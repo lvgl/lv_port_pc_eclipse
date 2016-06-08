@@ -1,0 +1,9 @@
+[submodule "hw"]
+	path = hw
+	url = https://github.com/littlevgl/hw.git
+[submodule "lvgl"]
+	path = lvgl
+	url = https://github.com/littlevgl/lvgl.git
+[submodule "misc"]
+	path = misc
+	url = https://github.com/littlevgl/misc.git
