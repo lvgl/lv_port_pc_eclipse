@@ -89,23 +89,6 @@
 #endif /*USE_SYS*/
 
 /*-----------------
- *      PWM
- *----------------*/
-#define USE_PWM     0
-#if USE_PWM != 0
-#define PWM_DEF_PERIOD      100    /*us*/
-#define PWM_DEF_DUTY_CYCLE  30     /*us*/
-#define PWM1_EN     0
-#define PWM2_EN     0
-#define PWM3_EN     0
-#define PWM4_EN     0
-#define PWM5_EN     0
-#define PWM6_EN     0
-#define PWM7_EN     0
-#define PWM8_EN     0
-#endif
-
-/*-----------------
  * SERIAL (UART)
  *----------------*/
 #define USE_SRIAL        0
@@ -211,28 +194,6 @@
 #define SPISW_CS4_PIN   IO_PINX
 
 #endif  /*USE_SPI*/
-
-/*---------------
- *   Multi SPI 
- *--------------*/
-#define USE_SPIM    0
-#if USE_SPIM    !=  0
-#define SPIM_IN_NUM 4   /* Max 4 */
-#define SPIM_CS_PORT    IO_PORTX
-#define SPIM_CS_PIN     IO_PINX
-#define SPIM_SCK_PORT   IO_PORTX
-#define SPIM_SCK_PIN    IO_PINX
-#define SPIM_SDO_PORT   IO_PORTX
-#define SPIM_SDO_PIN    IO_PINX
-#define SPIM_SDI1_PORT  IO_PORTX
-#define SPIM_SDI1_PIN   IO_PINX
-#define SPIM_SDI2_PORT  IO_PORTX
-#define SPIM_SDI2_PIN   IO_PINX
-#define SPIM_SDI3_PORT  IO_PORTX
-#define SPIM_SDI3_PIN   IO_PINX
-#define SPIM_SDI4_PORT  IO_PORTX
-#define SPIM_SDI4_PIN   IO_PINX
-#endif /*USE_SPIM*/
 
 /*-----------
  *   I2C 
@@ -386,66 +347,6 @@
 #define LOG_SERIAL_DRV  HW_SERIAL1
 #define LOG_SERIAL_BAUD 115200
 #endif /*USE_LOG*/
-/*=============================
- *   Analog-digital converter
- *============================*/
-
-/*--------------------
-        ADS1256
- *-------------------*/
-#define USE_ADS1256     0
-#if USE_ADS1256     !=  0
-#define ADS1256_DRV          HW_SPIX_CSX
-#define ADS1256_DRDY_PORT    IO_PORTX
-#define ADS1256_DRDY_PIN     IO_PINX
-#define ADS1256_PGA          0   /*0=x1, 1=x2, 2=x4, 3=x8, 4=x16, 5=x32, 6=x64*/
-#define ADS1256_BUFEN        1
-#define ADS1256_CLK_OUT    /*0: clk off, 1: clk_in, 2: clk_in/2. 3 clk_in/4*/
-/*SMPS: 0x03=2.5,0x13=5, 0x23=10, 0x33=15, 0x43=25, 0x53=30, 0x63=50,
- *      0x72=60, 0x82=100, 0x92=500, 0xA1=1000, 0xB0 = 2000, 0xC0 = 3750,
- *      0xD0=7500, 0xE0=15000, 0xF0 = 30000 */
-#define ADS1256_SAMPLE_RATE      0xA1
-#endif /*USE_ADS1256*/
-
-/*--------------------
-   ADS1256 Multi
- *-------------------*/
-#define USE_ADS1256_M     0
-#if USE_ADS1256_M != 0
-#define ADS1256_M_DRDY_PORT    IO_PORTX
-#define ADS1256_M_DRDY_PIN     IO_PINX
-#define ADS1256_M_PGA          0   /*0=x1, 1=x2, 2=x4, 3=x8, 4=x16, 5=x32, 6=x64*/
-#define ADS1256_M_BUFEN        0x82
-#define ADS1256_M_CLK_OUT    /*0: clk off, 1: clk_in, 2: clk_in/2. 3 clk_in/4*/
-/*SMPS: 0x03=2.5,0x13=5, 0x23=10, 0x33=15, 0x43=25, 0x53=30, 0x63=50,
- *      0x72=60, 0x82=100, 0x92=500, 0xA1=1000, 0xB0 = 2000, 0xC0 = 3750,
- *      0xD0=7500, 0xE0=15000, 0xF0 = 30000 */
-#define ADS1256_M_SAMPLE_RATE      0xA1
-#endif /*USE_ADS1256_M*/
-
-/*=============================
- *   Digital-analog converter
- *============================*/
-
-/*=================
- *    BlueTooth
- *=================*/
-
-/*--------------
- *    BTM41X
- *--------------*/
-#define USE_BTM41X  0
-#if USE_BTM41X != 0
-#define BTM41X_NAME     	"My Bluetooth name"
-#define BTM41X_SERIAL_DRV   HW_SERIALX
-#define BTM41X_RST_PORT     IO_PORTX
-#define BTM41X_RST_PIN      IO_PINX
-#endif
-
-/*=======================
- *   Real time clock
- *=======================*/
-
 
 /*=======================
  *   Display controllers
@@ -552,7 +453,7 @@
 
 
 /*====================
- *   Data storage
+ *  External memory
  *===================*/
 
 /*------------

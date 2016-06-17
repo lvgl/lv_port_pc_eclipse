@@ -13,6 +13,10 @@
 /*********************
  *      DEFINES
  *********************/
+#define USE_IMG_BG4			1
+#define USE_IMG_LOGO_WHITE	1
+#define USE_IMG_LOGO_TFT	0
+#define USE_IMG_BRICK		0
 
 /**********************
  *      TYPEDEFS
