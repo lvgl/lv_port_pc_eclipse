@@ -16,13 +16,13 @@
 #define LV_VER_RES          (320 * LV_DOWNSCALE)
 
 /* Buffered rendering: >= LV_DOWNSCALE * LV_HOR_RES or 0 to disable buffering*/
-#define LV_VDB_SIZE         (LV_HOR_RES * (LV_VER_RES / 20))
+#define LV_VDB_SIZE         (LV_HOR_RES * 100)
 
 /* Anti-aliasing with downscaling everything
  * 1: disabled
  * 2: 2x anti-alias -> half size
  * 4: 4x anti-alias -> quarter size */
-#define LV_DOWNSCALE		4
+#define LV_DOWNSCALE		2
 
 #define LV_UPSCALE_FONT	 0 /*Scale up fonts to compensate LV_DOWNSCALE*/
 #define LV_UPSCALE_MAP	 0 /*Scale up maps (e.g. images) elements to compensate LV_DOWNSCALE*/
@@ -53,12 +53,12 @@
 #define USE_FONT_DEJAVU_40   1
 #define USE_FONT_DEJAVU_60   1
 #define USE_FONT_DEJAVU_80   1
-#define LV_FONT_DEFAULT  FONT_DEJAVU_80  /*Always set a default font*/
+#define LV_FONT_DEFAULT  FONT_DEJAVU_30  /*Always set a default font*/
 #define LV_TXT_BREAK_CHARS	" ,.;-" /*Can break texts on these chars*/
 
 /*lv_obj (base object) settings*/
 #define LV_OBJ_FREE_P        	 1 			 /*Enable the free pointer attribute*/
-#define LV_OBJ_DEF_SCR_COLOR     COLOR_WHITE /*Default screen color*/
+#define LV_OBJ_DEF_SCR_COLOR     COLOR_SILVER /*Default screen color*/
 
 /*==================
  *  LV OBJ X USAGE 
@@ -80,6 +80,14 @@
 #define USE_LV_PAGE     1
 
 #define USE_LV_LIST     1
+
+#define USE_LV_CB 		1
+
+#define USE_LV_PB		1
+
+#define USE_LV_CHARTBG	1
+
+#define USE_LV_CHART	1
 
 /*==================
  *  LV APP SETTINGS 
