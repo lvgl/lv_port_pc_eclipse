@@ -13,13 +13,7 @@
 /*********************
  *      DEFINES
  *********************/
-#define USE_IMG_BG4			1
-#define USE_IMG_LOGO_WHITE	1
-#define USE_IMG_LOGO_TFT	0
-#define USE_IMG_BRICK		0
-#define USE_IMG_OK		1
-#define USE_IMG_KG		1
-#define USE_IMG_SD		1
+#define USE_IMG_SQUARE_X2		1
 
 /**********************
  *      TYPEDEFS

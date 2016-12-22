@@ -56,6 +56,10 @@ bool indev_get(uint8_t indev_id, int16_t * x, int16_t * y)
 #if USE_MOUSE != 0
     return mouse_get(x, y);
 #endif
+    
+    *x = 0;
+    *y = 0;
+    return false;
 
 }
 /**********************

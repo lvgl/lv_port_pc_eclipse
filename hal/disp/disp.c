@@ -48,11 +48,11 @@
 void disp_area(uint8_t disp_id, int32_t x1, int32_t y1, int32_t x2, int32_t y2)
 {
 #if USE_R61581 != 0
-    r61581_set_area((x1, y1, x2, y2);
+    r61581_set_area(x1, y1, x2, y2);
 #endif
 
 #if USE_SSD1963 != 0
-    ssd1963_set_area((x1, y1, x2, y2);
+    ssd1963_set_area(x1, y1, x2, y2);
 #endif
 
 #if USE_TFT != 0
@@ -60,7 +60,7 @@ void disp_area(uint8_t disp_id, int32_t x1, int32_t y1, int32_t x2, int32_t y2)
 #endif
 
 #if USE_ST7565 != 0
-    st7565_set_area((x1, y1, x2, y2);
+    st7565_set_area(x1, y1, x2, y2);
 #endif
 }
 
