@@ -15,6 +15,7 @@
 #include "lvgl/lv_misc/anim.h"
 #include "lvgl/lv_app/lv_app_util/lv_app_notice.h"
 
+
 int main (void)
 {
 	/*Initialization*/
@@ -22,6 +23,7 @@ int main (void)
 	misc_init();
 	dev_init();
 	lv_init();
+
 
 #if LV_APP_ENABLE == 0 /*The applications are not enabled*/
 
@@ -38,7 +40,6 @@ int main (void)
 	lv_label_set_text(label, "Hello world!");
     lv_obj_set_style(label, &label_style);
 	lv_obj_align(label, NULL, LV_ALIGN_CENTER, 0, 0);
-
 #else /*The applications are enabled*/
 
 	/*Run some applications*/

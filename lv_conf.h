@@ -138,7 +138,7 @@
  * =================*/
 
 /*Enable the application system*/
-#define LV_APP_ENABLE         1
+#define LV_APP_ENABLE         0
 
 #if LV_APP_ENABLE != 0
 #define LV_APP_SC_WIDTH     (LV_HOR_RES / 4)    /*Shortcut width*/
