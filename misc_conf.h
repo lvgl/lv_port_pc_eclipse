@@ -2,6 +2,7 @@
  * @file misc_conf.h
  * 
  */
+
 #ifndef MISC_CONF_H
 #define MISC_CONF_H
 
@@ -14,14 +15,22 @@
  *----------------*/
 #define USE_DYN_MEM     1
 #if USE_DYN_MEM != 0
-#define DM_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
-#define DM_AUTO_ZERO   1             /*Automatically fill-zero the allocated memory*/
-#define DM_MEM_ATTR					 /*Complier prefix for big array declaration*/
+#define DM_AUTO_ZERO   0     /*Automatically fill-zero the allocated memory*/
+#define DM_CUSTOM      0     /*1: use custom malloc/free, 0: use malloc/free provided by dyn_mem*/
+#if DM_CUSTOM == 0
+  #define DM_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
+  #define DM_MEM_ATTR                  /*Complier prefix for big array declaration*/
+#else /*DM_CUSTOM != 0: Provide custom malloc/free functions*/
+  #define DM_CUST_INCLUDE <stdlib.h>   /*Header for the dynamic memory function*/
+  #define DM_CUST_ALLOC   malloc       /*Wrapper to malloc*/
+  #define DM_CUST_FREE    free         /*Wrapper to free*/
+#endif  /*DM_CUSTOM*/
 #endif  /*USE_DYN_MEM*/
 
- /*----------------------------
-  * Dynamic memory with Defrag
-  *--------------------------*/
+ /*--------------------------------------
+  * Dynamic memory with always 0 % fragmentation
+  * Not compatible with normal malloc/free
+  *------------------------------------*/
  #define USE_DYN_MEM_DEFR     0
  #if USE_DYN_MEM_DEFR != 0
  #define DMD_MEM_SIZE    (16U * 1024U) /*Size memory used by mem_alloc (in bytes)*/
@@ -40,7 +49,7 @@
 /*----------------
  *   Linked list
  *----------------*/
-#define USE_LINKED_LIST 1
+#define USE_LINKED_LIST     1
 #if USE_LINKED_LIST != 0
 /* No settings*/
 #endif /*USE_LINKED_LIST*/
@@ -66,21 +75,6 @@
 #endif /*USE_IDLE*/
 
 /*===================
- *   Communication
- *==================*/
-
-/*------------
- *    Slip
- *-----------*/
-#define USE_SLIP    0
-#if USE_SLIP != 0
-#define SLIP_ESC        0x0C
-#define SLIP_END        0xDB
-#define SLIP_ESC_END    0xDC  /*Change END char in the stream to: ESC, ESC_END*/
-#define SLIP_ESC_ESC    0xDD  /*Change ESC char in the stream to: ESC, ESC_ESC*/
-#endif  /*USE_SLIP*/
-
-/*===================
  *   File system
  *==================*/
 
@@ -100,13 +94,23 @@
 #define UFS_LETTER 'U'
 #endif  /*USE_UFS*/
 
-/*----------------
- *     FAT32
- *----------------*/
+/*------------------------
+ * FAT32 - FatFS wrappers
+ * (used on MCU)
+ *-----------------------*/
 #define USE_FAT32   0
 #if USE_FAT32 != 0
-#define FAT32_LETTER 'S'
+#define FAT32_LETTER 'S'/
 #endif  /*USE_FAT32*/
+
+/*---------------------
+ * Linux File system
+ *---------------------*/
+#define USE_LINUXFS   1
+#if USE_LINUXFS != 0
+#define LINUXFS_LETTER 'L'
+#define LINUXFS_ROOT_DIR    "./" /*See this directory as root folder*/
+#endif  /*USE_LINUXFS*/
 
 /*===================
  *     Others
@@ -115,10 +119,29 @@
 /*----------------
  *     Color
  *----------------*/
-#define  USE_COLOR 		1
+#define  USE_COLOR      1
 #if USE_COLOR != 0
-#define COLOR_DEPTH		16
+#define COLOR_DEPTH     16
 #endif
 
-#endif /*#ifndef MISC_CONF_H*/
+/*------------
+ *    Slip
+ *-----------*/
+#define USE_SLIP        0
+#if USE_SLIP != 0
+#define SLIP_ESC        0x0C
+#define SLIP_END        0xDB
+#define SLIP_ESC_END    0xDC  /*Change END char in the stream to: ESC, ESC_END*/
+#define SLIP_ESC_ESC    0xDD  /*Change ESC char in the stream to: ESC, ESC_ESC*/
+#endif  /*USE_SLIP*/
+
+/*----------------
+ * String command
+ *--------------*/
+#define USE_STRCMD     0
+#if USE_STRCMD != 0
+/*No settings*/
+#endif /*USE_STRCMD*/
+
+#endif /* MISC_CONF_H */
 

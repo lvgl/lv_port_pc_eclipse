@@ -91,7 +91,7 @@
 /*-----------------
  * SERIAL (UART)
  *----------------*/
-#define USE_SRIAL        0
+#define USE_SERIAL        0
 #if USE_SERIAL != 0
 
 /*SERIAL1*/
@@ -113,6 +113,7 @@
 #define SER4_PRIO       HW_INT_PRIO_OFF /*HW_INT_PRIO_OFF to disable*/
 #define SER4_BUF_SIZE   0
 #define SER4_MODE       (SERIAL_MODE_BASIC)
+
 #endif /*USE_SERIAL*/
 
 

@@ -13,7 +13,7 @@
 #include "misc/os/ptask.h"
 #include "lvgl/lvgl.h"
 #include "lvgl/lv_misc/anim.h"
-
+#include "lvgl/lv_app/lv_app_util/lv_app_notice.h"
 
 int main (void)
 {
@@ -25,43 +25,36 @@ int main (void)
 
 #if LV_APP_ENABLE == 0 /*The applications are not enabled*/
 
-	lv_obj_t * label = lv_label_create(lv_scr_act(), NULL);
-	lv_obj_set_style(label, lv_labels_get(LV_LABELS_BTN, NULL));
+	/*Create a label style*/
+	static lv_labels_t label_style;
+	lv_labels_get(LV_LABELS_DEF, &label_style); /*Initialize from the default labels style*/
+	label_style.objs.color = COLOR_RED;
+	label_style.font = FONT_DEJAVU_80;
+	label_style.letter_space = 10 * LV_DOWNSCALE;
+
+	/*Create a label*/
+	lv_obj_t * label;
+	label = lv_label_create(lv_scr_act(), NULL);
 	lv_label_set_text(label, "Hello world!");
+    lv_obj_set_style(label, &label_style);
 	lv_obj_align(label, NULL, LV_ALIGN_CENTER, 0, 0);
 
 #else /*The applications are enabled*/
 
-	/*Run the "Example" application*/
-	lv_app_inst_t * app_sender = lv_app_run(lv_app_dsc_get("Example"),"Sender");
-	lv_app_sc_open(app_sender); /*Open the shortcut*/
+	/*Run some applications*/
+	lv_app_inst_t * app;
 
-    /*Run the "Example" application again*/
-    lv_app_inst_t * app_receiver = lv_app_run(lv_app_dsc_get("Example"),"Receiver");
-    lv_app_sc_open(app_receiver); /*Open the shortcut*/
+	app = lv_app_run(lv_app_dsc_get("Example"), NULL);
+	lv_app_sc_open(app); /*Open the shortcut*/
 
-    /*Make a connection between the applications */
-    lv_app_con_set(app_sender, app_receiver);
+    app = lv_app_run(lv_app_dsc_get("Sys. monitor"), NULL);
+    lv_app_sc_open(app); /*Open the shortcut*/
 
-    /* What to do?
-     * 1. Run the project.
-     * 2. Click on the "Sender" application
-     * 3. In the opened window click on the text area
-     * 4. Write something and Click the "Ok" button
-     * 5. Click the "Down" arrow on the right top corner
-     * 6. Check the "Receiver" application got the text */
+    app = lv_app_run(lv_app_dsc_get("Terminal"), NULL);
+    lv_app_sc_open(app); /*Open the shortcut*/
 
-    /*What else?
-     * - Click on the "Apps" button.
-     * - Open new instances of this application
-     * - Press longly a shortcut on the desktop (it will turn redish)
-     * - Click on other shortcuts to connect them to the long pressed
-     * - Click on the background
-     * - Test tit by sending text
-     */
-
-    /*Try to write new applications based on "Example"*/
-
+    lv_app_notice_add("Click on a shortcut to open\n"
+                      "the application in a window");
 #endif
 
 	while(1) {
