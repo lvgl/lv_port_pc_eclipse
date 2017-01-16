@@ -112,6 +112,26 @@
 #define LINUXFS_ROOT_DIR    "./" /*See this directory as root folder*/
 #endif  /*USE_LINUXFS*/
 
+/*================
+ *     Math
+ *================*/
+
+/*-----------------
+ *  Trigonometry
+ *----------------*/
+#define USE_TRIGO   1
+#if USE_TRIGO != 0
+/*No settings*/
+#endif
+
+/*-----------------
+ *  Math basic
+ *----------------*/
+#define USE_MATH_BASE   1
+#if USE_MATH_BASE != 0
+/*No settings*/
+#endif
+
 /*===================
  *     Others
  *==================*/

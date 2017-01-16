@@ -16,7 +16,7 @@
 #define LV_VER_RES          (320 * LV_DOWNSCALE)
 
 /* Buffered rendering: >= LV_DOWNSCALE * LV_HOR_RES or 0 to disable buffering*/
-#define LV_VDB_SIZE         (LV_HOR_RES * (LV_VER_RES / 20))
+#define LV_VDB_SIZE         (LV_HOR_RES * (LV_VER_RES / 30))
 
 /* Enable antialaiassing
  * If enabled everything will half-sized
@@ -58,12 +58,14 @@
 #define USE_FONT_DEJAVU_40   1
 #define USE_FONT_DEJAVU_60   1
 #define USE_FONT_DEJAVU_80   1
+#define USE_FONT_SYMBOL_30   1
+#define USE_FONT_SYMBOL_60   1
 #define LV_FONT_DEFAULT      FONT_DEJAVU_30  /*Always set a default font*/
 #define LV_TXT_BREAK_CHARS  " ,.;-" /*Can break texts on these chars*/
 
 /*lv_obj (base object) settings*/
 #define LV_OBJ_FREE_P            1           /*Enable the free pointer attribute*/
-#define LV_OBJ_DEF_SCR_COLOR     COLOR_SILVER /*Default screen color*/
+#define LV_OBJ_DEF_SCR_COLOR     COLOR_WHITE /*Default screen color*/
 
 /*Others*/
 #define LV_COLOR_TRANSP     COLOR_LIME
@@ -90,10 +92,17 @@
 /*Line (dependencies: -*/
 #define USE_LV_LINE     1
 
-/*Image (dependencies: from misc: FSINT, UFS)*/
+/*Image (dependencies: lv_label (if symbols are enabled) from misc: FSINT, UFS)*/
 #define USE_LV_IMG      1
 #if USE_LV_IMG != 0
-#define LV_IMG_DEF_WALLPAPER    img_square_x2 /*Comment this line to NOT use wallpaper*/
+#define LV_IMG_DEF_WALLPAPER    img_square_x2  /*Comment this line to NOT use wallpaper*/
+/* 1: enables to interpret the file names as symbol name
+ * from symbol_def.h if they begin with a lower case letter.
+ * (driver letters are always upper case)*/
+#define LV_IMG_ENABLE_SYMBOLS   1
+#if LV_IMG_ENABLE_SYMBOLS != 0
+#define LV_IMG_DEF_SYMBOL_FONT       FONT_SYMBOL_30
+#endif /*LV_IMG_ENABLE_SYMBOLS*/
 #endif /*USE_LV_IMG*/
 
 /*Page (dependencies: lv_rect)*/
@@ -132,13 +141,16 @@
 
 /*Message box (dependencies: lv_rect, lv_btn, lv_label)*/
 #define USE_LV_MBOX     1
+#if USE_LV_MBOX != 0
+#define LV_MBOX_ANIM_TIME   200 /*How fast animate out the message box in auto close. 0: no animation [ms]*/
+#endif
 
 /*==================
  *  LV APP SETTINGS
  * =================*/
 
 /*Enable the application system*/
-#define LV_APP_ENABLE         0
+#define LV_APP_ENABLE         1
 
 #if LV_APP_ENABLE != 0
 #define LV_APP_SC_WIDTH     (LV_HOR_RES / 4)    /*Shortcut width*/
@@ -172,10 +184,10 @@
 #define LV_APP_EFFECT_OPA_ANIM 1 /*Enable the using opacity in the application animations*/
 #define LV_APP_ANIM_WIN 200      /*Animation time in milliseconds (0: turn off animation)*/
 #define LV_APP_ANIM_SC  200      /*Animation time in milliseconds (0: turn off animation)*/
-#define LV_APP_ANIM_NOTICE 300   /*How fast animate out a notice [ms]*/
+#define LV_APP_ANIM_NOTICE 300   /*Obsolete, use LV_MBOX_ANIM. */
 
 /* App. utility settings */
-#define LV_APP_NOTICE_SHOW_TIME 4000 /*Notices will be shown for this time [ms]*/
+#define LV_APP_NOTICE_SHOW_TIME 4000 /*Notices will be shown for this time. 0: no auto. close [ms]*/
 #define LV_APP_NOTICE_MAX_LEN   256  /*Max. number of characters on a notice*/
 
 /*==================
