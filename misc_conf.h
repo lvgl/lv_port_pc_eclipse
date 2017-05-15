@@ -41,7 +41,7 @@
 /*------------
  *   FIFO
  *-----------*/
-#define USE_FIFO        1
+#define USE_FIFO        0
 #if USE_FIFO != 0
 /* No settings*/
 #endif /*USE_FIFO*/
@@ -63,12 +63,13 @@
  *----------------*/
 #define USE_PTASK       1
 #if USE_PTASK != 0
-/*No settings*/
+#define PTASK_IDLE_PERIOD  500  /*500*/
 #endif /*USE_PTASK*/
 
 /*-----------------------
  * CPU Idle measurement
  *-----------------------*/
+/*In hal/systick.c: systick_add_cb() and systick_rem_cb() is required)*/
 #define USE_IDLE        0
 #if USE_IDLE != 0
 #define IDLE_REFR_RATE  500 /*ms*/
@@ -106,7 +107,7 @@
 /*---------------------
  * Linux File system
  *---------------------*/
-#define USE_LINUXFS   1
+#define USE_LINUXFS   0
 #if USE_LINUXFS != 0
 #define LINUXFS_LETTER 'L'
 #define LINUXFS_ROOT_DIR    "./" /*See this directory as root folder*/
@@ -132,8 +133,9 @@
 /*No settings*/
 #endif
 
+
 /*===================
- *     Others
+ *  GRAPHICS (GFX)
  *==================*/
 
 /*----------------
@@ -141,8 +143,71 @@
  *----------------*/
 #define  USE_COLOR      1
 #if USE_COLOR != 0
-#define COLOR_DEPTH     16
+#define COLOR_DEPTH     24
 #endif
+
+/*----------------
+ *     Area
+ *----------------*/
+#define USE_AREA    1
+#if USE_AREA != 0
+/*No settings*/
+#endif
+
+/*----------------
+ *     Circle
+ *----------------*/
+#define USE_CIRC    1
+#if USE_CIRC != 0
+/*No settings*/
+#endif
+
+/*----------------
+ *     Font
+ *----------------*/
+#define USE_FONT    1
+#if USE_FONT != 0
+#define FONT_ANTIALIAS       0
+/*Built-in font usage*/
+#define USE_FONT_DEJAVU_8    0
+#define USE_FONT_DEJAVU_10   0
+#define USE_FONT_DEJAVU_14   0
+#define USE_FONT_DEJAVU_20   1
+#define USE_FONT_DEJAVU_30   1
+#define USE_FONT_DEJAVU_40   1
+#define USE_FONT_DEJAVU_60   0
+#define USE_FONT_DEJAVU_80   0
+#define USE_FONT_SYMBOL_30   1
+#define USE_FONT_SYMBOL_60   0
+
+/*Always set a default font from the built-in fonts*/
+#define FONT_DEFAULT      FONT_DEJAVU_30
+
+/*Enumerate the name of the external fonts. E.g: MY_FONT_1, MY_FONT_2, (comma at the end!)*/
+#define FONT_NEW_NAMES
+
+#endif /*USE_FONT*/
+
+/*----------------
+ *     Text
+ *----------------*/
+#define USE_TEXT    1
+#if USE_TEXT != 0
+#define TXT_BREAK_CHARS  " ,.;-_" /*Can break texts on these chars*/
+#endif /*USE_TEXT*/
+
+
+/*----------------
+ *     Animation
+ *----------------*/
+#define USE_ANIM    1
+#if USE_ANIM != 0
+#define ANIM_REFR_PERIOD 10 /*ms*/
+#endif
+
+/*===================
+ *     Others
+ *==================*/
 
 /*------------
  *    Slip
