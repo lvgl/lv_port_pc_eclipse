@@ -87,7 +87,10 @@
 #define TICK_FUNC_NUM   16
 #define TICK_US_BASE    5  /*Adjust the 'tick_wait_us' functions */
 #define TICK_TIMER		HW_TMR2
-#endif /*USE_SYS*/
+#else   /*Without tick a very simple wait functions can be enabled*/
+#define TICK_BLOCK_WAIT  1   /*Enable simple blocking wait functions*/
+#define TICK_US_BASE     5   /*Adjust the 'tick_wait_us' functions */
+#endif /*USE_TICK*/
 
 /*-----------------
  * SERIAL (UART)

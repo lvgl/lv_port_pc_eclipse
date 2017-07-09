@@ -41,7 +41,7 @@
 /*------------
  *   FIFO
  *-----------*/
-#define USE_FIFO        1
+#define USE_FIFO        0
 #if USE_FIFO != 0
 /* No settings*/
 #endif /*USE_FIFO*/
@@ -63,12 +63,13 @@
  *----------------*/
 #define USE_PTASK       1
 #if USE_PTASK != 0
-/*No settings*/
+#define PTASK_IDLE_PERIOD  500  /*500*/
 #endif /*USE_PTASK*/
 
 /*-----------------------
  * CPU Idle measurement
  *-----------------------*/
+/*In hal/systick.c: systick_add_cb() and systick_rem_cb() is required)*/
 #define USE_IDLE        0
 #if USE_IDLE != 0
 #define IDLE_REFR_RATE  500 /*ms*/
@@ -106,7 +107,7 @@
 /*---------------------
  * Linux File system
  *---------------------*/
-#define USE_LINUXFS   1
+#define USE_LINUXFS   0
 #if USE_LINUXFS != 0
 #define LINUXFS_LETTER 'L'
 #define LINUXFS_ROOT_DIR    "./" /*See this directory as root folder*/

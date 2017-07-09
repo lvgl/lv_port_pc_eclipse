@@ -3,6 +3,7 @@
  * 
  */
 
+
 #ifndef LV_CONF_H
 #define LV_CONF_H
 
@@ -24,12 +25,9 @@
  * Use LV_DOWNSCALE to compensate
  * the down scaling effect of antialiassing*/
 #define LV_ANTIALIAS        1
+
 /*Set the downscaling value*/
-#if LV_ANTIALIAS == 0
-#define LV_DOWNSCALE        1
-#else
-#define LV_DOWNSCALE        2
-#endif
+#define LV_DOWNSCALE        (1 << LV_ANTIALIAS)
 
 #define LV_REFR_PERIOD      40    /*Screen refresh period in milliseconds*/
 #define LV_INV_FIFO_SIZE    32    /*The average number of objects on a screen */
@@ -48,7 +46,6 @@
 /*lv_obj (base object) settings*/
 #define LV_OBJ_FREE_NUM            1           /*Enable the free pointer attribute*/
 #define LV_OBJ_FREE_P            1           /*Enable the free pointer attribute*/
-#define LV_OBJ_DEF_SCR_COLOR     COLOR_WHITE /*Default screen color*/
 
 /*Others*/
 #define LV_COLOR_TRANSP     COLOR_LIME
