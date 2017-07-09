@@ -13,7 +13,8 @@
 /*********************
  *      DEFINES
  *********************/
-#define USE_IMG_SQUARE_X2		1
+#define USE_IMG_SQUARE_X2		0
+#define USE_IMG_EFFECT_BG       0
 
 /**********************
  *      TYPEDEFS

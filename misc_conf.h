@@ -132,8 +132,9 @@
 /*No settings*/
 #endif
 
+
 /*===================
- *     Others
+ *  GRAPHICS (GFX)
  *==================*/
 
 /*----------------
@@ -141,8 +142,94 @@
  *----------------*/
 #define  USE_COLOR      1
 #if USE_COLOR != 0
-#define COLOR_DEPTH     16
+#define COLOR_DEPTH     24
 #endif
+
+/*----------------
+ *     Area
+ *----------------*/
+#define USE_AREA    1
+#if USE_AREA != 0
+/*No settings*/
+#endif
+
+/*----------------
+ *     Circle
+ *----------------*/
+#define USE_CIRC    1
+#if USE_CIRC != 0
+/*No settings*/
+#endif
+
+/*----------------
+ *     Font
+ *----------------*/
+#define USE_FONT    1
+#if USE_FONT != 0
+#define FONT_ANTIALIAS       0
+#define FONT_BUILTIN_LATIN_EXT   0  /*1: Use ISO8859-1 (Latin-1) character set instead of normal ASCII*/
+/*Built-in font usage*/
+#define USE_FONT_DEJAVU_8    1
+#define USE_FONT_DEJAVU_10   1
+#define USE_FONT_DEJAVU_14   1
+#define USE_FONT_DEJAVU_20   1
+#define USE_FONT_DEJAVU_30   1
+#define USE_FONT_DEJAVU_40   1
+#define USE_FONT_DEJAVU_60   1
+#define USE_FONT_DEJAVU_80   1
+#define USE_FONT_DEJAVU_120  1
+#define USE_FONT_SYMBOL_30   1
+#define USE_FONT_SYMBOL_60   1
+
+/*Always set a default font from the built-in fonts*/
+#define FONT_DEFAULT      FONT_DEJAVU_30
+
+/*Enumerate the name of the external fonts. E.g: MY_FONT_1, MY_FONT_2, (comma at the end!)*/
+#define FONT_NEW_NAMES
+
+#endif /*USE_FONT*/
+
+/*----------------
+ *     Text
+ *----------------*/
+#define USE_TEXT    1
+#if USE_TEXT != 0
+#define TXT_BREAK_CHARS  " ,.;-_" /*Can break texts on these chars*/
+#endif /*USE_TEXT*/
+
+/*----------------
+ *     Animation
+ *----------------*/
+#define USE_ANIM    1
+#if USE_ANIM != 0
+#define ANIM_REFR_PERIOD 20 /*ms*/
+#endif
+
+/*===================
+ *  Communication
+ *==================*/
+
+/*------------------
+ *    WiFi Manager
+ *-----------------*/
+#define USE_WIFIMNG        0
+#if USE_WIFIMNG != 0
+#define WIFIMNG_TCP_CON_DELAY      5000     /*Delay after network connection and before connecting to TCP [ms]*/
+#define WIFIMNG_RETRY_WAIT         10000    /*Wait before two reconnect attempts [ms] */
+#endif
+
+/*------------------
+ *    GSM Manager
+ *-----------------*/
+#define USE_GSMMNG        0
+#if USE_GSMMNG != 0
+#define GSMMNG_TCP_CON_DELAY      5000     /*Delay after network connection and before connecting to TCP [ms]*/
+#define GSMMNG_RETRY_WAIT         10000    /*Wait before two reconnect attempts [ms] */
+#endif
+
+/*===================
+ *     Others
+ *==================*/
 
 /*------------
  *    Slip

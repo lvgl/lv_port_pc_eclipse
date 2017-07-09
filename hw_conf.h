@@ -17,6 +17,7 @@
 #define PSP_PIC24F_33F     0
 #define PSP_PIC32MX        0
 #define PSP_PIC32MZ        0
+#define PSP_KEA            0
 #define PSP_PC	       	   1
 
 /*-----------
@@ -94,26 +95,30 @@
 #define USE_SERIAL        0
 #if USE_SERIAL != 0
 
+/*SERIAL0*/
+#define SERIAL0_PRIO       HW_INT_PRIO_OFF /*HW_INT_PRIO_OFF to disable module*/
+#define SERIAL0_BUF_SIZE   0                 /*0: disable module*/
+#define SERIAL0_MODE       (SERIAL_MODE_BASIC)
+
 /*SERIAL1*/
-#define SER1_PRIO       HW_INT_PRIO_OFF /*HW_INT_PRIO_OFF to disable module*/
-#define SER1_BUF_SIZE   0				 /*0: disable module*/
-#define SER1_MODE       (SER_MODE_BASIC)
+#define SERIAL1_PRIO       HW_INT_PRIO_OFF /*HW_INT_PRIO_OFF to disable module*/
+#define SERIAL1_BUF_SIZE   0                 /*0: disable module*/
+#define SERIAL1_MODE       (SERIAL_MODE_BASIC)
 
 /*SERAL2*/
-#define SER2_PRIO       HW_INT_PRIO_OFF /*HW_INT_PRIO_OFF to disable module*/
-#define SER2_BUF_SIZE   0
-#define SER2_MODE       (SERIAL_MODE_BASIC)
+#define SERIAL2_PRIO       HW_INT_PRIO_OFF /*HW_INT_PRIO_OFF to disable module*/
+#define SERIAL2_BUF_SIZE   0
+#define SERIAL2_MODE       (SERIAL_MODE_BASIC)
 
 /*SERIAL3*/
-#define SER3_PRIO       HW_INT_PRIO_OFF /*HW_INT_PRIO_OFF to disable module*/
-#define SER3_BUF_SIZE   0
-#define SER3_MODE       (SERIAL_MODE_BASIC)
+#define SERIAL3_PRIO       HW_INT_PRIO_OFF /*HW_INT_PRIO_OFF to disable module*/
+#define SERIAL3_BUF_SIZE   0
+#define SERIAL3_MODE       (SERIAL_MODE_BASIC)
 
 /*SERIAL4*/
-#define SER4_PRIO       HW_INT_PRIO_OFF /*HW_INT_PRIO_OFF to disable*/
-#define SER4_BUF_SIZE   0
-#define SER4_MODE       (SERIAL_MODE_BASIC)
-
+#define SERIAL4_PRIO       HW_INT_PRIO_OFF /*HW_INT_PRIO_OFF to disable*/
+#define SERIAL4_BUF_SIZE   0
+#define SERIAL4_MODE       (SERIAL_MODE_BASIC)
 #endif /*USE_SERIAL*/
 
 
@@ -122,6 +127,17 @@
  *----------*/
 #define USE_SPI         0
 #if USE_SPI != 0
+
+/*SPI0*/
+#define SPI0_EN        0
+#define SPI0_CS1_PORT  IO_PORTX
+#define SPI0_CS1_PIN   IO_PINX
+#define SPI0_CS2_PORT  IO_PORTX
+#define SPI0_CS2_PIN   IO_PINX
+#define SPI0_CS3_PORT  IO_PORTX
+#define SPI0_CS3_PIN   IO_PINX
+#define SPI0_CS4_PORT  IO_PORTX
+#define SPI0_CS4_PIN   IO_PINX
 
 /*SPI1*/
 #define SPI1_EN        0
@@ -202,6 +218,9 @@
 #define USE_I2C         0
 #if USE_I2C != 0
 
+/*I2C0*/
+#define I2C0_BAUD       0 /* 0: disable the module */
+
 /*I2C1*/
 #define I2C1_BAUD       0 /* 0: disable the module */
 
@@ -235,7 +254,6 @@
 #endif  /*PAR_SW*/
 #endif  /*USE_PARALLEL*/
 
-
 /*-----------------------------
  *  Internal TFT or PC monitor
  *----------------------------*/
@@ -256,7 +274,6 @@
 #define TFT_BL_PIN  IO_PINX
 
 #endif
-
 
 /*********************
  *   DEVICE CONFIG
@@ -292,7 +309,6 @@
 #define LED8_PIN        IO_PINX
 #endif /*USE_LED*/
 
-
 /*----------
  *  Switch
  *---------*/
@@ -315,7 +331,6 @@
 #define SW8_PORT       IO_PORTX
 #define SW8_PIN        IO_PINX
 #endif
-
 
 /*-------------
  *   Buzzer
@@ -379,7 +394,6 @@
 #define SSD1963_ORI     0   /*0, 90, 180, 270*/
 #define SSD1963_COLOR_DEPTH 16
 #endif
-
 
 /*----------------
  *    R61581

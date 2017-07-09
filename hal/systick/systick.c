@@ -60,7 +60,7 @@ uint32_t systick_elaps(uint32_t prev_tick)
  */
 bool systick_add_cb(void (*cb) (void))
 {
-	return tick_add_cb(cb);
+	return tick_add_func(cb);
 }
 
 /**
@@ -69,7 +69,7 @@ bool systick_add_cb(void (*cb) (void))
  */
 void systick_rem_cb(void (*cb) (void))
 {
-	 tick_rem_cb(cb);
+	 tick_rem_func(cb);
 }
 
 /**********************
