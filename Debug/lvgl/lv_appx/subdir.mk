@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../lvgl/lv_appx/lv_app_benchmark.c \
+../lvgl/lv_appx/lv_app_ethernet.c \
 ../lvgl/lv_appx/lv_app_example.c \
 ../lvgl/lv_appx/lv_app_files.c \
 ../lvgl/lv_appx/lv_app_gsm.c \
@@ -15,6 +16,7 @@ C_SRCS += \
 
 OBJS += \
 ./lvgl/lv_appx/lv_app_benchmark.o \
+./lvgl/lv_appx/lv_app_ethernet.o \
 ./lvgl/lv_appx/lv_app_example.o \
 ./lvgl/lv_appx/lv_app_files.o \
 ./lvgl/lv_appx/lv_app_gsm.o \
@@ -25,6 +27,7 @@ OBJS += \
 
 C_DEPS += \
 ./lvgl/lv_appx/lv_app_benchmark.d \
+./lvgl/lv_appx/lv_app_ethernet.d \
 ./lvgl/lv_appx/lv_app_example.d \
 ./lvgl/lv_appx/lv_app_files.d \
 ./lvgl/lv_appx/lv_app_gsm.d \
@@ -38,7 +41,7 @@ C_DEPS += \
 lvgl/lv_appx/%.o: ../lvgl/lv_appx/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	gcc -I"/home/kisvegabor/eclipse_neon_cdt_workspace/proj_pc" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
+	gcc -I"/home/kisvegabor/eclipse_neon_workspace/lv_pc" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

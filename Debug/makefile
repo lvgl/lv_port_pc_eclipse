@@ -60,19 +60,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: proj_pc
+all: lv_pc
 
 # Tool invocations
-proj_pc: $(OBJS) $(USER_OBJS)
+lv_pc: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC Linker'
-	gcc  -o "proj_pc" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc  -o "lv_pc" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) proj_pc
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) lv_pc
 	-@echo ' '
 
 .PHONY: all clean dependents
