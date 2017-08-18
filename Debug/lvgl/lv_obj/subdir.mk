@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../lvgl/lv_obj/lv_dispi.c \
+../lvgl/lv_obj/lv_group.c \
 ../lvgl/lv_obj/lv_obj.c \
 ../lvgl/lv_obj/lv_refr.c \
 ../lvgl/lv_obj/lv_style.c \
@@ -12,6 +13,7 @@ C_SRCS += \
 
 OBJS += \
 ./lvgl/lv_obj/lv_dispi.o \
+./lvgl/lv_obj/lv_group.o \
 ./lvgl/lv_obj/lv_obj.o \
 ./lvgl/lv_obj/lv_refr.o \
 ./lvgl/lv_obj/lv_style.o \
@@ -19,6 +21,7 @@ OBJS += \
 
 C_DEPS += \
 ./lvgl/lv_obj/lv_dispi.d \
+./lvgl/lv_obj/lv_group.d \
 ./lvgl/lv_obj/lv_obj.d \
 ./lvgl/lv_obj/lv_refr.d \
 ./lvgl/lv_obj/lv_style.d \

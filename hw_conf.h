@@ -262,12 +262,12 @@
  *----------------------------*/
 #define USE_TFT     1
 #if USE_TFT != 0
-#define TFT_HOR_RES   480
+#define TFT_HOR_RES   320
 #define TFT_HSL       0     /*HSYNC length*/
 #define TFT_HBP       0     /*Hor. Back proach*/
 #define TFT_HFP       0     /*Hor Front proach*/
 
-#define TFT_VER_RES  320
+#define TFT_VER_RES  240
 #define TFT_VSL      0       /*VSYNC length*/
 #define TFT_VBP      0       /*Ver. Back proach*/
 #define TFT_VFP      0       /*Ver. Front proach*/

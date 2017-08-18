@@ -107,10 +107,10 @@
 /*---------------------
  * Linux File system
  *---------------------*/
-#define USE_LINUXFS   0
+#define USE_LINUXFS   1
 #if USE_LINUXFS != 0
 #define LINUXFS_LETTER 'L'
-#define LINUXFS_ROOT_DIR    "./" /*See this directory as root folder*/
+#define LINUXFS_ROOT_DIR    "./fsnav/test_drive/" /*See this directory as root folder*/
 #endif  /*USE_LINUXFS*/
 
 /*================
@@ -183,7 +183,7 @@
 #define USE_FONT_SYMBOL_60   1
 
 /*Always set a default font from the built-in fonts*/
-#define FONT_DEFAULT      FONT_DEJAVU_30
+#define FONT_DEFAULT      FONT_DEJAVU_40
 
 /*Enumerate the name of the external fonts. E.g: MY_FONT_1, MY_FONT_2, (comma at the end!)*/
 #define FONT_NEW_NAMES

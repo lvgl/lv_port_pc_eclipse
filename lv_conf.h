@@ -13,8 +13,8 @@
 
 /* Horizontal and vertical resolution of the library.
  * Screen resolution multiplied by LV_DOWN_SCALE*/
-#define LV_HOR_RES          (480 * LV_DOWNSCALE)
-#define LV_VER_RES          (320 * LV_DOWNSCALE)
+#define LV_HOR_RES          (320 * LV_DOWNSCALE)
+#define LV_VER_RES          (240 * LV_DOWNSCALE)
 #define LV_DPI              (60 * LV_DOWNSCALE)
 
 /* Buffered rendering: >= LV_DOWNSCALE * LV_HOR_RES or 0 to disable buffering*/
@@ -44,11 +44,13 @@
 #define LV_DISPI_LONG_PRESS_REP_TIME 100 /*Repeated trigger period in long press [ms] */
 
 /*lv_obj (base object) settings*/
-#define LV_OBJ_FREE_NUM            1           /*Enable the free pointer attribute*/
+#define LV_OBJ_FREE_NUM          1           /*Enable the free pointer attribute*/
 #define LV_OBJ_FREE_P            1           /*Enable the free pointer attribute*/
+#define LV_OBJ_GROUP             1           /*Enable object groups*/
 
 /*Others*/
-#define LV_COLOR_TRANSP     COLOR_LIME
+#define LV_COLOR_TRANSP     COLOR_LIME      /*This could mean transparent pixel*/
+#define USE_LV_EXAMPLE      1               /*Enable examples (lvgl/lv_examples/). Disable to save memory*/
 
 /*==================
  *  LV OBJ X USAGE 
@@ -142,8 +144,14 @@
 /*Check box (dependencies: lv_btn, lv_label)*/
 #define USE_LV_CB       1
 
+/*Switch (dependencies: lv_slider)*/
+#define USE_LV_SW       1
+
 /*List (dependencies: lv_page, lv_btn, lv_label, lv_img)*/
 #define USE_LV_LIST     1
+#if USE_LV_LIST != 0
+#define LV_LIST_FOCUS_TIME  100 /*Animation time of focusing to the a list element [ms] (0: no animation)  */
+#endif
 
 /*Drop down list (dependencies: lv_page, lv_label)*/
 #define USE_LV_DDLIST    1
@@ -156,13 +164,13 @@
  * =================*/
 
 /*Enable the application system*/
-#define LV_APP_ENABLE       0
+#define LV_APP_ENABLE       1
 #if LV_APP_ENABLE != 0
 
 /****************************
  * Basic application settings
  *****************************/
-#define LV_APP_DESKTOP      1                   /*Create a desktop-like environment*/
+#define LV_APP_DESKTOP      0                   /*Create a desktop-like environment*/
 
 #define LV_APP_SC_WIDTH     (LV_DPI * 2)        /*Shortcut width*/
 #define LV_APP_SC_HEIGHT    (3 * LV_DPI / 2)    /*Shortcut height*/

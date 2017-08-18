@@ -13,6 +13,7 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+fsnav \
 hal/disp \
 hal/indev \
 hal/systick \
@@ -35,6 +36,21 @@ lvgl/lv_app \
 lvgl/lv_app/lv_app_util \
 lvgl/lv_appx \
 lvgl/lv_draw \
+lvgl/lv_examples/1_1_hello_world \
+lvgl/lv_examples/1_2_objects \
+lvgl/lv_examples/1_3_styles \
+lvgl/lv_examples/1_4_responsive \
+lvgl/lv_examples/1_5_animations \
+lvgl/lv_examples/1_6_anti_aliasing \
+lvgl/lv_examples/1_7_gui \
+lvgl/lv_examples/1_8_new_obj_type \
+lvgl/lv_examples/2_1_button_ctrl \
+lvgl/lv_examples/2_2_encoder_ctrl \
+lvgl/lv_examples/2_3_keyboard_ctrl \
+lvgl/lv_examples/2_4_mouse_ctrl \
+lvgl/lv_examples/3_1_app_desktop \
+lvgl/lv_examples/3_2_app_run \
+lvgl/lv_examples/3_3_app_com \
 lvgl/lv_obj \
 lvgl/lv_objx \
 . \

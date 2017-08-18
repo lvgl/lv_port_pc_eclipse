@@ -24,6 +24,21 @@ RM := rm -rf
 -include misc/subdir.mk
 -include lvgl/lv_objx/subdir.mk
 -include lvgl/lv_obj/subdir.mk
+-include lvgl/lv_examples/3_3_app_com/subdir.mk
+-include lvgl/lv_examples/3_2_app_run/subdir.mk
+-include lvgl/lv_examples/3_1_app_desktop/subdir.mk
+-include lvgl/lv_examples/2_4_mouse_ctrl/subdir.mk
+-include lvgl/lv_examples/2_3_keyboard_ctrl/subdir.mk
+-include lvgl/lv_examples/2_2_encoder_ctrl/subdir.mk
+-include lvgl/lv_examples/2_1_button_ctrl/subdir.mk
+-include lvgl/lv_examples/1_8_new_obj_type/subdir.mk
+-include lvgl/lv_examples/1_7_gui/subdir.mk
+-include lvgl/lv_examples/1_6_anti_aliasing/subdir.mk
+-include lvgl/lv_examples/1_5_animations/subdir.mk
+-include lvgl/lv_examples/1_4_responsive/subdir.mk
+-include lvgl/lv_examples/1_3_styles/subdir.mk
+-include lvgl/lv_examples/1_2_objects/subdir.mk
+-include lvgl/lv_examples/1_1_hello_world/subdir.mk
 -include lvgl/lv_draw/subdir.mk
 -include lvgl/lv_appx/subdir.mk
 -include lvgl/lv_app/lv_app_util/subdir.mk
@@ -46,6 +61,7 @@ RM := rm -rf
 -include hal/systick/subdir.mk
 -include hal/indev/subdir.mk
 -include hal/disp/subdir.mk
+-include fsnav/subdir.mk
 -include subdir.mk
 -include objects.mk
 
