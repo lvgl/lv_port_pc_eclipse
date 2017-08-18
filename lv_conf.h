@@ -13,8 +13,8 @@
 
 /* Horizontal and vertical resolution of the library.
  * Screen resolution multiplied by LV_DOWN_SCALE*/
-#define LV_HOR_RES          (320 * LV_DOWNSCALE)
-#define LV_VER_RES          (240 * LV_DOWNSCALE)
+#define LV_HOR_RES          (480 * LV_DOWNSCALE)
+#define LV_VER_RES          (320 * LV_DOWNSCALE)
 #define LV_DPI              (60 * LV_DOWNSCALE)
 
 /* Buffered rendering: >= LV_DOWNSCALE * LV_HOR_RES or 0 to disable buffering*/
@@ -170,7 +170,7 @@
 /****************************
  * Basic application settings
  *****************************/
-#define LV_APP_DESKTOP      0                   /*Create a desktop-like environment*/
+#define LV_APP_DESKTOP      1                   /*Create a desktop-like environment*/
 
 #define LV_APP_SC_WIDTH     (LV_DPI * 2)        /*Shortcut width*/
 #define LV_APP_SC_HEIGHT    (3 * LV_DPI / 2)    /*Shortcut height*/

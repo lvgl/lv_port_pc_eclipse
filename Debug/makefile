@@ -61,7 +61,6 @@ RM := rm -rf
 -include hal/systick/subdir.mk
 -include hal/indev/subdir.mk
 -include hal/disp/subdir.mk
--include fsnav/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -76,19 +75,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: lv_pc
+all: lv_proj_pc
 
 # Tool invocations
-lv_pc: $(OBJS) $(USER_OBJS)
+lv_proj_pc: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC Linker'
-	gcc  -o "lv_pc" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc  -o "lv_proj_pc" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) lv_pc
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) lv_proj_pc
 	-@echo ' '
 
 .PHONY: all clean dependents
