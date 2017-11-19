@@ -13,6 +13,7 @@ C_SRCS += \
 ../lvgl/lv_objx/lv_ddlist.c \
 ../lvgl/lv_objx/lv_gauge.c \
 ../lvgl/lv_objx/lv_img.c \
+../lvgl/lv_objx/lv_kb.c \
 ../lvgl/lv_objx/lv_label.c \
 ../lvgl/lv_objx/lv_led.c \
 ../lvgl/lv_objx/lv_line.c \
@@ -21,8 +22,11 @@ C_SRCS += \
 ../lvgl/lv_objx/lv_mbox.c \
 ../lvgl/lv_objx/lv_objx_templ.c \
 ../lvgl/lv_objx/lv_page.c \
+../lvgl/lv_objx/lv_roller.c \
 ../lvgl/lv_objx/lv_slider.c \
+../lvgl/lv_objx/lv_sw.c \
 ../lvgl/lv_objx/lv_ta.c \
+../lvgl/lv_objx/lv_tabview.c \
 ../lvgl/lv_objx/lv_win.c 
 
 OBJS += \
@@ -35,6 +39,7 @@ OBJS += \
 ./lvgl/lv_objx/lv_ddlist.o \
 ./lvgl/lv_objx/lv_gauge.o \
 ./lvgl/lv_objx/lv_img.o \
+./lvgl/lv_objx/lv_kb.o \
 ./lvgl/lv_objx/lv_label.o \
 ./lvgl/lv_objx/lv_led.o \
 ./lvgl/lv_objx/lv_line.o \
@@ -43,8 +48,11 @@ OBJS += \
 ./lvgl/lv_objx/lv_mbox.o \
 ./lvgl/lv_objx/lv_objx_templ.o \
 ./lvgl/lv_objx/lv_page.o \
+./lvgl/lv_objx/lv_roller.o \
 ./lvgl/lv_objx/lv_slider.o \
+./lvgl/lv_objx/lv_sw.o \
 ./lvgl/lv_objx/lv_ta.o \
+./lvgl/lv_objx/lv_tabview.o \
 ./lvgl/lv_objx/lv_win.o 
 
 C_DEPS += \
@@ -57,6 +65,7 @@ C_DEPS += \
 ./lvgl/lv_objx/lv_ddlist.d \
 ./lvgl/lv_objx/lv_gauge.d \
 ./lvgl/lv_objx/lv_img.d \
+./lvgl/lv_objx/lv_kb.d \
 ./lvgl/lv_objx/lv_label.d \
 ./lvgl/lv_objx/lv_led.d \
 ./lvgl/lv_objx/lv_line.d \
@@ -65,8 +74,11 @@ C_DEPS += \
 ./lvgl/lv_objx/lv_mbox.d \
 ./lvgl/lv_objx/lv_objx_templ.d \
 ./lvgl/lv_objx/lv_page.d \
+./lvgl/lv_objx/lv_roller.d \
 ./lvgl/lv_objx/lv_slider.d \
+./lvgl/lv_objx/lv_sw.d \
 ./lvgl/lv_objx/lv_ta.d \
+./lvgl/lv_objx/lv_tabview.d \
 ./lvgl/lv_objx/lv_win.d 
 
 
@@ -74,7 +86,7 @@ C_DEPS += \
 lvgl/lv_objx/%.o: ../lvgl/lv_objx/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	gcc -I"/home/kisvegabor/eclipse_neon_workspace/lv_proj_pc" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
+	gcc -I"/home/kisvegabor/eclipse-workspace/lv_dev_5" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

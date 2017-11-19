@@ -1,62 +1,136 @@
-/*
- * main.c
+
+/**
+ * @file main
+ *
  */
 
+/*********************
+ *      INCLUDES
+ *********************/
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h>
 #include "hw/hw.h"
+#include "hw/per/tft.h"
+#include "hw/per/tick.h"
+#include "hw/dev/tp/mouse.h"
 #include "misc/misc.h"
 #include "misc/os/ptask.h"
 #include "lvgl/lvgl.h"
-#include "lvgl/lv_app/lv_app_util/lv_app_notice.h"
 
+/*********************
+ *      DEFINES
+ *********************/
+
+/**********************
+ *      TYPEDEFS
+ **********************/
+
+/**********************
+ *  STATIC PROTOTYPES
+ **********************/
+static void hal_init(void);
+static bool mouse_input_read(lv_indev_data_t *data);
+
+/**********************
+ *  STATIC VARIABLES
+ **********************/
+
+/**********************
+ *      MACROS
+ **********************/
+
+/**********************
+ *   GLOBAL FUNCTIONS
+ **********************/
 int main (void)
 {
-    /*Initialization*/
+    /*Initialize the the misc. library and the drivers */
     misc_init();
     per_init();
     dev_init();
+
+    /*Initialize the HAL for LittlevGL*/
+    hal_init();
+
+    /*Initialize LittlevGL*/
     lv_init();
 
-#if LV_APP_ENABLE == 0 /*The applications are not enabled*/
-
-	/*Create a Hello world Label*/
+    /*Create a Hello world Label*/
     static lv_style_t new_style;                                /*Create a new style*/
-    lv_style_get(LV_STYLE_SCR, &new_style);                     /*Copy the screen style*/
-    new_style.ccolor = COLOR_BLUE;                              /*Modify the Content Color (text color)*/
-    new_style.letter_space = 20;                                /*Modify the letter space*/
+    lv_style_copy(&new_style, &lv_style_plain);                 /*Copy a built-in style as starting point*/
+    new_style.text.color = COLOR_BLUE;                          /*Modify the text color*/
+    new_style.text.letter_space = 20;                           /*Modify the letter space*/
 
     lv_obj_t * label1 =  lv_label_create(lv_scr_act(), NULL);   /*Create a Label on the current screen*/
     lv_label_set_text(label1, "Hello world!");                  /*Modify the Label's text*/
     lv_obj_set_style(label1, &new_style);                       /*Set the new style*/
-    lv_obj_align_us(label1, NULL, LV_ALIGN_CENTER, 0, 0);       /*Align the Label to the center*/
+    lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);       /*Align the Label to the center*/
 
-#else /*The applications are enabled*/
 
-    /*Run a System monitor and open its shortcut*/
-    lv_app_inst_t *  app = lv_app_run(lv_app_dsc_get("Sys. monitor"), NULL);
-    lv_app_sc_open(app);
 
-	app = lv_app_run(lv_app_dsc_get("Benchmark"), NULL);
-	lv_app_sc_open(app); /*Open the shortcut*/
+    lv_test_theme_1(lv_theme_alien_init(210, NULL));
 
-    /*Run a Terminal and open its shortcut*/
-    app = lv_app_run(lv_app_dsc_get("Terminal"), NULL);
-    lv_app_sc_open(app);
-
-    lv_app_notice_add("Click on a shortcut\nto open it in a window");
-
-#endif
 
     while(1) {
         /* Periodically call the ptask handler.
          * It could be done in a timer interrupt or an OS task too.*/
         ptask_handler();
-        usleep(5000);
-
+        usleep(5000);       /*Just to let the system breath*/
     }
 
     return 0;
 }
 
+/**********************
+ *   STATIC FUNCTIONS
+ **********************/
+
+/**
+ * Initialize the Hardware Abstraction Layer (HAL) for the Littlev graphics library
+ */
+static void hal_init(void)
+{
+    /* Sys. tick init.
+     * You have to call 'lv_tick_handler()' in every milliseconds
+     * Use the 'tick' module of the 'hw' repository*/
+    tick_add_func(lv_tick_handler);
+
+    /* Add a display
+     * Use the 'TFT' module of the 'hw' repository which
+     * uses a window on PC's monitor to simulate a display*/
+    lv_disp_drv_t disp_drv;
+    disp_drv.fill = tft_fill;
+    disp_drv.map = tft_map;
+    disp_drv.copy = NULL;
+    disp_drv.hor_res = TFT_HOR_RES;
+    disp_drv.ver_res = TFT_VER_RES;
+    lv_disp_register(&disp_drv);
+
+    /* Add the mouse (or touchpad) as input device
+     * Use the 'mouse' module of the 'hw' repository which reads the PC-s mouse*/
+    lv_indev_drv_t indev_drv;
+    indev_drv.name = "Mouse";
+    indev_drv.type = LV_INDEV_TYPE_MOUSE;
+    indev_drv.get_data = mouse_input_read;  /*This function will be called periodically (by the library) to get the mouse position and events*/
+    lv_indev_register(&indev_drv);
+}
+
+/**
+ * Interface function to read the mouse position and events
+ * @param data store the mouse info here
+ * @return 'false' because no buffering in operation (it would return 'true' if there would be more data be read)
+ */
+static bool mouse_input_read(lv_indev_data_t * data)
+{
+    /*Get the mouse data*/
+    point_t p;
+    bool state;
+    state = mouse_get(&p.x, &p.y);
+
+    /*Store the collected data*/
+    data->point.x = p.x;
+    data->point.y = p.y;
+    data->state = state ? LV_INDEV_EVENT_PR : LV_INDEV_EVENT_REL;
+
+    return false;
+}

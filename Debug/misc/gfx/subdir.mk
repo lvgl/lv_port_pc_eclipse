@@ -7,6 +7,7 @@ C_SRCS += \
 ../misc/gfx/anim.c \
 ../misc/gfx/area.c \
 ../misc/gfx/circ.c \
+../misc/gfx/color.c \
 ../misc/gfx/font.c \
 ../misc/gfx/text.c 
 
@@ -14,6 +15,7 @@ OBJS += \
 ./misc/gfx/anim.o \
 ./misc/gfx/area.o \
 ./misc/gfx/circ.o \
+./misc/gfx/color.o \
 ./misc/gfx/font.o \
 ./misc/gfx/text.o 
 
@@ -21,6 +23,7 @@ C_DEPS += \
 ./misc/gfx/anim.d \
 ./misc/gfx/area.d \
 ./misc/gfx/circ.d \
+./misc/gfx/color.d \
 ./misc/gfx/font.d \
 ./misc/gfx/text.d 
 
@@ -29,7 +32,7 @@ C_DEPS += \
 misc/gfx/%.o: ../misc/gfx/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	gcc -I"/home/kisvegabor/eclipse_neon_workspace/lv_proj_pc" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
+	gcc -I"/home/kisvegabor/eclipse-workspace/lv_dev_5" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

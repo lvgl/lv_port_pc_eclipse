@@ -20,29 +20,50 @@ RM := rm -rf
 -include misc/fs/fat32/option/subdir.mk
 -include misc/fs/fat32/subdir.mk
 -include misc/fs/subdir.mk
--include misc/comm/subdir.mk
 -include misc/subdir.mk
+-include lvgl/lv_themes/subdir.mk
 -include lvgl/lv_objx/subdir.mk
 -include lvgl/lv_obj/subdir.mk
--include lvgl/lv_examples/3_3_app_com/subdir.mk
--include lvgl/lv_examples/3_2_app_run/subdir.mk
--include lvgl/lv_examples/3_1_app_desktop/subdir.mk
--include lvgl/lv_examples/2_4_mouse_ctrl/subdir.mk
--include lvgl/lv_examples/2_3_keyboard_ctrl/subdir.mk
--include lvgl/lv_examples/2_2_encoder_ctrl/subdir.mk
--include lvgl/lv_examples/2_1_button_ctrl/subdir.mk
--include lvgl/lv_examples/1_8_new_obj_type/subdir.mk
--include lvgl/lv_examples/1_7_gui/subdir.mk
--include lvgl/lv_examples/1_6_anti_aliasing/subdir.mk
--include lvgl/lv_examples/1_5_animations/subdir.mk
--include lvgl/lv_examples/1_4_responsive/subdir.mk
--include lvgl/lv_examples/1_3_styles/subdir.mk
--include lvgl/lv_examples/1_2_objects/subdir.mk
--include lvgl/lv_examples/1_1_hello_world/subdir.mk
+-include lvgl/lv_hal/subdir.mk
 -include lvgl/lv_draw/subdir.mk
--include lvgl/lv_appx/subdir.mk
--include lvgl/lv_app/lv_app_util/subdir.mk
--include lvgl/lv_app/subdir.mk
+-include lv_examples/lv_tutorial/9_keyboard_ctrl/subdir.mk
+-include lv_examples/lv_tutorial/8_encoder_ctrl/subdir.mk
+-include lv_examples/lv_tutorial/7_button_ctrl/subdir.mk
+-include lv_examples/lv_tutorial/6_anti_aliasing/subdir.mk
+-include lv_examples/lv_tutorial/5_animations/subdir.mk
+-include lv_examples/lv_tutorial/4_responsive/subdir.mk
+-include lv_examples/lv_tutorial/3_styles/subdir.mk
+-include lv_examples/lv_tutorial/2_objects/subdir.mk
+-include lv_examples/lv_tutorial/1_hello_world/subdir.mk
+-include lv_examples/lv_tutorial/10_mouse_ctrl/subdir.mk
+-include lv_examples/lv_tests/lv_test_theme/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_win/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_tabview/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_ta/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_sw/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_slider/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_roller/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_page/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_mbox/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_lmeter/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_list/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_line/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_led/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_label/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_kb/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_img/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_gauge/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_ddlist/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_cont/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_chart/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_cb/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_btnm/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_btn/subdir.mk
+-include lv_examples/lv_tests/lv_test_objx/lv_test_bar/subdir.mk
+-include lv_examples/lv_tests/lv_test_obj/subdir.mk
+-include lv_examples/lv_tests/lv_test_group/subdir.mk
+-include lv_examples/lv_apps/subdir.mk
+-include lv_dev_tools/demo/subdir.mk
 -include hw/per/psp/pic32mz/subdir.mk
 -include hw/per/psp/pic32mx/subdir.mk
 -include hw/per/psp/pic24f_33f/subdir.mk
@@ -58,9 +79,6 @@ RM := rm -rf
 -include hw/dev/ext_mem/subdir.mk
 -include hw/dev/dispc/subdir.mk
 -include hw/subdir.mk
--include hal/systick/subdir.mk
--include hal/indev/subdir.mk
--include hal/disp/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -75,22 +93,21 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: lv_proj_pc
+all: lv_dev_5
 
 # Tool invocations
-lv_proj_pc: $(OBJS) $(USER_OBJS)
+lv_dev_5: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC Linker'
-	gcc  -o "lv_proj_pc" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc  -o "lv_dev_5" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) lv_proj_pc
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) lv_dev_5
 	-@echo ' '
 
 .PHONY: all clean dependents
-.SECONDARY:
 
 -include ../makefile.targets
