@@ -278,6 +278,15 @@
 
 #endif
 
+/*-----------------------------------------
+ *  Linux frame buffer device (/dev/fbx)
+ *-----------------------------------------*/
+#define USE_FBDEV       0
+#if USE_FBDEV != 0
+#define FBDEV_PATH  "/dev/fb0"
+#endif
+
+
 /*********************
  *   DEVICE CONFIG
  *********************/
@@ -440,7 +449,7 @@
 #endif  /*USE_ST7565*/
 
 /*====================
- * Display input
+ * Input devices
  *===================*/
 
 /*--------------
@@ -464,11 +473,19 @@
 /*-------------------------------
  *    Mouse or touchpad on PC
  *------------------------------*/
-#define USE_MOUSE 1
+#define USE_MOUSE       1
 #if USE_MOUSE != 0
 /*No settings*/
 #endif
 
+
+/*-------------------------------
+ *   Keyboard of a PC
+ *------------------------------*/
+#define USE_KEYBOARD    0
+#if USE_KEYBOARD != 0
+/*No settings*/
+#endif
 
 /*====================
  *  External memory

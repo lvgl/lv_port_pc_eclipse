@@ -220,10 +220,10 @@
 #define USE_FONT_SYMBOL_30_FEEDBACK     0
 
 #define USE_FONT_DEJAVU_40              1
-#define USE_FONT_DEJAVU_40_SUP          0
-#define USE_FONT_DEJAVU_40_LATIN_EXT_A  0
-#define USE_FONT_DEJAVU_40_LATIN_EXT_B  0
-#define USE_FONT_DEJAVU_40_CYRILLIC     0
+#define USE_FONT_DEJAVU_40_SUP          1
+#define USE_FONT_DEJAVU_40_LATIN_EXT_A  1
+#define USE_FONT_DEJAVU_40_LATIN_EXT_B  1
+#define USE_FONT_DEJAVU_40_CYRILLIC     1
 #define USE_FONT_SYMBOL_40_BASIC        1
 #define USE_FONT_SYMBOL_40_FILE         1
 #define USE_FONT_SYMBOL_40_FEEDBACK     1
@@ -272,7 +272,7 @@
 #define USE_TEXT    1
 #if USE_TEXT != 0
 #define TXT_BREAK_CHARS     " ,.;:-_"    /*Can break texts on these chars*/
-#define TXT_UTF8            0            /*Enable UTF-8 support*/
+#define TXT_UTF8            1            /*Enable UTF-8 support*/
 #endif /*USE_TEXT*/
 
 /*----------------
