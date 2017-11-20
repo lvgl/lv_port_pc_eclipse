@@ -98,8 +98,6 @@ static void hal_init(void)
     disp_drv.fill = tft_fill;
     disp_drv.map = tft_map;
     disp_drv.copy = NULL;
-    disp_drv.hor_res = TFT_HOR_RES;
-    disp_drv.ver_res = TFT_VER_RES;
     lv_disp_register(&disp_drv);
 
     /* Add the mouse (or touchpad) as input device
