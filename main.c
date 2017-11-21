@@ -61,10 +61,8 @@ int main (void)
 
     lv_obj_t * label1 =  lv_label_create(lv_scr_act(), NULL);   /*Create a Label on the current screen*/
     lv_label_set_text(label1, "Hello world!");                  /*Modify the Label's text*/
-    lv_label_set_style(label1, &new_style);                       /*Set the new style*/
-    lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);       /*Align the Label to the center*/
-
-    lv_test_theme_1(lv_theme_night_init(215, NULL));
+    lv_label_set_style(label1, &new_style);                     /*Set the new style*/
+    lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);          /*Align the Label to the center*/
 
     while(1) {
         /* Periodically call the ptask handler.
