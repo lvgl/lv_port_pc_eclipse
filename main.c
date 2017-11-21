@@ -13,10 +13,7 @@
 #include "hw/per/tft.h"
 #include "hw/per/tick.h"
 #include "hw/dev/indev/mouse.h"
-#include "misc/misc.h"
-#include "misc/os/ptask.h"
 #include "lvgl/lvgl.h"
-
 
 /*********************
  *      DEFINES
@@ -67,6 +64,7 @@ int main (void)
     lv_label_set_style(label1, &new_style);                       /*Set the new style*/
     lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);       /*Align the Label to the center*/
 
+    lv_test_theme_1(lv_theme_night_init(215, NULL));
 
     while(1) {
         /* Periodically call the ptask handler.

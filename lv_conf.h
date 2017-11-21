@@ -13,8 +13,8 @@
 
 /* Horizontal and vertical resolution of the library.
  * Screen resolution multiplied by LV_DOWN_SCALE*/
-#define LV_HOR_RES          (480 << LV_ANTIALIAS)
-#define LV_VER_RES          (320 << LV_ANTIALIAS)
+#define LV_HOR_RES          (800 << LV_ANTIALIAS)
+#define LV_VER_RES          (480 << LV_ANTIALIAS)
 #define LV_DPI              (100 << LV_ANTIALIAS)
 
 /* Buffered rendering: >= LV_DOWNSCALE * LV_HOR_RES or 0 to disable buffering*/
@@ -64,7 +64,7 @@
 #define USE_LV_THEME_ALIEN      1       /*Dark futuristic theme*/
 #define USE_LV_THEME_MATERIAL   0       /*Flat theme with bold colors and light shadows (Planned)*/
 #define USE_LV_THEME_ZEN        0       /*Peaceful, mainly black and white theme (Planned)*/
-#define USE_LV_THEME_NIGHT      0       /*Dark elegant theme (Planned)*/
+#define USE_LV_THEME_NIGHT      1       /*Dark elegant theme (Planned)*/
 
 /*==================
  *  LV OBJ X USAGE 
