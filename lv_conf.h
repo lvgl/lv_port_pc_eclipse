@@ -18,12 +18,11 @@
 #define LV_DPI              (100 << LV_ANTIALIAS)
 
 /* Buffered rendering: >= LV_DOWNSCALE * LV_HOR_RES or 0 to disable buffering*/
-#define LV_VDB_SIZE         (20 * LV_VER_RES)
+#define LV_VDB_SIZE         (40 * LV_VER_RES)
 
 /* Enable anti aliasing
  * If enabled everything will be rendered in double size and filtered to normal size */
 #define LV_ANTIALIAS        1
-
 
 /*=================
    Misc. setting
@@ -54,6 +53,7 @@
  *  IMAGE USAGE
  * ================*/
 #define LV_IMAGE_ENABLE_ALL    1       /*Unconditionally enable all image maps*/
+#define USE_IMG_BUBBLE_PATTERN 1
 //#define USE_IMG_XYZ      1           /*Enable or disable to compile you image map files*/
 
 /*==================
@@ -61,10 +61,10 @@
  * ================*/
 #define USE_LV_THEME_TEMPL      0       /*Just for test*/
 #define USE_LV_THEME_DEFAULT    0       /*Built manly from the built-in styles. Consumes very few RAM*/
-#define USE_LV_THEME_ALIEN      1       /*Dark futuristic theme*/
+#define USE_LV_THEME_ALIEN      0       /*Dark futuristic theme*/
 #define USE_LV_THEME_MATERIAL   0       /*Flat theme with bold colors and light shadows (Planned)*/
 #define USE_LV_THEME_ZEN        0       /*Peaceful, mainly black and white theme (Planned)*/
-#define USE_LV_THEME_NIGHT      1       /*Dark elegant theme (Planned)*/
+#define USE_LV_THEME_NIGHT      0       /*Dark elegant theme*/
 
 /*==================
  *  LV OBJ X USAGE 

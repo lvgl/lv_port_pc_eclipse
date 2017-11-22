@@ -53,16 +53,9 @@ int main (void)
     /*Initialize LittlevGL*/
     lv_init();
 
-    /*Create a Hello world Label*/
-    static lv_style_t new_style;                                /*Create a new style*/
-    lv_style_copy(&new_style, &lv_style_plain);                 /*Copy a built-in style as starting point*/
-    new_style.text.color = COLOR_BLUE;                          /*Modify the text color*/
-    new_style.text.letter_space = 20;                           /*Modify the letter space*/
+    /*Load a demo*/
+    demo_init();
 
-    lv_obj_t * label1 =  lv_label_create(lv_scr_act(), NULL);   /*Create a Label on the current screen*/
-    lv_label_set_text(label1, "Hello world!");                  /*Modify the Label's text*/
-    lv_label_set_style(label1, &new_style);                     /*Set the new style*/
-    lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);          /*Align the Label to the center*/
 
     while(1) {
         /* Periodically call the ptask handler.
@@ -100,7 +93,6 @@ static void hal_init(void)
     /* Add the mouse (or touchpad) as input device
      * Use the 'mouse' module of the 'hw' repository which reads the PC-s mouse*/
     lv_indev_drv_t indev_drv;
-    indev_drv.name = "Mouse";
     indev_drv.type = LV_INDEV_TYPE_MOUSE;
     indev_drv.get_data = mouse_input_read;  /*This function will be called periodically (by the library) to get the mouse position and events*/
     lv_indev_register(&indev_drv);
