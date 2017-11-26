@@ -77,9 +77,9 @@ static void hal_init(void)
     monitor_init();
     lv_disp_drv_t disp_drv;
     memset(&disp_drv, 0, sizeof(disp_drv));     /*Basic initialization*/
-    disp_drv.fill = monitor_fill;
-    disp_drv.map = monitor_map;
-    disp_drv.copy = NULL;
+    disp_drv.fill_fp = monitor_fill;
+    disp_drv.map_fp = monitor_map;
+    disp_drv.blend_fp = NULL;
     lv_disp_register(&disp_drv);
 
     /* Add the mouse (or touchpad) as input device
@@ -88,7 +88,7 @@ static void hal_init(void)
     lv_indev_drv_t indev_drv;
     memset(&indev_drv, 0, sizeof(indev_drv));      /*Basic initialization*/
     indev_drv.type = LV_INDEV_TYPE_MOUSE;
-    indev_drv.get_data = mouse_input_read;  /*This function will be called periodically (by the library) to get the mouse position and events*/
+    indev_drv.read_fp = mouse_input_read;  /*This function will be called periodically (by the library) to get the mouse position and events*/
     lv_indev_register(&indev_drv);
 
     /* Tick init.
