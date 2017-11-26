@@ -9,10 +9,8 @@
  *********************/
 #include <stdlib.h>
 #include <unistd.h>
-#include "hw/hw.h"
-#include "hw/per/tft.h"
-#include "hw/per/tick.h"
-#include "hw/dev/indev/mouse.h"
+#include "lv_drivers/display/monitor.h"
+#include "lv_drivers/indev/mouse.h"
 #include "lvgl/lvgl.h"
 
 /*********************
@@ -27,6 +25,7 @@
  *  STATIC PROTOTYPES
  **********************/
 static void hal_init(void);
+static void tick_thread(void *data);
 static bool mouse_input_read(lv_indev_data_t *data);
 
 /**********************
@@ -42,11 +41,6 @@ static bool mouse_input_read(lv_indev_data_t *data);
  **********************/
 int main (void)
 {
-    /*Initialize the the misc. library and the drivers */
-    per_init();
-    dev_init();
-
-
     /*Initialize LittlevGL*/
     lv_init();
 
@@ -76,27 +70,40 @@ int main (void)
  */
 static void hal_init(void)
 {
-    /* Sys. tick init.
-     * You have to call 'lv_tick_handler()' in every milliseconds
-     * Use the 'tick' module of the 'hw' repository*/
-    tick_add_func(lv_tick_handler);
 
     /* Add a display
      * Use the 'TFT' module of the 'hw' repository which
      * uses a window on PC's monitor to simulate a display*/
+    monitor_init();
     lv_disp_drv_t disp_drv;
-    disp_drv.fill = tft_fill;
-    disp_drv.map = tft_map;
+    disp_drv.fill = monitor_fill;
+    disp_drv.map = monitor_map;
     disp_drv.copy = NULL;
     lv_disp_register(&disp_drv);
 
     /* Add the mouse (or touchpad) as input device
      * Use the 'mouse' module of the 'hw' repository which reads the PC-s mouse*/
+    mouse_init();
     lv_indev_drv_t indev_drv;
     indev_drv.type = LV_INDEV_TYPE_MOUSE;
     indev_drv.get_data = mouse_input_read;  /*This function will be called periodically (by the library) to get the mouse position and events*/
     lv_indev_register(&indev_drv);
+
+    /* Sys. tick init.
+     * You have to call 'lv_tick_handler()' in every milliseconds
+     * Use the 'tick' module of the 'hw' repository*/
+    SDL_CreateThread(tick_thread, "tick", NULL);
+
 }
+
+static void tick_thread(void *data)
+{
+    while(1) {
+        lv_tick_handler();
+        SDL_Delay(1);
+    }
+}
+
 
 /**
  * Interface function to read the mouse position and events

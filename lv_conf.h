@@ -36,13 +36,12 @@
 
 /* Enable anti aliasing
  * If enabled everything will be rendered in double size and filtered to normal size */
-#define LV_ANTIALIAS        1
+#define LV_ANTIALIAS        0
 
 /* Enable anti aliasing only for fonts (texts)
  * It half the size of the letters so you should use double sized fonts
  * Much faster then normal anti aliasing  */
-#define FONT_ANTIALIAS      0
-#define LV_FONT_ANTIALIAS      0
+#define LV_FONT_ANTIALIAS      1
 
 /*=================
    Misc. setting
