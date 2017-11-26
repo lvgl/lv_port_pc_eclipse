@@ -272,7 +272,7 @@
 #define TFT_VBP      0       /*Ver. Back proach*/
 #define TFT_VFP      0       /*Ver. Front proach*/
 
-#define TFT_COLOR_DEPTH 16
+#define TFT_LV_COLOR_DEPTH 16
 #define TFT_BL_PORT IO_PORTX
 #define TFT_BL_PIN  IO_PINX
 
@@ -404,7 +404,7 @@
 #define SSD1963_HS_NEG  0   /*Negative hsync*/
 #define SSD1963_VS_NEG  0   /*Negative vsync*/
 #define SSD1963_ORI     0   /*0, 90, 180, 270*/
-#define SSD1963_COLOR_DEPTH 16
+#define SSD1963_LV_COLOR_DEPTH 16
 #endif
 
 /*----------------
@@ -433,7 +433,7 @@
 #define R61581_HS_NEG  0   /*Negative hsync*/
 #define R61581_VS_NEG  0   /*Negative vsync*/
 #define R61581_ORI     180   /*0, 90, 180, 270*/
-#define R61581_COLOR_DEPTH 16
+#define R61581_LV_COLOR_DEPTH 16
 #endif
 
 /*------------------------------

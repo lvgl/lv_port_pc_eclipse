@@ -43,24 +43,24 @@ static bool mouse_input_read(lv_indev_data_t *data);
 int main (void)
 {
     /*Initialize the the misc. library and the drivers */
-    misc_init();
     per_init();
     dev_init();
 
-    /*Initialize the HAL for LittlevGL*/
-    hal_init();
 
     /*Initialize LittlevGL*/
     lv_init();
+
+    /*Initialize the HAL for LittlevGL*/
+    hal_init();
 
     /*Load a demo*/
     demo_init();
 
 
     while(1) {
-        /* Periodically call the ptask handler.
+        /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
-        ptask_handler();
+        lv_task_handler();
         usleep(5000);       /*Just to let the system breath*/
     }
 
@@ -106,7 +106,7 @@ static void hal_init(void)
 static bool mouse_input_read(lv_indev_data_t * data)
 {
     /*Get the mouse data*/
-    point_t p;
+    lv_point_t p;
     bool state;
     state = mouse_get(&p.x, &p.y);
 
