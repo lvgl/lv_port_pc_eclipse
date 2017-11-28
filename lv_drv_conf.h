@@ -83,7 +83,7 @@
 /*----------------
  *    SSD1963
  *--------------*/
-#define USE_SSD1963         1
+#define USE_SSD1963         0
 #if USE_SSD1963
 #define SSD1963_HOR_RES     480
 #define SSD1963_VER_RES     320
@@ -106,7 +106,7 @@
 /*----------------
  *    R61581
  *--------------*/
-#define USE_R61581          1
+#define USE_R61581          0
 #if USE_R61581 != 0
 #define R61581_HOR_RES     480
 #define R61581_VER_RES     320
@@ -129,7 +129,7 @@
 /*------------------------------
  *  ST7565 (Monochrome, low res.)
  *-----------------------------*/
-#define USE_ST7565      1
+#define USE_ST7565      0
 #if USE_ST7565 != 0
 /*No settings*/
 #endif  /*USE_ST7565*/
@@ -149,7 +149,7 @@
 /*--------------
  *    XPT2046
  *--------------*/
-#define USE_XPT2046         1
+#define USE_XPT2046         0
 #if USE_XPT2046 != 0
 #define XPT2046_HOR_RES     480
 #define XPT2046_VER_RES     320
@@ -164,7 +164,7 @@
 /*-----------------
  *    FT5406EE8
  *-----------------*/
-#define USE_FT5406EE8    1
+#define USE_FT5406EE8    0
 #if USE_FT5406EE8
 #define FT5406EE8_I2C_ADR   0x38                  /*7 bit address*/
 #endif
@@ -181,7 +181,7 @@
 /*-------------------------------
  *   Keyboard of a PC
  *------------------------------*/
-#define USE_KEYBOARD    1
+#define USE_KEYBOARD    0
 #if USE_KEYBOARD
 /*No settings*/
 #endif

@@ -10,9 +10,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <SDL2/SDL.h>
+#include "lvgl/lvgl.h"
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/mouse.h"
-#include "lvgl/lvgl.h"
+#include "lv_examples/lv_apps/demo/demo.h"
 
 /*********************
  *      DEFINES
@@ -51,7 +52,6 @@ int main (void)
     /*Load a demo*/
     demo_init();
 
-
     while(1) {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
@@ -71,15 +71,13 @@ int main (void)
  */
 static void hal_init(void)
 {
-
     /* Add a display
      * Use the 'monitor' driver which creates window on PC's monitor to simulate a display*/
     monitor_init();
     lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv);     /*Basic initialization*/
-    disp_drv.fill_fp = monitor_fill;
-    disp_drv.map_fp = monitor_map;
-    disp_drv.blend_fp = NULL;
+    disp_drv.disp_fill = monitor_fill;
+    disp_drv.disp_map = monitor_map;
     lv_disp_drv_register(&disp_drv);
 
     /* Add the mouse (or touchpad) as input device
@@ -95,7 +93,6 @@ static void hal_init(void)
      * You have to call 'lv_tick_handler()' in every milliseconds
      * Create an SDL thread to do this*/
     SDL_CreateThread(tick_thread, "tick", NULL);
-
 }
 
 static int tick_thread(void *data)
@@ -107,7 +104,6 @@ static int tick_thread(void *data)
 
     return 0;
 }
-
 
 /**
  * Interface function to read the mouse position and events

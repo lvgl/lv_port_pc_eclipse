@@ -39,7 +39,7 @@
 /* Enable anti aliasing only for fonts (texts)
  * It half the size of the letters so you should use double sized fonts
  * Much faster then normal anti aliasing  */
-#define LV_FONT_ANTIALIAS      1
+#define LV_FONT_ANTIALIAS   1
 
 /*=================
    Misc. setting
