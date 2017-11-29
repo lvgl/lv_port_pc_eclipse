@@ -32,6 +32,10 @@
 /* Buffered rendering: >= LV_DOWNSCALE * LV_HOR_RES or 0 to disable buffering*/
 #define LV_VDB_SIZE         (80 * LV_VER_RES)
 
+/* Use two Virtual Display buffers (VDB) parallelize rendering and flushing
+ * The flushing should use DMA to write the frame buffer in the background*/
+#define LV_VDB_DOUBLE       0
+
 /* Enable anti aliasing
  * If enabled everything will be rendered in double size and filtered to normal size */
 #define LV_ANTIALIAS        1

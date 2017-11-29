@@ -98,7 +98,7 @@ static void hal_init(void)
 static int tick_thread(void *data)
 {
     while(1) {
-        lv_tick_inc();
+        lv_tick_inc(1);
         SDL_Delay(1);
     }
 
