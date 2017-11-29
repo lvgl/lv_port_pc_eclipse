@@ -87,7 +87,7 @@ static void hal_init(void)
     lv_indev_drv_init(&indev_drv);          /*Basic initialization*/
     indev_drv.type = LV_INDEV_TYPE_POINTER;
     indev_drv.read_fp = mouse_read;         /*This function will be called periodically (by the library) to get the mouse position and state*/
-    lv_indev_register(&indev_drv);
+    lv_indev_drv_register(&indev_drv);
 
     /* Tick init.
      * You have to call 'lv_tick_handler()' in every milliseconds
