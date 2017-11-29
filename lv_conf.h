@@ -30,16 +30,16 @@
 #define LV_DPI              (100 << LV_ANTIALIAS)
 
 /* Buffered rendering: >= LV_DOWNSCALE * LV_HOR_RES or 0 to disable buffering*/
-#define LV_VDB_SIZE         (40 * LV_VER_RES)
+#define LV_VDB_SIZE         (80 * LV_VER_RES)
 
 /* Enable anti aliasing
  * If enabled everything will be rendered in double size and filtered to normal size */
-#define LV_ANTIALIAS        0
+#define LV_ANTIALIAS        1
 
 /* Enable anti aliasing only for fonts (texts)
  * It half the size of the letters so you should use double sized fonts
  * Much faster then normal anti aliasing  */
-#define LV_FONT_ANTIALIAS   1
+#define LV_FONT_ANTIALIAS   0
 
 /*=================
    Misc. setting

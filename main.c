@@ -28,7 +28,6 @@
  **********************/
 static void hal_init(void);
 static int tick_thread(void *data);
-static bool mouse_input_read(lv_indev_data_t *data);
 
 /**********************
  *  STATIC VARIABLES
@@ -75,7 +74,8 @@ static void hal_init(void)
      * Use the 'monitor' driver which creates window on PC's monitor to simulate a display*/
     monitor_init();
     lv_disp_drv_t disp_drv;
-    lv_disp_drv_init(&disp_drv);     /*Basic initialization*/
+    lv_disp_drv_init(&disp_drv);            /*Basic initialization*/
+    disp_drv.disp_flush = monitor_flush;
     disp_drv.disp_fill = monitor_fill;
     disp_drv.disp_map = monitor_map;
     lv_disp_drv_register(&disp_drv);
@@ -84,9 +84,9 @@ static void hal_init(void)
      * Use the 'mouse' driver which reads the PC's mouse*/
     mouse_init();
     lv_indev_drv_t indev_drv;
-    lv_indev_drv_init(&indev_drv);     /*Basic initialization*/
-    indev_drv.type = LV_INDEV_TYPE_MOUSE;
-    indev_drv.read_fp = mouse_input_read;  /*This function will be called periodically (by the library) to get the mouse position and events*/
+    lv_indev_drv_init(&indev_drv);          /*Basic initialization*/
+    indev_drv.type = LV_INDEV_TYPE_POINTER;
+    indev_drv.read_fp = mouse_read;         /*This function will be called periodically (by the library) to get the mouse position and state*/
     lv_indev_register(&indev_drv);
 
     /* Tick init.
@@ -98,29 +98,9 @@ static void hal_init(void)
 static int tick_thread(void *data)
 {
     while(1) {
-        lv_tick_handler();
+        lv_tick_inc();
         SDL_Delay(1);
     }
 
     return 0;
-}
-
-/**
- * Interface function to read the mouse position and events
- * @param data store the mouse info here
- * @return 'false' because no buffering in operation (it would return 'true' if there would be more data be read)
- */
-static bool mouse_input_read(lv_indev_data_t * data)
-{
-    /*Get the mouse data*/
-    lv_point_t p;
-    bool state;
-    state = mouse_get(&p.x, &p.y);
-
-    /*Store the collected data*/
-    data->point.x = p.x;
-    data->point.y = p.y;
-    data->state = state ? LV_INDEV_EVENT_PR : LV_INDEV_EVENT_REL;
-
-    return false;
 }

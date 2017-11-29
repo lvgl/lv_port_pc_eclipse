@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wall
 CFLAGS += -O3 -I./
 LDFLAGS += -lSDL2 -lm
-BIN = test
+BIN = demo
 
 OBJFILES = ./main.o
 
@@ -21,6 +21,8 @@ include ./lv_drivers/lv_drivers.mk
 LV_EXAMPLES_PATH = ./lv_examples
 include ./lv_examples/lv_examples.mk
 
+all: clean default
+
 %.o: %.c
 	$(CC)  $(CFLAGS) -c $< -o $@
 
@@ -31,4 +33,3 @@ default: $(OBJFILES)
 clean: 
 	rm -f $(BIN) $(OBJFILES)
 
-all: clean default
