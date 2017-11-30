@@ -2,7 +2,7 @@
 # Makefile
 #
 CC = gcc
-CFLAGS = -Wall
+CFLAGS = -Wall -Wshadow -Wundef -Wmaybe-uninitialized
 CFLAGS += -O3 -I./
 LDFLAGS += -lSDL2 -lm
 BIN = demo

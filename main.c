@@ -49,7 +49,18 @@ int main (void)
     hal_init();
 
     /*Load a demo*/
-    demo_init();
+//    demo_init();
+
+    ex_styles();
+
+    /*Initialize the alien theme
+     * 210: a green HUE value
+     * NULL: use the default font (LV_FONT_DEFAULT)*/
+    lv_theme_t *th = lv_theme_alien_init(210, NULL);
+
+    /*Set the surent system theme*/
+    lv_theme_set_current(th);
+//    lv_test_theme_1(th);
 
     while(1) {
         /* Periodically call the lv_task handler.
