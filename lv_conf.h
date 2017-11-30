@@ -31,10 +31,12 @@
 
 /* Buffered rendering: >= LV_DOWNSCALE * LV_HOR_RES or 0 to disable buffering*/
 #define LV_VDB_SIZE         (80 * LV_VER_RES)
+#define LV_VDB_ADR          0       /*Place VDB to a specific address (e.g. in external RAM) (0: allocate into RAM)*/
 
 /* Use two Virtual Display buffers (VDB) parallelize rendering and flushing
  * The flushing should use DMA to write the frame buffer in the background*/
 #define LV_VDB_DOUBLE       0
+#define LV_VDB2_ADR         0       /*Place VDB2 to a specific address (e.g. in external RAM) (0: allocate into RAM)*/
 
 /* Enable anti aliasing
  * If enabled everything will be rendered in double size and filtered to normal size */
@@ -51,7 +53,7 @@
 
 /*Screen refresh settings*/
 #define LV_REFR_PERIOD      50    /*Screen refresh period in milliseconds*/
-#define LV_INV_FIFO_SIZE    32    /*The average number of objects on a screen */
+#define LV_INV_FIFO_SIZE    32    /*The average count of objects on a screen */
 
 /*Input device settings*/
 #define LV_INDEV_READ_PERIOD            50                     /*Input device read period in milliseconds*/
@@ -63,11 +65,18 @@
 
 /*Color settings*/
 #define LV_COLOR_DEPTH     24
-#define LV_COLOR_TRANSP     LV_COLOR_LIME          /*Images pixels with this color will not be drawn*/
+#define LV_COLOR_TRANSP     LV_COLOR_LIME          /*Images pixels with this color will not be drawn (chroma keying)*/
 
 /*Text settings*/
 #define LV_TXT_UTF8             1
-#define LV_TXT_BREAK_CHARS     " ,.;:-_"              /*Can break texts on these chars*/
+#define LV_TXT_BREAK_CHARS     " ,.;:-_"           /*Can break texts on these chars*/
+
+/*Group settings*/
+#define LV_GROUP                1                  /*Enable object groups (for keyboards)*/
+
+/*Graphics feature usage*/
+#define LV_NO_ANIM              0               /*1: disable all animations*/
+#define LV_NO_SHADOW            0               /*1: disable shadows*/
 
 /*==================
  *  THEME USAGE
@@ -138,19 +147,11 @@
 #define USE_LV_FONT_SYMBOL_80_FILE         0
 #define USE_LV_FONT_SYMBOL_80_FEEDBACK     0
 
-/*==================
- *  IMAGE USAGE
- *================*/
-#define LV_IMAGE_ENABLE_ALL    1       /*Unconditionally enable all image maps*/
-#define USE_IMG_BUBBLE_PATTERN 1
-//#define USE_IMG_XYZ      1           /*Enable or disable to compile you image map files*/
-
-
-/*lv_obj (base object) settings*/
+/*===================
+ *  LV_OBJ SETTINGS
+ *==================*/
 #define LV_OBJ_FREE_NUM_TYPE    uint32_t    /*Type of free number attribute (comment out disable free number)*/
 #define LV_OBJ_FREE_PTR         1           /*Enable the free pointer attribute*/
-#define LV_OBJ_GROUP            1           /*Enable object groups*/
-
 
 /*==================
  *  LV OBJ X USAGE 
@@ -173,7 +174,7 @@
 #define USE_LV_LINE     1
 
 /*******************
- * Container object
+ * Container objects
  *******************/
 
 /*Container (dependencies: -*/
@@ -192,7 +193,7 @@
 #endif
 
 /*************************
- * Data visualizer object
+ * Data visualizer objects
  *************************/
 
 /*Bar (dependencies: -)*/
@@ -221,7 +222,7 @@
 #endif
 
 /*************************
- * User input object
+ * User input objects
  *************************/
 
 /*Button (dependencies: lv_cont*/
