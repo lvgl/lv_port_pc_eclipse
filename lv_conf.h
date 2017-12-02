@@ -13,11 +13,12 @@
 #if LV_MEM_CUSTOM == 0
 #define LV_MEM_SIZE    (32U * 1024U)        /*Size memory used by mem_alloc (in bytes)*/
 #define LV_MEM_ATTR                         /*Complier prefix for big array declaration*/
+#define LV_MEM_AUTO_DEFRAG  1               /*Automatically defrag on free*/
 #else       /*LV_MEM_CUSTOM*/
 #define LV_MEM_CUSTOM_INCLUDE <stdlib.h>   /*Header for the dynamic memory function*/
 #define LV_MEM_CUSTOM_ALLOC   malloc       /*Wrapper to malloc*/
 #define LV_MEM_CUSTOM_FREE    free         /*Wrapper to free*/
-#endif  /*DM_CUSTOM*/
+#endif     /*LV_MEM_CUSTOM*/
 
 /*===================
    Graphical settings
@@ -82,11 +83,12 @@
  *  THEME USAGE
  *================*/
 #define USE_LV_THEME_TEMPL      0       /*Just for test*/
-#define USE_LV_THEME_DEFAULT    0       /*Built manly from the built-in styles. Consumes very few RAM*/
+#define USE_LV_THEME_DEFAULT    0       /*Built mainly from the built-in styles. Consumes very few RAM*/
 #define USE_LV_THEME_ALIEN      1       /*Dark futuristic theme*/
+#define USE_LV_THEME_NIGHT      0       /*Dark elegant theme*/
+#define USE_LV_THEME_MONO       1       /*Mono color theme for monochrome displays*/
 #define USE_LV_THEME_MATERIAL   0       /*Flat theme with bold colors and light shadows (Planned)*/
 #define USE_LV_THEME_ZEN        0       /*Peaceful, mainly black and white theme (Planned)*/
-#define USE_LV_THEME_NIGHT      0       /*Dark elegant theme*/
 
 /*==================
  *    FONT USAGE
