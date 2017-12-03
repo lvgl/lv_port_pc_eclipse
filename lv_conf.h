@@ -66,7 +66,7 @@
 
 /*Color settings*/
 #define LV_COLOR_DEPTH     24
-#define LV_COLOR_TRANSP     LV_COLOR_LIME          /*Images pixels with this color will not be drawn (chroma keying)*/
+#define LV_COLOR_TRANSP    LV_COLOR_LIME          /*Images pixels with this color will not be drawn (chroma keying)*/
 
 /*Text settings*/
 #define LV_TXT_UTF8             1
