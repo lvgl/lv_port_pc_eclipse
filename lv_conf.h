@@ -25,13 +25,13 @@
  *=====================*/
 
 /* Horizontal and vertical resolution of the library.
- * Screen resolution multiplied by LV_DOWN_SCALE*/
+ * Use (x << LV_AA)to setup for anti-alaising*/
 #define LV_HOR_RES          (800 << LV_ANTIALIAS)
 #define LV_VER_RES          (480 << LV_ANTIALIAS)
 #define LV_DPI              (100 << LV_ANTIALIAS)
 
-/* Buffered rendering: >= LV_DOWNSCALE * LV_HOR_RES or 0 to disable buffering*/
-#define LV_VDB_SIZE         (80 * LV_VER_RES)
+/* Buffered rendering: >= LV_DOWNSCALE * lv_disp_hor_res() or 0 to disable buffering*/
+#define LV_VDB_SIZE         (80 * LV_HOR_RES)
 #define LV_VDB_ADR          0       /*Place VDB to a specific address (e.g. in external RAM) (0: allocate into RAM)*/
 
 /* Use two Virtual Display buffers (VDB) parallelize rendering and flushing
@@ -85,7 +85,7 @@
 #define USE_LV_THEME_TEMPL      0       /*Just for test*/
 #define USE_LV_THEME_DEFAULT    0       /*Built mainly from the built-in styles. Consumes very few RAM*/
 #define USE_LV_THEME_ALIEN      1       /*Dark futuristic theme*/
-#define USE_LV_THEME_NIGHT      0       /*Dark elegant theme*/
+#define USE_LV_THEME_NIGHT      1       /*Dark elegant theme*/
 #define USE_LV_THEME_MONO       1       /*Mono color theme for monochrome displays*/
 #define USE_LV_THEME_MATERIAL   0       /*Flat theme with bold colors and light shadows (Planned)*/
 #define USE_LV_THEME_ZEN        0       /*Peaceful, mainly black and white theme (Planned)*/

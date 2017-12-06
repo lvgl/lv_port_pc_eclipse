@@ -49,8 +49,13 @@ int main (void)
     hal_init();
 
     /*Load a demo*/
-    demo_init();
+    lv_theme_t *th = lv_theme_night_init(210, NULL);
+    lv_test_theme_1(th);
+//    demo_init();
 
+//    ex_image();
+
+    lv_tutorial_hello_world();
     while(1) {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
