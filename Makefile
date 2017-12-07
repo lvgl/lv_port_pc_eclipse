@@ -3,7 +3,7 @@
 #
 CC = gcc
 CFLAGS = -Wall -Wshadow -Wundef -Wmaybe-uninitialized
-CFLAGS += -O3 -I./
+CFLAGS += -O3 -g3 -I./
 LDFLAGS += -lSDL2 -lm
 BIN = demo
 VPATH = 

@@ -31,7 +31,7 @@
 #define LV_DPI              (100 << LV_ANTIALIAS)
 
 /* Buffered rendering: >= LV_DOWNSCALE * lv_disp_hor_res() or 0 to disable buffering*/
-#define LV_VDB_SIZE         (80 * LV_HOR_RES)
+#define LV_VDB_SIZE         (40 * LV_HOR_RES)
 #define LV_VDB_ADR          0       /*Place VDB to a specific address (e.g. in external RAM) (0: allocate into RAM)*/
 
 /* Use two Virtual Display buffers (VDB) parallelize rendering and flushing
@@ -48,13 +48,14 @@
  * Much faster then normal anti aliasing  */
 #define LV_FONT_ANTIALIAS   0
 
+/*Screen refresh settings*/
+#define LV_REFR_PERIOD      50    /*Screen refresh period in milliseconds*/
+#define LV_INV_FIFO_SIZE    32    /*The average count of objects on a screen */
+
 /*=================
    Misc. setting
  *=================*/
 
-/*Screen refresh settings*/
-#define LV_REFR_PERIOD      50    /*Screen refresh period in milliseconds*/
-#define LV_INV_FIFO_SIZE    32    /*The average count of objects on a screen */
 
 /*Input device settings*/
 #define LV_INDEV_READ_PERIOD            50                     /*Input device read period in milliseconds*/
@@ -71,9 +72,6 @@
 /*Text settings*/
 #define LV_TXT_UTF8             1
 #define LV_TXT_BREAK_CHARS     " ,.;:-_"           /*Can break texts on these chars*/
-
-/*Group settings*/
-#define LV_GROUP                1                  /*Enable object groups (for keyboards)*/
 
 /*Graphics feature usage*/
 #define LV_NO_ANIM              0               /*1: disable all animations*/
@@ -154,6 +152,7 @@
  *==================*/
 #define LV_OBJ_FREE_NUM_TYPE    uint32_t    /*Type of free number attribute (comment out disable free number)*/
 #define LV_OBJ_FREE_PTR         1           /*Enable the free pointer attribute*/
+#define LV_OBJ_GROUP            1           /*Enable object groups (for keyboards)*/
 
 /*==================
  *  LV OBJ X USAGE 
