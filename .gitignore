@@ -3,3 +3,4 @@ Debug/
 lv_dev_tools/
 **/*.o
 demo
+.pydevproject
