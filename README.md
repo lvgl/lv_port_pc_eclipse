@@ -1,6 +1,6 @@
 # PC project for LittleV Graphics Library
 
-The [Littlev Graphic Library](https://github.com/littlevgl/lvgl) is written mainly for microcontrollers and embedded systems however you can run the library **on your PC** too without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system.
+The [Littlev Graphic Library](https://github.com/littlevgl/lvgl) is written mainly for microcontrollers and embedded systems however you can run the library **on your PC** as well without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system.
 
 Using a PC simulator instead of an embedded hardware has got several advantages:
 * **Costs $0** because you you don't have to buy design PCB
@@ -9,9 +9,9 @@ Using a PC simulator instead of an embedded hardware has got several advantages:
 * **Developer friendly** because much easier and faster to debug on PC
 
 ## Requirements
-* The PC simulator is cross platform so **Windows, Linux and OSX** is suitable as well
-* **SDL** a low level driver library to use graphics, audio, handle mouse, keyboard etc.
-* This project is configured for **Eclipse CDT IDE**
+* The PC simulator is cross platform so **Windows, Linux and OSX** is supported
+* **SDL** a low level driver library to use graphics, handle mouse, keyboard etc.
+* This project (configured for **Eclipse CDT IDE**)
 
 ## Usage
 
@@ -22,7 +22,7 @@ Clone the PC project and the related sub modules:
 cd proj_pc
 git submodule update --init`
 
-or download it as zip [here](htp://www.gl.littlev.hu/download/lv_proj_pc_v4_0_0.zip).
+or download it as zip [here](htp://www.gl.littlev.hu/download/pc_simulator_v5_0_0.zip).
 
 ### Install SDL
 You can download SDL from https://www.libsdl.org/
