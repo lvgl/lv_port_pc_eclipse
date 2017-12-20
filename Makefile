@@ -26,7 +26,6 @@ include ./lv_drivers/display/display.mk
 include ./lv_drivers/indev/indev.mk
 
 #EXAMPLES
-include ./lv_examples/lv_apps/demo/demo.mk
 include ./lv_examples/lv_tests/lv_test_obj/lv_test_obj.mk
 include ./lv_examples/lv_tests/lv_test_stress/lv_test_stress.mk
 include ./lv_examples/lv_tests/lv_test_theme/lv_test_theme.mk
@@ -53,6 +52,13 @@ include ./lv_examples/lv_tests/lv_test_objx/lv_test_sw/lv_test_sw.mk
 include ./lv_examples/lv_tests/lv_test_objx/lv_test_ta/lv_test_ta.mk
 include ./lv_examples/lv_tests/lv_test_objx/lv_test_tabview/lv_test_tabview.mk
 include ./lv_examples/lv_tests/lv_test_objx/lv_test_win/lv_test_win.mk
+
+include ./lv_examples/lv_apps/benchmark/benchmark.mk
+include ./lv_examples/lv_apps/demo/demo.mk
+include ./lv_examples/lv_apps/sysmon/sysmon.mk
+include ./lv_examples/lv_apps/terminal/terminal.mk
+include ./lv_examples/lv_apps/tpcal/tpcal.mk
+
 include ./lv_examples/lv_tutorial/1_hello_world/lv_tutorial_hello_world.mk
 include ./lv_examples/lv_tutorial/2_objects/lv_tutorial_objects.mk
 include ./lv_examples/lv_tutorial/3_styles/lv_tutorial_styles.mk

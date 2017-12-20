@@ -9,7 +9,7 @@
 /*********************
  * DELAY INTERFACE
  *********************/
-#define LV_DRV_DELAY_INCLUDE  <stdint.h>            /*Dummy include by default*/
+#define LV_DRV_DELAY_INCLUDE  <stdint.h>            /*Delay header (Dummy include by default)*/
 #define LV_DRV_DELAY_US(us)  /*delay_us(us)*/       /*Delay the given number of microseconds*/
 #define LV_DRV_DELAY_MS(ms)  /*delay_ms(ms)*/       /*Delay the given number of milliseconds*/
 
@@ -20,25 +20,25 @@
 /*------------
  *  Common
  *------------*/
-#define LV_DRV_DISPLAY_INCLUDE         <stdint.h>           /*Dummy include by default*/
-#define LV_DRV_DISPLAY_CMD_DATA(val)  /*pin_x_set(val)*/    /*Set the command/data pin to 'val'*/
-#define LV_DRV_DISPLAY_RST(val)       /*pin_x_set(val)*/    /*Set the reset pin to 'val'*/
+#define LV_DRV_DISP_INCLUDE         <stdint.h>           /*Driver header (Dummy include by default)*/
+#define LV_DRV_DISP_CMD_DATA(val)  /*pin_x_set(val)*/    /*Set the command/data pin to 'val'*/
+#define LV_DRV_DISP_RST(val)       /*pin_x_set(val)*/    /*Set the reset pin to 'val'*/
 
 /*---------
  *  SPI
  *---------*/
-#define LV_DRV_DISPLAY_SPI_CS(val)          /*spi_cs_set(val)*/     /*Set the SPI's Chip select to 'val'*/
-#define LV_DRV_DISPLAY_SPI_WR_BYTE(data)    /*spi_wr(data)*/        /*Write a byte the SPI bus*/
-#define LV_DRV_DISPLAY_SPI_WR_ARRAY(adr, n) /*spi_wr_mem(adr, n)*/  /*Write 'n' bytes to SPI bus from 'adr'*/
+#define LV_DRV_DISP_SPI_CS(val)          /*spi_cs_set(val)*/     /*Set the SPI's Chip select to 'val'*/
+#define LV_DRV_DISP_SPI_WR_BYTE(data)    /*spi_wr(data)*/        /*Write a byte the SPI bus*/
+#define LV_DRV_DISP_SPI_WR_ARRAY(adr, n) /*spi_wr_mem(adr, n)*/  /*Write 'n' bytes to SPI bus from 'adr'*/
 
 /*------------------
  *  Parallel port
  *-----------------*/
-#define LV_DRV_DISPLAY_PAR_CS(val)          /*par_cs_set(val)*/   /*Set the Parallel port's Chip select to 'val'*/
-#define LV_DRV_DISPLAY_PAR_SLOW             /*par_slow()*/        /*Set low speed on the parallel port*/
-#define LV_DRV_DISPLAY_PAR_FAST             /*par_fast()*/        /*Set high speed on the parallel port*/
-#define LV_DRV_DISPLAY_PAR_WR_WORD(data)    /*par_wr(data)*/      /*Write a word to the parallel port*/
-#define LV_DRV_DISPLAY_PAR_WR_ARRAY(adr, n) /*par_wr_mem(adr,n)*/ /*Write 'n' bytes to Parallel ports from 'adr'*/
+#define LV_DRV_DISP_PAR_CS(val)          /*par_cs_set(val)*/   /*Set the Parallel port's Chip select to 'val'*/
+#define LV_DRV_DISP_PAR_SLOW             /*par_slow()*/        /*Set low speed on the parallel port*/
+#define LV_DRV_DISP_PAR_FAST             /*par_fast()*/        /*Set high speed on the parallel port*/
+#define LV_DRV_DISP_PAR_WR_WORD(data)    /*par_wr(data)*/      /*Write a word to the parallel port*/
+#define LV_DRV_DISP_PAR_WR_ARRAY(adr, n) /*par_wr_mem(adr,n)*/ /*Write 'n' bytes to Parallel ports from 'adr'*/
 
 /***************************
  * INPUT DEVICE INTERFACE
@@ -47,7 +47,7 @@
 /*----------
  *  Common
  *----------*/
-#define LV_DRV_INDEV_INCLUDE     <stdint.h>             /*Dummy include by default*/
+#define LV_DRV_INDEV_INCLUDE     <stdint.h>             /*Driver header (Dummy include by default)*/
 #define LV_DRV_INDEV_RST(val)    /*pin_x_set(val)*/     /*Set the reset pin to 'val'*/
 #define LV_DRV_INDEV_IRQ_READ    0 /*pn_x_read()*/      /*Read the IRQ pin*/
 
@@ -76,8 +76,8 @@
  *-------------------*/
 #define USE_MONITOR    1
 #if USE_MONITOR
-#define MONITOR_HOR_RES   800
-#define MONITOR_VER_RES   480
+#define MONITOR_HOR_RES   (320* 3)
+#define MONITOR_VER_RES   (240 * 3)
 #endif
 
 /*----------------

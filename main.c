@@ -14,6 +14,7 @@
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/mouse.h"
 #include "lv_examples/lv_apps/demo/demo.h"
+#include "lvgl/lv_misc/lv_fonts/lv_symbol_def.h"
 
 /*********************
  *      DEFINES
@@ -49,13 +50,13 @@ int main (void)
     hal_init();
 
     /*Load a demo*/
-    demo_init();
+    demo_create();
 
     while(1) {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
-        usleep(5000);       /*Just to let the system breath*/
+        usleep(1000);       /*Just to let the system breath*/
     }
 
     return 0;
@@ -64,6 +65,7 @@ int main (void)
 /**********************
  *   STATIC FUNCTIONS
  **********************/
+
 
 /**
  * Initialize the Hardware Abstraction Layer (HAL) for the Littlev graphics library
@@ -86,7 +88,7 @@ static void hal_init(void)
     lv_indev_drv_t indev_drv;
     lv_indev_drv_init(&indev_drv);          /*Basic initialization*/
     indev_drv.type = LV_INDEV_TYPE_POINTER;
-    indev_drv.read_fp = mouse_read;         /*This function will be called periodically (by the library) to get the mouse position and state*/
+    indev_drv.read = mouse_read;         /*This function will be called periodically (by the library) to get the mouse position and state*/
     lv_indev_drv_register(&indev_drv);
 
     /* Tick init.

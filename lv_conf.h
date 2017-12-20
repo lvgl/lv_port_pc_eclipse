@@ -25,12 +25,12 @@
  *=====================*/
 
 /* Horizontal and vertical resolution of the library.*/
-#define LV_HOR_RES          800
-#define LV_VER_RES          480
+#define LV_HOR_RES          (320 * 3)
+#define LV_VER_RES          (240 * 3)
 #define LV_DPI              100
 
 /* Buffered rendering: >= LV_DOWNSCALE * lv_disp_hor_res() or 0 to disable buffering*/
-#define LV_VDB_SIZE         (20  * 1024)
+#define LV_VDB_SIZE         (100  * 1024)
 #define LV_VDB_ADR          0       /*Place VDB to a specific address (e.g. in external RAM) (0: allocate into RAM)*/
 
 /* Use two Virtual Display buffers (VDB) parallelize rendering and flushing
@@ -40,12 +40,12 @@
 
 /* Enable anti aliasing
  * If enabled everything will be rendered in double size and filtered to normal size */
-#define LV_ANTIALIAS        1
+#define LV_ANTIALIAS        0
 
 /* Enable anti aliasing only for fonts (texts)
  * It half the size of the letters so you should use double sized fonts
  * Much faster then normal anti aliasing  */
-#define LV_FONT_ANTIALIAS   0
+#define LV_FONT_ANTIALIAS   1
 
 /*Screen refresh settings*/
 #define LV_REFR_PERIOD      50    /*Screen refresh period in milliseconds*/
@@ -78,16 +78,16 @@
 #define USE_LV_GPU              0               /*1: Enable GPU interface*/
 #define USE_LV_FILESYSTEM       1               /*1: Enable file system (required by images aka. lv_img)*/
 
-/*==================
+/*================
  *  THEME USAGE
  *================*/
 #define USE_LV_THEME_TEMPL      0       /*Just for test*/
-#define USE_LV_THEME_DEFAULT    0       /*Built mainly from the built-in styles. Consumes very few RAM*/
+#define USE_LV_THEME_DEFAULT    1       /*Built mainly from the built-in styles. Consumes very few RAM*/
 #define USE_LV_THEME_ALIEN      1       /*Dark futuristic theme*/
 #define USE_LV_THEME_NIGHT      1       /*Dark elegant theme*/
 #define USE_LV_THEME_MONO       1       /*Mono color theme for monochrome displays*/
-#define USE_LV_THEME_MATERIAL   0       /*Flat theme with bold colors and light shadows (Planned)*/
-#define USE_LV_THEME_ZEN        0       /*Peaceful, mainly black and white theme (Planned)*/
+#define USE_LV_THEME_MATERIAL   1       /*Flat theme with bold colors and light shadows*/
+#define USE_LV_THEME_ZEN        1       /*Peaceful, mainly light theme */
 
 /*==================
  *    FONT USAGE
@@ -112,14 +112,14 @@
 #define USE_LV_FONT_SYMBOL_20_FILE         0
 #define USE_LV_FONT_SYMBOL_20_FEEDBACK     0
 
-#define USE_LV_FONT_DEJAVU_30              0
+#define USE_LV_FONT_DEJAVU_30              1
 #define USE_LV_FONT_DEJAVU_30_SUP          0
 #define USE_LV_FONT_DEJAVU_30_LATIN_EXT_A  0
 #define USE_LV_FONT_DEJAVU_30_LATIN_EXT_B  0
 #define USE_LV_FONT_DEJAVU_30_CYRILLIC     0
-#define USE_LV_FONT_SYMBOL_30_BASIC        0
-#define USE_LV_FONT_SYMBOL_30_FILE         0
-#define USE_LV_FONT_SYMBOL_30_FEEDBACK     0
+#define USE_LV_FONT_SYMBOL_30_BASIC        1
+#define USE_LV_FONT_SYMBOL_30_FILE         1
+#define USE_LV_FONT_SYMBOL_30_FEEDBACK     1
 
 #define USE_LV_FONT_DEJAVU_40              1
 #define USE_LV_FONT_DEJAVU_40_SUP          1
@@ -130,14 +130,14 @@
 #define USE_LV_FONT_SYMBOL_40_FILE         1
 #define USE_LV_FONT_SYMBOL_40_FEEDBACK     1
 
-#define USE_LV_FONT_DEJAVU_60              0
+#define USE_LV_FONT_DEJAVU_60              1
 #define USE_LV_FONT_DEJAVU_60_SUP          0
 #define USE_LV_FONT_DEJAVU_60_LATIN_EXT_A  0
 #define USE_LV_FONT_DEJAVU_60_LATIN_EXT_B  0
 #define USE_LV_FONT_DEJAVU_60_CYRILLIC     0
-#define USE_LV_FONT_SYMBOL_60_BASIC        0
-#define USE_LV_FONT_SYMBOL_60_FILE         0
-#define USE_LV_FONT_SYMBOL_60_FEEDBACK     0
+#define USE_LV_FONT_SYMBOL_60_BASIC        1
+#define USE_LV_FONT_SYMBOL_60_FILE         1
+#define USE_LV_FONT_SYMBOL_60_FEEDBACK     1
 
 #define USE_LV_FONT_DEJAVU_80              0
 #define USE_LV_FONT_DEJAVU_80_SUP          0
@@ -200,10 +200,10 @@
 /*Bar (dependencies: -)*/
 #define USE_LV_BAR      1
 
-/*Line meter (dependencies: bar; misc: trigo)*/
+/*Line meter (dependencies: *;)*/
 #define USE_LV_LMETER   1
 
-/*Gauge (dependencies:bar, lmeter; misc: trigo)*/
+/*Gauge (dependencies:bar, lmeter)*/
 #define USE_LV_GAUGE    1
 
 /*Chart (dependencies: -)*/
@@ -218,8 +218,8 @@
 /*Text area (dependencies: lv_label, lv_page)*/
 #define USE_LV_TA       1
 #if USE_LV_TA != 0
-#define LV_TA_CURSOR_BLINK_TIME 400   /*ms*/
-#define LV_TA_PWD_SHOW_TIME  1500    /*ms*/
+#define LV_TA_CURSOR_BLINK_TIME 400     /*ms*/
+#define LV_TA_PWD_SHOW_TIME     1500    /*ms*/
 #endif
 
 /*************************
@@ -238,9 +238,6 @@
 /*Check box (dependencies: lv_btn, lv_label)*/
 #define USE_LV_CB       1
 
-/*Switch (dependencies: lv_slider)*/
-#define USE_LV_SW       1
-
 /*List (dependencies: lv_page, lv_btn, lv_label, (lv_img optionally for icons ))*/
 #define USE_LV_LIST     1
 #if USE_LV_LIST != 0
@@ -250,13 +247,19 @@
 /*Drop down list (dependencies: lv_page, lv_label)*/
 #define USE_LV_DDLIST    1
 #if USE_LV_DDLIST != 0
-#define LV_DDLIST_DEF_ANIM_TIME     200     /*Open and close default animation time [ms] (0: no animation)*/
+#define LV_DDLIST_ANIM_TIME     200     /*Open and close default animation time [ms] (0: no animation)*/
 #endif
 
-/*Drop down list (dependencies: lv_ddlist)*/
+/*Roller (dependencies: lv_ddlist)*/
 #define USE_LV_ROLLER    1
+#if USE_LV_ROLLER != 0
+#define LV_ROLLER_ANIM_TIME     200     /*Focus animation time [ms] (0: no animation)*/
+#endif
 
 /*Slider (dependencies: lv_bar)*/
 #define USE_LV_SLIDER    1
+
+/*Switch (dependencies: lv_slider)*/
+#define USE_LV_SW       1
 
 #endif /*LV_CONF_H*/
