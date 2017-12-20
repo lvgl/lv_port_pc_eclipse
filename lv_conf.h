@@ -25,8 +25,8 @@
  *=====================*/
 
 /* Horizontal and vertical resolution of the library.*/
-#define LV_HOR_RES          (320 * 3)
-#define LV_VER_RES          (240 * 3)
+#define LV_HOR_RES          (480)
+#define LV_VER_RES          (320)
 #define LV_DPI              100
 
 /* Buffered rendering: >= LV_DOWNSCALE * lv_disp_hor_res() or 0 to disable buffering*/

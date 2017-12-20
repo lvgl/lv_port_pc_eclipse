@@ -76,8 +76,8 @@
  *-------------------*/
 #define USE_MONITOR    1
 #if USE_MONITOR
-#define MONITOR_HOR_RES   (320* 3)
-#define MONITOR_VER_RES   (240 * 3)
+#define MONITOR_HOR_RES   (480)
+#define MONITOR_VER_RES   (320)
 #endif
 
 /*----------------
