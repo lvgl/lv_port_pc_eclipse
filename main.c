@@ -14,7 +14,6 @@
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/mouse.h"
 #include "lv_examples/lv_apps/demo/demo.h"
-#include "lvgl/lv_misc/lv_fonts/lv_symbol_def.h"
 
 /*********************
  *      DEFINES
@@ -41,7 +40,8 @@ static int tick_thread(void *data);
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-int main (void)
+
+int main(int argc, char** argv)
 {
     /*Initialize LittlevGL*/
     lv_init();
@@ -97,11 +97,16 @@ static void hal_init(void)
     SDL_CreateThread(tick_thread, "tick", NULL);
 }
 
+/**
+ * A task to measure the elapsed time for LittlevGL
+ * @param data unused
+ * @return never return
+ */
 static int tick_thread(void *data)
 {
     while(1) {
         lv_tick_inc(1);
-        SDL_Delay(1);
+        SDL_Delay(1);   /*Sleep for 1 millisecond*/
     }
 
     return 0;
