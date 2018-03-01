@@ -171,19 +171,26 @@
 #define FT5406EE8_I2C_ADR   0x38                  /*7 bit address*/
 #endif
 
-/*-------------------------------
- *    Mouse or touchpad on PC
- *------------------------------*/
+/*---------------------------------------
+ * Mouse or touchpad on PC (using SDL)
+ *-------------------------------------*/
 #define USE_MOUSE       1
 #if USE_MOUSE
 /*No settings*/
 #endif
 
+/*-------------------------------------------------
+ * Mouse as HID device (for Linux based systems)
+ *------------------------------------------------*/
+#define USE_MOUSE_HID    0
+#if USE_MOUSE_HID
+#define MOUSE_HID_DEV   "/dev/input/event0"
+#endif
 
 /*-------------------------------
- *   Keyboard of a PC
+ *   Keyboard of a PC (using SDL)
  *------------------------------*/
-#define USE_KEYBOARD    0
+#define USE_KEYBOARD    1
 #if USE_KEYBOARD
 /*No settings*/
 #endif

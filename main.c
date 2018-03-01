@@ -14,6 +14,8 @@
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/mouse.h"
 #include "lv_examples/lv_apps/demo/demo.h"
+#include "lv_examples/lv_apps/benchmark/benchmark.h"
+#include "lv_examples/lv_tests/lv_test_theme/lv_test_theme.h"
 
 /*********************
  *      DEFINES
@@ -52,6 +54,13 @@ int main(int argc, char** argv)
     /*Load a demo*/
     demo_create();
 
+    /*Or try the benchmark too to see the speed of your MCU*/
+    //benchmark_create();
+
+    /*Or try a theme*/
+    //lv_theme_t * th = lv_theme_night_init(210, NULL);      /*Hue: 210; Font: NULL (default)*/
+    //lv_test_theme_1(th);
+
     while(1) {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
@@ -65,7 +74,6 @@ int main(int argc, char** argv)
 /**********************
  *   STATIC FUNCTIONS
  **********************/
-
 
 /**
  * Initialize the Hardware Abstraction Layer (HAL) for the Littlev graphics library
@@ -96,6 +104,8 @@ static void hal_init(void)
      * Create an SDL thread to do this*/
     SDL_CreateThread(tick_thread, "tick", NULL);
 }
+
+
 
 /**
  * A task to measure the elapsed time for LittlevGL
