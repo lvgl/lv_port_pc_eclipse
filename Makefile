@@ -29,6 +29,7 @@ include ./lv_drivers/indev/indev.mk
 include ./lv_examples/lv_tests/lv_test_obj/lv_test_obj.mk
 include ./lv_examples/lv_tests/lv_test_stress/lv_test_stress.mk
 include ./lv_examples/lv_tests/lv_test_theme/lv_test_theme.mk
+include ./lv_examples/lv_tests/lv_test_group/lv_test_group.mk
 include ./lv_examples/lv_tests/lv_test_objx/lv_test_bar/lv_test_bar.mk
 include ./lv_examples/lv_tests/lv_test_objx/lv_test_btn/lv_test_btn.mk
 include ./lv_examples/lv_tests/lv_test_objx/lv_test_btnm/lv_test_btnm.mk

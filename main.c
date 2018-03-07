@@ -14,7 +14,8 @@
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/mouse.h"
 #include "lv_examples/lv_apps/demo/demo.h"
-#include "lvgl/lv_misc/lv_fonts/lv_symbol_def.h"
+#include "lv_examples/lv_apps/benchmark/benchmark.h"
+#include "lv_examples/lv_tests/lv_test_theme/lv_test_theme.h"
 
 /*********************
  *      DEFINES
@@ -41,7 +42,8 @@ static int tick_thread(void *data);
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-int main (void)
+
+int main(int argc, char** argv)
 {
     /*Initialize LittlevGL*/
     lv_init();
@@ -51,6 +53,13 @@ int main (void)
 
     /*Load a demo*/
     demo_create();
+
+    /*Or try the benchmark too to see the speed of your MCU*/
+    //benchmark_create();
+
+    /*Or try a theme (Enable the theme in lv_conf.h with USE_LV_THEME_...  1 )*/
+    //lv_theme_t * th = lv_theme_night_init(210, NULL);      /*Hue: 210; Font: NULL (default)*/
+    //lv_test_theme_1(th);
 
     while(1) {
         /* Periodically call the lv_task handler.
@@ -65,7 +74,6 @@ int main (void)
 /**********************
  *   STATIC FUNCTIONS
  **********************/
-
 
 /**
  * Initialize the Hardware Abstraction Layer (HAL) for the Littlev graphics library
@@ -97,11 +105,16 @@ static void hal_init(void)
     SDL_CreateThread(tick_thread, "tick", NULL);
 }
 
+/**
+ * A task to measure the elapsed time for LittlevGL
+ * @param data unused
+ * @return never return
+ */
 static int tick_thread(void *data)
 {
     while(1) {
         lv_tick_inc(1);
-        SDL_Delay(1);
+        SDL_Delay(1);   /*Sleep for 1 millisecond*/
     }
 
     return 0;
