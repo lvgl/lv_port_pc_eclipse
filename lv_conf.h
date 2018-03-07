@@ -57,7 +57,7 @@
 
 /*Input device settings*/
 #define LV_INDEV_READ_PERIOD            50                     /*Input device read period in milliseconds*/
-#define LV_INDEV_POINT_MARKER           0                      /*Mark the pressed points*/
+#define LV_INDEV_POINT_MARKER           0                      /*Mark the pressed points  (required: USE_LV_REAL_DRAW = 1)*/
 #define LV_INDEV_DRAG_LIMIT             10                     /*Drag threshold in pixels */
 #define LV_INDEV_DRAG_THROW             20                     /*Drag throw slow-down in [%]. Greater value means faster slow-down */
 #define LV_INDEV_LONG_PRESS_TIME        400                    /*Long press time in milliseconds*/
@@ -80,8 +80,8 @@
 #define USE_LV_FILESYSTEM       1               /*1: Enable file system (required by images*/
 
 /*Compiler attributes*/
-#define LV_ATTRIBUTE_TICK_INC                 /* Define a custom attribute to tick increment function */
-#define LV_ATTRIBUTE_TASK_HANDLER
+#define LV_ATTRIBUTE_TICK_INC                 /* Define a custom attribute to `lv_tick_inc` function */
+#define LV_ATTRIBUTE_TASK_HANDLER             /* Define a custom attribute to `lv_task_handler` function */
 
 /*================
  *  THEME USAGE
@@ -89,7 +89,7 @@
 #define USE_LV_THEME_TEMPL      0       /*Just for test*/
 #define USE_LV_THEME_DEFAULT    0       /*Built mainly from the built-in styles. Consumes very few RAM*/
 #define USE_LV_THEME_ALIEN      0       /*Dark futuristic theme*/
-#define USE_LV_THEME_NIGHT      1       /*Dark elegant theme*/
+#define USE_LV_THEME_NIGHT      0       /*Dark elegant theme*/
 #define USE_LV_THEME_MONO       0       /*Mono color theme for monochrome displays*/
 #define USE_LV_THEME_MATERIAL   0       /*Flat theme with bold colors and light shadows*/
 #define USE_LV_THEME_ZEN        0       /*Peaceful, mainly light theme */

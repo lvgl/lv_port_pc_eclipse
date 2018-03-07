@@ -57,7 +57,7 @@ int main(int argc, char** argv)
     /*Or try the benchmark too to see the speed of your MCU*/
     //benchmark_create();
 
-    /*Or try a theme*/
+    /*Or try a theme (Enable the theme in lv_conf.h with USE_LV_THEME_...  1 )*/
     //lv_theme_t * th = lv_theme_night_init(210, NULL);      /*Hue: 210; Font: NULL (default)*/
     //lv_test_theme_1(th);
 
@@ -104,8 +104,6 @@ static void hal_init(void)
      * Create an SDL thread to do this*/
     SDL_CreateThread(tick_thread, "tick", NULL);
 }
-
-
 
 /**
  * A task to measure the elapsed time for LittlevGL
