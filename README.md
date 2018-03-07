@@ -18,9 +18,11 @@ Using a PC simulator instead of an embedded hardware has got several advantages:
 ### Get the PC project
 
 Clone the PC project and the related sub modules:
-`git clone https://github.com/littlevgl/proj_pc.git
+```
+git clone https://github.com/littlevgl/proj_pc.git
 cd proj_pc
-git submodule update --init`
+git submodule update --init
+```
 
 or download it as zip [here](htp://www.gl.littlev.hu/download/pc_simulator_v5_0_0.zip).
 
