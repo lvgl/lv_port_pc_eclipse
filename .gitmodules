@@ -7,6 +7,3 @@
 [submodule "lv_drivers"]
 	path = lv_drivers
 	url = https://github.com/littlevgl/lv_drivers.git
-[submodule "gui"]
-	path = gui
-	url = https://github.com/kisvegabor/bitoriginal_wallet_gui.git
