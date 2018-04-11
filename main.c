@@ -54,13 +54,6 @@ int main(int argc, char** argv)
     /*Load a demo*/
     demo_create();
 
-    /*Or try the benchmark too to see the speed of your MCU*/
-    //benchmark_create();
-
-    /*Or try a theme (Enable the theme in lv_conf.h with USE_LV_THEME_...  1 )*/
-    //lv_theme_t * th = lv_theme_night_init(210, NULL);      /*Hue: 210; Font: NULL (default)*/
-    //lv_test_theme_1(th);
-
     while(1) {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/

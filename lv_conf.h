@@ -28,8 +28,8 @@
  *===================*/
 
 /* Horizontal and vertical resolution of the library.*/
-#define LV_HOR_RES          (640)
-#define LV_VER_RES          (480)
+#define LV_HOR_RES          (240)
+#define LV_VER_RES          (240)
 #define LV_DPI              100
 
 /* Size of VDB (Virtual Display Buffer: the internal graphics buffer).
@@ -64,7 +64,7 @@
 #define LV_INDEV_LONG_PRESS_REP_TIME    100                    /*Repeated trigger period in long press [ms] */
 
 /*Color settings*/
-#define LV_COLOR_DEPTH     24                     /*Color depth: 1/8/16/24*/
+#define LV_COLOR_DEPTH     16                     /*Color depth: 1/8/16/24*/
 #define LV_COLOR_TRANSP    LV_COLOR_LIME          /*Images pixels with this color will not be drawn (with chroma keying)*/
 
 /*Text settings*/
