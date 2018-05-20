@@ -82,17 +82,18 @@
 /*Compiler attributes*/
 #define LV_ATTRIBUTE_TICK_INC                 /* Define a custom attribute to `lv_tick_inc` function */
 #define LV_ATTRIBUTE_TASK_HANDLER             /* Define a custom attribute to `lv_task_handler` function */
+#define LV_COMPILER_VLA_SUPPORTED    1        /* 1: Variable length array is supported*/
 
 /*================
  *  THEME USAGE
  *================*/
 #define USE_LV_THEME_TEMPL      0       /*Just for test*/
-#define USE_LV_THEME_DEFAULT    0       /*Built mainly from the built-in styles. Consumes very few RAM*/
-#define USE_LV_THEME_ALIEN      0       /*Dark futuristic theme*/
-#define USE_LV_THEME_NIGHT      0       /*Dark elegant theme*/
-#define USE_LV_THEME_MONO       0       /*Mono color theme for monochrome displays*/
-#define USE_LV_THEME_MATERIAL   0       /*Flat theme with bold colors and light shadows*/
-#define USE_LV_THEME_ZEN        0       /*Peaceful, mainly light theme */
+#define USE_LV_THEME_DEFAULT    1       /*Built mainly from the built-in styles. Consumes very few RAM*/
+#define USE_LV_THEME_ALIEN      1       /*Dark futuristic theme*/
+#define USE_LV_THEME_NIGHT      1       /*Dark elegant theme*/
+#define USE_LV_THEME_MONO       1       /*Mono color theme for monochrome displays*/
+#define USE_LV_THEME_MATERIAL   1       /*Flat theme with bold colors and light shadows*/
+#define USE_LV_THEME_ZEN        1       /*Peaceful, mainly light theme */
 
 /*==================
  *    FONT USAGE
@@ -199,6 +200,8 @@
 #define LV_TA_CURSOR_BLINK_TIME 400     /*ms*/
 #define LV_TA_PWD_SHOW_TIME     1500    /*ms*/
 #endif
+
+#define USE_LV_CALENDAR 1
 
 /*************************
  * User input objects
