@@ -54,7 +54,11 @@ int main(int argc, char** argv)
     /*Load a demo*/
     demo_create();
 
-    lv_test_theme_1(lv_theme_night_init(210, NULL));
+    /*Try the benchmark to see how fast is your GUI*/
+    //benchmark_create();
+
+    /*Check the themes too*/
+    //lv_test_theme_1(lv_theme_night_init(210, NULL));
 
     while(1) {
         /* Periodically call the lv_task handler.
