@@ -1,0 +1,40 @@
+
+Use the following shell variables to influence the build:
+
+DEBUG=1
+    To build the apps with debug symbols, 0-optimization and asserts.
+
+LVGL_USE_SDL=[1|y|Y]
+    To build the apps for PC, using SDL2 emulation of screen and input devices.
+
+LVGL_BUILD_TUTORIAL=0     [default if not given]
+    To build the demo app in lv_examples/lv_apps/demo/.
+    This is the default if this var is not set.
+
+LVGL_BUILD_TUTORIAL=1
+    To build the 10_keyboard tutorial app in lv_examples/lv_tutorial.
+    You may also look at the lv_tutorial_keyboard.mk file and choose
+    between simulated keypad or real keyboard inside of it.
+
+LVGL_MINIMAL_BUILD=0      [default if not given]
+    By default the build infrastructure links the app with all object files.
+    This setting leaves this as-is.
+
+LVGL_MINIMAL_BUILD=1
+    By default the build infrastructure links the app with all object files.
+    This setting selects only the necessary object files for linking,
+    reducing considerably the size of the apps.
+    NOTE: This is not yet fully implemented
+
+
+Examples:
+---------
+To build the 'demo' app on PC with full debug info:
+$  DEBUG=1 LVGL_USE_SDL=1 make
+   -OR-
+$  DEBUG=1 LVGL_USE_SDL=1 LVGL_BUILD_TUTORIAL=0 make
+
+To build the '10_keyboard' tutorial app for your architecture, with no debug infos:
+$ LVGL_BUILD_TUTORIAL=1 make
+NOTE: This will usually require specifying other options, depending on your target architecture.
+
