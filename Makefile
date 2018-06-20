@@ -1,14 +1,39 @@
 #
 # Makefile
 #
-CC = gcc
-CFLAGS = -Wall -Wshadow -Wundef -Wmaybe-uninitialized
-CFLAGS += -O3 -g3 -I./
-LDFLAGS += -lSDL2 -lm
-BIN = demo
-VPATH = 
+CC ?= gcc
+CFLAGS += -Wall -Wshadow -Wundef -Wmaybe-uninitialized
+CFLAGS += -O3 -I./
+LDFLAGS += -lm
 
-LVGL_DIR = ${shell pwd}
+ifeq "$(LVGL_BUILD_TUTORIAL)" "1"
+CFLAGS += -DBUILD_TUTORIAL=1 -DBUILD_DEMO=0
+else
+CFLAGS += -DBUILD_TUTORIAL=0 -DBUILD_DEMO=1
+endif
+
+ifneq "$(LVGL_USE_SDL)" ""
+ifneq "$(LVGL_USE_SDL)" "0"
+# The CFLAGS to build a SDL2-based app.
+CFLAGS += -DUSE_SDL=1 -DUSE_MONITOR=1 -DUSE_MOUSE=1 -DUSE_KEYBOARD=1
+# Add libSDL2 to linker flags 
+LDFLAGS += -lSDL2
+else
+CFLAGS += -DUSE_SDL=0
+endif				# if LVGL_USE_SDL
+endif				# if LVGL_USE_SDL
+
+ifeq "$(DEBUG)" "1"
+CFLAGS += -DDEBUG=1
+CFLAGS += -O0 -g3
+else
+CFLAGS += -DNDEBUG
+endif
+
+BIN = demo
+VPATH =
+
+LVGL_DIR ?= ${shell pwd}
 
 MAINSRC = main.c
 
@@ -24,6 +49,8 @@ include ./lvgl/lv_draw/lv_draw.mk
 #DRIVERS
 include ./lv_drivers/display/display.mk
 include ./lv_drivers/indev/indev.mk
+
+ifneq "$(LVGL_MINIMAL_BUILD)" "1"
 
 #EXAMPLES
 include ./lv_examples/lv_tests/lv_test_obj/lv_test_obj.mk
@@ -70,6 +97,17 @@ include ./lv_examples/lv_tutorial/7_fonts/lv_tutorial_fonts.mk
 include ./lv_examples/lv_tutorial/8_animations/lv_tutorial_animations.mk
 include ./lv_examples/lv_tutorial/9_responsive/lv_tutorial_responsive.mk
 
+else
+
+ifeq "$(LVGL_BUILD_TUTORIAL)" "1"
+include ./lv_examples/lv_tutorial/10_keyboard/lv_tutorial_keyboard.mk
+else
+include ./lv_examples/lv_apps/demo/demo.mk
+endif
+
+endif	# LVGL_MINIMAL_BUILD
+
+
 OBJEXT ?= .o
 
 AOBJS = $(ASRCS:.S=$(OBJEXT))
@@ -82,15 +120,29 @@ OBJS = $(AOBJS) $(COBJS)
 
 ## MAINOBJ -> OBJFILES
 
+# ATTENTION!
+# The dependency of 'all:' on 'clean:' breaks parallel builds, because it creates
+# a race condition between the two targets - 'clean:' and 'default:', with the
+# 'clean:' make target job deleting object files just built by the other target!
+#
+# Solutions:
+#	Sol.1. Remove the dependency on 'clean:' and clean the build dir manually
+# 	Sul.2. Use non-parallelized make builds (no '-j'), OR,  where appicable use
+#		   a special make invocation variable, like $(MAKE1) in Buildroot.
 all: clean default
 
 %.o: %.c
-	@$(CC)  $(CFLAGS) -c $< -o $@
 	@echo "CC $<"
-    
+	$(CC)  $(CFLAGS) -I$(LVGL_DIR) -c $< -o $@
+
 default: $(AOBJS) $(COBJS) $(MAINOBJ)
 	$(CC) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(LDFLAGS)
 
-clean: 
+clean:
+	rm -f $(AOBJS) $(COBJS) $(MAINOBJ)
+
+maintainer-clean:
 	rm -f $(BIN) $(AOBJS) $(COBJS) $(MAINOBJ)
 
+help:
+	@cat ./BUILDING
