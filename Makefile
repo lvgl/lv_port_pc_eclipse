@@ -1,14 +1,33 @@
 #
 # Makefile
 #
-CC = gcc
-CFLAGS = -Wall -Wshadow -Wundef -Wmaybe-uninitialized
-CFLAGS += -O3 -g3 -I./
-LDFLAGS += -lSDL2 -lm
-BIN = demo
-VPATH = 
+CC ?= gcc
+CFLAGS += -Wall -Wshadow -Wundef -Wmaybe-uninitialized
+CFLAGS += -I./
+LDFLAGS += -lm
 
-LVGL_DIR = ${shell pwd}
+# Assume the user wants to build a SDL2-simulated demo. If building for
+# a real board or not using SDL, then set LVGL_USE_SDL=0 in your build.
+LVGL_USE_SDL ?= 1
+ifeq "$(LVGL_USE_SDL)" "1"
+# The CFLAGS to build a SDL2-based app.
+CFLAGS += -DUSE_MONITOR=1 -DUSE_MOUSE=1
+# Add libSDL2 to linker flags 
+LDFLAGS += -lSDL2
+endif				# if LVGL_USE_SDL
+
+# Allow debug and release builds via the DEBUG var. Release is default.
+ifeq "$(DEBUG)" "1"
+CFLAGS += -DDEBUG=1
+CFLAGS += -O0 -g3
+else
+CFLAGS += -O3 -DNDEBUG
+endif
+
+BIN = demo
+VPATH =
+
+LVGL_DIR ?= ${shell pwd}
 
 MAINSRC = main.c
 
@@ -24,6 +43,8 @@ include ./lvgl/lv_draw/lv_draw.mk
 #DRIVERS
 include ./lv_drivers/display/display.mk
 include ./lv_drivers/indev/indev.mk
+
+ifneq "$(LVGL_MINIMAL_BUILD)" "1"
 
 #EXAMPLES
 include ./lv_examples/lv_tests/lv_test_obj/lv_test_obj.mk
@@ -70,6 +91,13 @@ include ./lv_examples/lv_tutorial/7_fonts/lv_tutorial_fonts.mk
 include ./lv_examples/lv_tutorial/8_animations/lv_tutorial_animations.mk
 include ./lv_examples/lv_tutorial/9_responsive/lv_tutorial_responsive.mk
 
+else
+
+# You will need to change this include if building a different example!
+include ./lv_examples/lv_apps/demo/demo.mk
+
+endif	# LVGL_MINIMAL_BUILD
+
 OBJEXT ?= .o
 
 AOBJS = $(ASRCS:.S=$(OBJEXT))
@@ -82,15 +110,20 @@ OBJS = $(AOBJS) $(COBJS)
 
 ## MAINOBJ -> OBJFILES
 
-all: clean default
+all: default
 
 %.o: %.c
 	@$(CC)  $(CFLAGS) -c $< -o $@
 	@echo "CC $<"
-    
+
 default: $(AOBJS) $(COBJS) $(MAINOBJ)
 	$(CC) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(LDFLAGS)
 
-clean: 
+clean:
+	rm -f $(AOBJS) $(COBJS) $(MAINOBJ)
+
+maintainer-clean:
 	rm -f $(BIN) $(AOBJS) $(COBJS) $(MAINOBJ)
 
+help:
+	@cat ./BUILDING
