@@ -1,0 +1,35 @@
+
+Use the following shell variables to influence the build
+(defaults values given in brackets):
+
+DEBUG=1|(0)
+    Set to 1 to build the apps with: debug infos, asserts and 0-level
+    optimizations.
+
+LVGL_USE_SDL=(1)|0
+    To build the apps for PC, using SDL2 emulation of screen and input devices.
+
+LVGL_MINIMAL_BUILD=(0)|1
+    By default the build infrastructure compiles all the source files in the
+    project and then links the app with all produced object files. This
+    ensures taht all the code compiles but slows down the build and generates a
+    bigger than necessary executable.
+    Setting LVGL_MINIMAL_BUILD=1 selects only the necessary object files
+    for linking, reducing considerably the size of the app.
+    NOTE: Though not yet fully implemented (only 'lv_examples' is optimized) this
+          value does have a tangible positive effect on build's speed and size.
+
+
+Examples (default settings which can be omitted are given in []):
+-----------------------------------------------------------------
+To build a release version of the 'demo' app on PC with SDL2 emulation:
+  $ make clean all
+
+To build the 'demo' app on PC with all objects, with SDL2 emulation and
+with full debug info:
+  $ [LVGL_MINIMAL_BUILD=0] [LVGL_USE_SDL=1] DEBUG=1 make clean all
+
+To build a 'lean' demo app for your architecture, i.e. NOT linking un-
+needed objects, NOT including gcc debug infos and NOT using SDL2 emulation:
+  $ LVGL_MINIMAL_BUILD=1  LVGL_USE_SDL=0  [DEBUG=0] make clean all 
+

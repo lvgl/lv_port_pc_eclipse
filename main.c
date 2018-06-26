@@ -7,15 +7,29 @@
 /*********************
  *      INCLUDES
  *********************/
-#include <stdlib.h>
+/* INCLUDE THE CONF FILES FIRST! THEY SET UP DEFINES AND SYSTEM SETTINGS! */
+#include "lv_conf.h"
+#include "lv_ex_conf.h"
+
 #include <unistd.h>
 #include <SDL2/SDL.h>
 #include "lvgl/lvgl.h"
+#if USE_MONITOR
 #include "lv_drivers/display/monitor.h"
+#endif
+#if USE_MOUSE
 #include "lv_drivers/indev/mouse.h"
+#endif
+#if USE_KEYBOARD || USE_LV_DEMO
+#include "lv_drivers/indev/keyboard.h"
+#endif
 #include "lv_examples/lv_apps/demo/demo.h"
+/*
+If trying the benchmark, tutorials or tests - use one of these headers instead of demo.h!
 #include "lv_examples/lv_apps/benchmark/benchmark.h"
 #include "lv_examples/lv_tests/lv_test_theme/lv_test_theme.h"
+#include "lv_examples/lv_tutorial/10_keyboard/lv_tutorial_keyboard.h"
+*/
 
 /*********************
  *      DEFINES
@@ -29,6 +43,7 @@
  *  STATIC PROTOTYPES
  **********************/
 static void hal_init(void);
+static void hal_deinit(void);
 static int tick_thread(void *data);
 
 /**********************
@@ -38,6 +53,11 @@ static int tick_thread(void *data);
 /**********************
  *      MACROS
  **********************/
+
+/**********************
+ *   GLOBAL VARIABLES
+ **********************/
+lv_indev_t * g_kbd_dev = NULL;  /*The keyboard handler*/
 
 /**********************
  *   GLOBAL FUNCTIONS
@@ -52,7 +72,7 @@ int main(int argc, char** argv)
     hal_init();
 
     /*Load a demo*/
-    demo_create();
+    demo_create(g_kbd_dev);
 
     /*Try the benchmark to see how fast is your GUI*/
     //benchmark_create();
@@ -60,12 +80,17 @@ int main(int argc, char** argv)
     /*Check the themes too*/
     //lv_test_theme_1(lv_theme_night_init(210, NULL));
 
-    while(1) {
+    /*Or try a tutorial (Enable USE_LV_TUTORIALS in lv_ex_conf.h)*/
+    //lv_tutorial_keyboard(g_kbd_dev);
+
+    while(!g_sdl_quit_qry) {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
         usleep(1000);       /*Just to let the system breath*/
     }
+
+    hal_deinit();
 
     return 0;
 }
@@ -74,11 +99,32 @@ int main(int argc, char** argv)
  *   STATIC FUNCTIONS
  **********************/
 
+static int sdl_quit_filter(void * userdata, SDL_Event * event)
+{
+    (void)userdata;
+
+    if(event->type == SDL_QUIT) {
+        g_sdl_quit_qry = true;
+    }
+
+    return 1;
+}
+
 /**
- * Initialize the Hardware Abstraction Layer (HAL) for the Littlev graphics library
+ * Initialize the Hardware Abstraction Layer (HAL) for the Littlev graphics library.
+ * In our case - since we use SDL2 code in monitor.c, keyboard.c and mouse.c - this
+ * means initialize our SDL2-based simulation.
+ * When writing an implementation for your board you should use hal_init to
+ * initialize your hardware properly (set pins, registers, frequiencies, etc).
  */
 static void hal_init(void)
 {
+    /*Initialize the SDL*/
+    SDL_Init(SDL_INIT_VIDEO);
+
+    SDL_SetEventFilter(sdl_quit_filter, NULL);
+
+#if USE_MONITOR
     /* Add a display
      * Use the 'monitor' driver which creates window on PC's monitor to simulate a display*/
     monitor_init();
@@ -88,7 +134,19 @@ static void hal_init(void)
     disp_drv.disp_fill = monitor_fill;
     disp_drv.disp_map = monitor_map;
     lv_disp_drv_register(&disp_drv);
+#endif
 
+#if USE_KEYBOARD
+    /* Use the 'keyboard' driver which reads the PC's keyboard*/
+    keyboard_init();
+    lv_indev_drv_t kbd_drv;
+    lv_indev_drv_init(&kbd_drv);          /*Basic initialization*/
+    kbd_drv.type = LV_INDEV_TYPE_KEYPAD;
+    kbd_drv.read = keyboard_read;         /*This function will be called periodically (by the library) to read the keyboard*/
+    g_kbd_dev = lv_indev_drv_register(&kbd_drv);
+#endif
+
+#if USE_MOUSE
     /* Add the mouse (or touchpad) as input device
      * Use the 'mouse' driver which reads the PC's mouse*/
     mouse_init();
@@ -97,10 +155,13 @@ static void hal_init(void)
     indev_drv.type = LV_INDEV_TYPE_POINTER;
     indev_drv.read = mouse_read;         /*This function will be called periodically (by the library) to get the mouse position and state*/
     lv_indev_drv_register(&indev_drv);
+#endif
 
     /* Tick init.
-     * You have to call 'lv_tick_handler()' in every milliseconds
-     * Create an SDL thread to do this*/
+     * You have to call 'lv_tick_inc()' every millisecond.
+     * Create an SDL thread to do this. This really belongs in one of
+     * the impl files, e.g. in monitor.c but is left here to bring
+     * the user's attention to the importance of calling lv_tick_inc!*/
     SDL_CreateThread(tick_thread, "tick", NULL);
 }
 
@@ -117,4 +178,17 @@ static int tick_thread(void *data)
     }
 
     return 0;
+}
+
+/**
+ * Deinitialize LvGL's HAL layer.
+ * In our case - since we use SDL2 in 'monitor.c' to simulate some
+ * imaginary hardware - this means deinit the SDL2 lib.
+ * When writing an implementation for your board you should use hal_deinit
+ * to properly deinit your hardware (if necessary). In reality, embedded systems
+ * often run only one application and there may be no need for deinit.
+ */
+static void hal_deinit(void)
+{
+    monitor_deinit();
 }
