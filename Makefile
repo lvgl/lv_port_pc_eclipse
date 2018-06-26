@@ -39,6 +39,25 @@ include ./lvgl/lv_misc/lv_fonts/lv_fonts.mk
 include ./lvgl/lv_misc/lv_misc.mk
 include ./lvgl/lv_themes/lv_themes.mk
 include ./lvgl/lv_draw/lv_draw.mk
+include ./lvgl/lv_sys/lv_sys.mk
+
+# Include corresponding lv_sys sources. For now only a generic
+# POSIX system is allowed as host OS. This should accommodate
+# all Linux-es and most other UNIX flavors. Other OS-es
+# can be implemented in the future, if needed (see examples below).
+LVGL_HOST_OS ?= POSIX
+ifeq ($(LVGL_HOST_OS),POSIX)
+	include ./lvgl/lv_sys/posix/lv_sys_posix_generic.mk
+else
+$(error "You must set variabel LVGL_HOST_OS. Use "POSIX" if unsure.")
+#ifeq ($(LVGL_HOST_OS),DARWIN)
+#	include ./lvgl/lv_sys/macos/lv_sys_macos.mk
+#else
+#ifeq ($(LVGL_HOST_OS),ANDROID)
+#	include ./lvgl/lv_sys/android/lv_sys_android.mk
+#endif
+#endif
+endif
 
 #DRIVERS
 include ./lv_drivers/display/display.mk
@@ -113,8 +132,8 @@ OBJS = $(AOBJS) $(COBJS)
 all: default
 
 %.o: %.c
-	@$(CC)  $(CFLAGS) -c $< -o $@
 	@echo "CC $<"
+	$(CC)  $(CFLAGS) -I$(LVGL_DIR) -c $< -o $@
 
 default: $(AOBJS) $(COBJS) $(MAINOBJ)
 	$(CC) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(LDFLAGS)

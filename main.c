@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <SDL2/SDL.h>
 #include "lvgl/lvgl.h"
+#include "lvgl/lv_sys/lv_sys.h"
 #if USE_MONITOR
 #include "lv_drivers/display/monitor.h"
 #endif
@@ -65,6 +66,9 @@ lv_indev_t * g_kbd_dev = NULL;  /*The keyboard handler*/
 
 int main(int argc, char** argv)
 {
+    /*Init OS-dependent settings, provide 'atexit' user cleanup func (ignored if NULL)*/
+    lv_sys_init(NULL);  /*You may pass in hal_deinit here*/
+
     /*Initialize LittlevGL*/
     lv_init();
 
