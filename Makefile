@@ -11,7 +11,7 @@ LDFLAGS += -lm
 LVGL_USE_SDL ?= 1
 ifeq "$(LVGL_USE_SDL)" "1"
 # The CFLAGS to build a SDL2-based app.
-CFLAGS += -DUSE_MONITOR=1 -DUSE_MOUSE=1 -DUSE_KEYBOARD=1
+CFLAGS += -DUSE_SDL2=1 -DUSE_MONITOR=1 -DUSE_MOUSE=1 -DUSE_KEYBOARD=1
 # Add libSDL2 to linker flags 
 LDFLAGS += -lSDL2
 endif				# if LVGL_USE_SDL

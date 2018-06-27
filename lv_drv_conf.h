@@ -76,7 +76,6 @@
 /*-------------------
  *  Monitor of PC
  *-------------------*/
-#define USE_MONITOR         1
 #if USE_MONITOR
 #define MONITOR_HOR_RES     LV_HOR_RES
 #define MONITOR_VER_RES     LV_VER_RES
@@ -135,7 +134,6 @@
 /*-----------------------------------------
  *  Linux frame buffer device (/dev/fbx)
  *-----------------------------------------*/
-#define USE_FBDEV           0
 #if USE_FBDEV != 0
 #define FBDEV_PATH          "/dev/fb0"
 #endif
@@ -179,7 +177,6 @@
 /*---------------------------------------
  * Mouse or touchpad on PC (using SDL)
  *-------------------------------------*/
-#define USE_MOUSE       1
 #if USE_MOUSE
 /*No settings*/
 #endif
@@ -195,7 +192,6 @@
 /*-------------------------------
  *   Keyboard of a PC (using SDL)
  *------------------------------*/
-#define USE_KEYBOARD    1
 #if USE_KEYBOARD
 /*No settings*/
 #endif
