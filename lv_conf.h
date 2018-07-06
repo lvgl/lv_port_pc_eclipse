@@ -7,12 +7,12 @@
 #define LV_CONF_H
 
 /*===================
- * Dynamic memory
+   Dynamic memory
  *===================*/
 
 /* Memory size which will be used by the library
  * to store the graphical objects and other data */
-#define LV_MEM_CUSTOM      0                /*1: use custom malloc/free, 0: use the built-in lv_mem_alloc/lv_mem_free*/
+#define LV_MEM_CUSTOM       0               /*1: use custom malloc/free, 0: use the built-in lv_mem_alloc/lv_mem_free*/
 #if LV_MEM_CUSTOM == 0
 #define LV_MEM_SIZE    (32U * 1024U)        /*Size memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
 #define LV_MEM_ATTR                         /*Complier prefix for big array declaration*/
@@ -28,7 +28,7 @@
  *===================*/
 
 /* Horizontal and vertical resolution of the library.*/
-#define LV_HOR_RES          (640)
+#define LV_HOR_RES          (720)
 #define LV_VER_RES          (480)
 #define LV_DPI              100
 
@@ -36,7 +36,8 @@
  * Required for buffered drawing, opacity and anti-aliasing
  * VDB makes the double buffering, you don't need to deal with it!
  * Typical size: ~1/10 screen */
-#define LV_VDB_SIZE         (20 * LV_HOR_RES)  /*Size of VDB in pixel count (1/10 screen size is good for first)*/
+#define LV_VDB_SIZE         ((LV_VER_RES * LV_HOR_RES)>>3)  /*Size of VDB in pixel count (1/10 screen size is good for first)*/
+
 #define LV_VDB_ADR          0                  /*Place VDB to a specific address (e.g. in external RAM) (0: allocate automatically into RAM)*/
 
 /* Use two Virtual Display buffers (VDB) parallelize rendering and flushing (optional)
@@ -45,7 +46,7 @@
 #define LV_VDB2_ADR         0       /*Place VDB2 to a specific address (e.g. in external RAM) (0: allocate automatically into RAM)*/
 
 /* Enable anti-aliasing (lines, and radiuses will be smoothed) */
-#define LV_ANTIALIAS        1       /*1: Enable anti-aliasing*/
+#define LV_ANTIALIAS        (LV_VDB_SIZE != 0)       /*1: Enable anti-aliasing*/
 
 /*Screen refresh settings*/
 #define LV_REFR_PERIOD      50    /*Screen refresh period in milliseconds*/
@@ -55,7 +56,7 @@
    System settings
  *=================*/
 
-#define LV_SIGNALS                      1   /*Setup signal handlers (need a POSIX system)*/
+#define USE_POSIX_SIGNALS   1   /*Setup signal handlers (need a POSIX system)*/
 
 /*=================
    Misc. setting
@@ -88,7 +89,7 @@
 /*Compiler settings*/
 #define LV_ATTRIBUTE_TICK_INC                 /* Define a custom attribute to `lv_tick_inc` function */
 #define LV_ATTRIBUTE_TASK_HANDLER             /* Define a custom attribute to `lv_task_handler` function */
-#define LV_COMPILER_VLA_SUPPORTED    1        /* 1: Variable length array is supported*/
+#define LV_COMPILER_VLA_SUPPORTED    0        /* 1: Variable length array is supported*/
 
 /*================
  *  THEME USAGE
