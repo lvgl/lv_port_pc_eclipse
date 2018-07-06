@@ -12,7 +12,7 @@ LVGL_USE_SDL ?= 1
 ifeq "$(LVGL_USE_SDL)" "1"
 # The CFLAGS to build a SDL2-based app.
 CFLAGS += -DUSE_MONITOR=1 -DUSE_MOUSE=1 -DUSE_KEYBOARD=1
-# Add libSDL2 to linker flags 
+# Add libSDL2 to linker flags
 LDFLAGS += -lSDL2
 endif				# if LVGL_USE_SDL
 
@@ -90,6 +90,7 @@ include ./lv_examples/lv_tutorial/6_images/lv_tutorial_images.mk
 include ./lv_examples/lv_tutorial/7_fonts/lv_tutorial_fonts.mk
 include ./lv_examples/lv_tutorial/8_animations/lv_tutorial_animations.mk
 include ./lv_examples/lv_tutorial/9_responsive/lv_tutorial_responsive.mk
+include ./lv_examples/lv_tutorial/10_keyboard/lv_tutorial_keyboard.mk
 
 else
 
@@ -113,8 +114,12 @@ OBJS = $(AOBJS) $(COBJS)
 all: default
 
 %.o: %.c
-	@$(CC)  $(CFLAGS) -c $< -o $@
 	@echo "CC $<"
+ifeq "$(DEBUG)" "1"
+	$(CC)  $(CFLAGS) -c $< -o $@
+else
+	@$(CC)  $(CFLAGS) -c $< -o $@
+endif
 
 default: $(AOBJS) $(COBJS) $(MAINOBJ)
 	$(CC) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(LDFLAGS)

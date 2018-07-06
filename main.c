@@ -58,6 +58,7 @@ static int tick_thread(void *data);
  *   GLOBAL VARIABLES
  **********************/
 lv_indev_t * g_kbd_dev = NULL;  /*The keyboard handler*/
+bool g_sdl_quit_qry = false;
 
 /**********************
  *   GLOBAL FUNCTIONS
@@ -191,5 +192,4 @@ static int tick_thread(void *data)
  */
 static void hal_deinit(void)
 {
-    monitor_deinit();
 }
