@@ -1,6 +1,6 @@
 /**
  * @file lv_drv_conf.h
- * 
+ *
  */
 
 #ifndef LV_DRV_CONF_H
@@ -152,11 +152,11 @@
 #define XPT2046_HOR_RES     480
 #define XPT2046_VER_RES     320
 #define XPT2046_X_MIN       200
-#define XPT2046_Y_MIN       200 
+#define XPT2046_Y_MIN       200
 #define XPT2046_X_MAX       3800
 #define XPT2046_Y_MAX       3800
-#define XPT2046_AVG         4 
-#define XPT2046_INV         0 
+#define XPT2046_AVG         4
+#define XPT2046_INV         0
 #endif
 
 /*-----------------
@@ -185,11 +185,11 @@
 #endif
 
 /*-------------------------------------------------
- * Mouse as HID device (for Linux based systems)
+ * Mouse or touchpad as evdev interface (for Linux based systems)
  *------------------------------------------------*/
-#define USE_MOUSE_HID    0
-#if USE_MOUSE_HID
-#define MOUSE_HID_DEV   "/dev/input/event0"
+#define USE_EVDEV    0
+#if USE_EVDEV
+#define EVDEV_NAME   "/dev/input/event0"
 #endif
 
 /*-------------------------------
@@ -201,4 +201,3 @@
 #endif
 
 #endif  /*LV_DRV_CONF_H*/
-

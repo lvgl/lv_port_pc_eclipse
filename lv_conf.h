@@ -1,6 +1,6 @@
 /**
  * @file lv_conf.h
- * 
+ *
  */
 
 #ifndef LV_CONF_H
@@ -82,6 +82,7 @@
 /*Compiler attributes*/
 #define LV_ATTRIBUTE_TICK_INC                 /* Define a custom attribute to `lv_tick_inc` function */
 #define LV_ATTRIBUTE_TASK_HANDLER             /* Define a custom attribute to `lv_task_handler` function */
+#define LV_COMPILER_VLA_SUPPORTED    0        /* 1: Variable length array is supported*/
 
 /*================
  *  THEME USAGE
@@ -130,7 +131,7 @@
 #define LV_OBJ_FREE_PTR         1           /*Enable the free pointer attribute*/
 
 /*==================
- *  LV OBJ X USAGE 
+ *  LV OBJ X USAGE
  *================*/
 /*
  * Documentation of the object types: https://littlevgl.com/object-types
