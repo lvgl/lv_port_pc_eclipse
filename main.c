@@ -13,9 +13,13 @@
 #include "lvgl/lvgl.h"
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/mouse.h"
+#include "lv_drivers/indev/keyboard.h"
 #include "lv_examples/lv_apps/demo/demo.h"
 #include "lv_examples/lv_apps/benchmark/benchmark.h"
 #include "lv_examples/lv_tests/lv_test_theme/lv_test_theme.h"
+#include "lv_examples/lv_tutorial/10_keyboard/lv_tutorial_keyboard.h"
+
+#include "upng/upng.h"
 
 /*********************
  *      DEFINES
@@ -30,10 +34,12 @@
  **********************/
 static void hal_init(void);
 static int tick_thread(void *data);
+void mon_cb(uint32_t t, uint32_t p);
 
 /**********************
  *  STATIC VARIABLES
  **********************/
+static lv_indev_t * kb_indev;
 
 /**********************
  *      MACROS
@@ -42,6 +48,13 @@ static int tick_thread(void *data);
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
+
+
+bool clock_design(lv_obj_t * clock, const lv_area_t * mask, lv_design_mode_t mode)
+{
+
+	return false;
+}
 
 int main(int argc, char** argv)
 {
@@ -55,10 +68,17 @@ int main(int argc, char** argv)
     demo_create();
 
     /*Try the benchmark to see how fast is your GUI*/
-    //benchmark_create();
+//    benchmark_create();
 
     /*Check the themes too*/
-    //lv_test_theme_1(lv_theme_night_init(210, NULL));
+//    lv_test_theme_1(lv_theme_night_init(210, NULL));
+
+
+    /*A keyboard control example*/
+//    lv_tutorial_keyboard(kb_indev);
+
+    lv_test_group_1();
+
 
     while(1) {
         /* Periodically call the lv_task handler.
@@ -82,6 +102,18 @@ int main(int argc, char** argv)
     }
 
     return 0;
+}
+
+
+
+
+
+
+void mon_cb(uint32_t t, uint32_t p)
+{
+	printf("time: %d, px: %d\n", t, p);
+
+
 }
 
 /**********************
@@ -112,8 +144,17 @@ static void hal_init(void)
     indev_drv.read = mouse_read;         /*This function will be called periodically (by the library) to get the mouse position and state*/
     lv_indev_drv_register(&indev_drv);
 
+    /* If the PC keyboard driver is enabled in`lv_drv_conf.h`
+     * add this as an input device. It might be used in some examples. */
+#if USE_KEYBOARD
+    lv_indev_drv_t kb_drv;
+    kb_drv.type = LV_INDEV_TYPE_KEYPAD;
+    kb_drv.read = keyboard_read;
+    kb_indev = lv_indev_drv_register(&kb_drv);
+#endif
+
     /* Tick init.
-     * You have to call 'lv_tick_handler()' in every milliseconds
+     * You have to call 'lv_tick_inc()' in every milliseconds
      * Create an SDL thread to do this*/
     SDL_CreateThread(tick_thread, "tick", NULL);
 }

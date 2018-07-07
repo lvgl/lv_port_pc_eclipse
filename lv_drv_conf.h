@@ -80,6 +80,7 @@
 #if USE_MONITOR
 #define MONITOR_HOR_RES     LV_HOR_RES
 #define MONITOR_VER_RES     LV_VER_RES
+#define MONITOR_UPSCALE		1			/*Draw 2x2 pixels instead of one*/
 #endif
 
 /*----------------
@@ -135,7 +136,7 @@
 /*-----------------------------------------
  *  Linux frame buffer device (/dev/fbx)
  *-----------------------------------------*/
-#define USE_FBDEV           0
+#define USE_FBDEV           1
 #if USE_FBDEV != 0
 #define FBDEV_PATH          "/dev/fb0"
 #endif

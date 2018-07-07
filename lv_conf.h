@@ -1,6 +1,6 @@
 /**
  * @file lv_conf.h
- * 
+ *
  */
 
 #ifndef LV_CONF_H
@@ -36,7 +36,7 @@
  * Required for buffered drawing, opacity and anti-aliasing
  * VDB makes the double buffering, you don't need to deal with it!
  * Typical size: ~1/10 screen */
-#define LV_VDB_SIZE         (20 * LV_HOR_RES)  /*Size of VDB in pixel count (1/10 screen size is good for first)*/
+#define LV_VDB_SIZE         (30 * LV_HOR_RES)  /*Size of VDB in pixel count (1/10 screen size is good for first)*/
 #define LV_VDB_ADR          0                  /*Place VDB to a specific address (e.g. in external RAM) (0: allocate automatically into RAM)*/
 
 /* Use two Virtual Display buffers (VDB) parallelize rendering and flushing (optional)
@@ -64,7 +64,7 @@
 #define LV_INDEV_LONG_PRESS_REP_TIME    100                    /*Repeated trigger period in long press [ms] */
 
 /*Color settings*/
-#define LV_COLOR_DEPTH     16                     /*Color depth: 1/8/16/24*/
+#define LV_COLOR_DEPTH     24                     /*Color depth: 1/8/16/24*/
 #define LV_COLOR_TRANSP    LV_COLOR_LIME          /*Images pixels with this color will not be drawn (with chroma keying)*/
 
 /*Text settings*/
@@ -84,6 +84,16 @@
 #define LV_ATTRIBUTE_TASK_HANDLER             /* Define a custom attribute to `lv_task_handler` function */
 #define LV_COMPILER_VLA_SUPPORTED    1        /* 1: Variable length array is supported*/
 
+/*Log settings*/
+#define USE_LV_LOG		1	/*Enable/disable the log module*/
+#if USE_LV_LOG
+#define LV_LOG_INFO		1	/*1: Log a lot of runtime information*/
+#define LV_LOG_WARN		1	/*1: Log is something unexpected happens but succesfully handled*/
+#define LV_LOG_ERROR	1	/*1: Log critical error*/
+#define LV_LOG_USER		1	/*1: Log user defined/user level things */
+#define LV_LOG_PRINTF	1	/*1: Print the log with 'printf'; 0: user need to register a callback*/
+#endif  /*USE_LV_LOG*/
+
 /*================
  *  THEME USAGE
  *================*/
@@ -101,18 +111,16 @@
 
 /* More info about fonts: https://littlevgl.com/basics#fonts
  * To enable a built-in font use 1,2,4 or 8 values
- * which will determine the bit-per-pixel */
-#define LV_FONT_DEFAULT        &lv_font_dejavu_20     /*Always set a default font from the built-in fonts*/
-
+ * which will determine the bit-per-pixel (0 to disable the font)*/
 #define USE_LV_FONT_DEJAVU_10              0
 #define USE_LV_FONT_DEJAVU_10_LATIN_SUP    0
 #define USE_LV_FONT_DEJAVU_10_CYRILLIC     0
 #define USE_LV_FONT_SYMBOL_10              0
 
-#define USE_LV_FONT_DEJAVU_20              4
+#define USE_LV_FONT_DEJAVU_20              1
 #define USE_LV_FONT_DEJAVU_20_LATIN_SUP    0
 #define USE_LV_FONT_DEJAVU_20_CYRILLIC     0
-#define USE_LV_FONT_SYMBOL_20              4
+#define USE_LV_FONT_SYMBOL_20              1
 
 #define USE_LV_FONT_DEJAVU_30              0
 #define USE_LV_FONT_DEJAVU_30_LATIN_SUP    0
@@ -124,6 +132,10 @@
 #define USE_LV_FONT_DEJAVU_40_CYRILLIC     0
 #define USE_LV_FONT_SYMBOL_40              0
 
+#define LV_FONT_CUSTOM_DECLARE LV_FONT_DECLARE(synch) \
+							   LV_FONT_DECLARE(uniscii) \
+
+#define LV_FONT_DEFAULT        &lv_font_dejavu_20     /*Always set a default font from the built-in fonts*/
 /*===================
  *  LV_OBJ SETTINGS
  *==================*/
@@ -131,7 +143,7 @@
 #define LV_OBJ_FREE_PTR         1           /*Enable the free pointer attribute*/
 
 /*==================
- *  LV OBJ X USAGE 
+ *  LV OBJ X USAGE
  *================*/
 /*
  * Documentation of the object types: https://littlevgl.com/object-types
@@ -152,6 +164,9 @@
 
 /*Line (dependencies: -*/
 #define USE_LV_LINE     1
+
+/*Arc (dependencies: -)*/
+#define USE_LV_ARC      1
 
 /*******************
  * Container objects
@@ -201,7 +216,15 @@
 #define LV_TA_PWD_SHOW_TIME     1500    /*ms*/
 #endif
 
+/*Calendar (dependencies: -)*/
 #define USE_LV_CALENDAR 1
+
+/*Preload (dependencies: arc)*/
+#define USE_LV_PRELOAD      1
+#if USE_LV_PRELOAD != 0
+#define LV_PRELOAD_DEF_ARC_LENGTH	60  	/*[deg]*/
+#define LV_PRELOAD_DEF_SPIN_TIME	1000    /*[ms]*/
+#endif
 
 /*************************
  * User input objects
