@@ -65,6 +65,20 @@ int main(int argc, char** argv)
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
         usleep(1000);       /*Just to let the system breath*/
+
+        #if __APPLE__ && TARGET_OS_MAC
+            SDL_Event event;
+            
+            while(SDL_PollEvent(&event)) {
+                #if USE_MOUSE != 0
+                    mouse_handler(&event);
+                #endif
+
+                #if USE_KEYBOARD
+                    keyboard_handler(&event);
+                #endif
+            }
+        #endif
     }
 
     return 0;
