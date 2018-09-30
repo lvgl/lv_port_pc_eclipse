@@ -19,21 +19,18 @@ Using a PC simulator instead of an embedded hardware has got several advantages:
 
 Clone the PC project and the related sub modules:
 ```
-git clone https://github.com/littlevgl/proj_pc.git
-cd proj_pc
-git submodule update --init
+git clone --recursive https://github.com/littlevgl/pc_simulator.git
 ```
 
-or download it as zip [here](htp://www.gl.littlev.hu/download/pc_simulator_v5_0_0.zip).
+or download it as zip [here](https://littlevgl.com/download/pc_simulator_v5_1_1.zip).
 
 ### Install SDL
 You can download SDL from https://www.libsdl.org/
 
 On Linux you can install it via terminal:
-1. Find the current version of SDL2: `apt-cache search libsdl2` (e.g. libsdl2-2.0-0)
-2. Install SDL2: `sudo apt-get install libsdl2-2.0-0` (replace with the found version)
-3. Install SDL2 development package: `sudo apt-get install libsdl2-dev`
-4. If build essentials are not installed yet: `sudo apt-get install build-essential`
+```
+sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev
+```
 
 ### Install Eclipse CDT
 Download and install Eclipse CDT from  http://www.eclipse.org/cdt/
