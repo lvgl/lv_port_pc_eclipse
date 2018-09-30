@@ -44,6 +44,22 @@ Download and install Eclipse CDT from  http://www.eclipse.org/cdt/
 3. Browse the root directory of the project and click Finish
 4. Build your project and run it
 
+## Docker
+1. Build the docker container
+```
+docker build -t lvgl_simulator .
+```
+2. Run the docker container
+```
+docker run lvgl_simulator
+```
+GUI with docker is platform dependent. For example, on macOS you can follow 
+[this tutorial](https://cntnr.io/running-guis-with-docker-on-mac-os-x-a14df6a76efc) 
+and run a command similar to:
+```
+docker run -e DISPLAY=10.103.56.101:0 lvgl_simulator
+```
+
 ## Contributing
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
