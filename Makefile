@@ -2,7 +2,8 @@
 # Makefile
 #
 CC = gcc
-CFLAGS = -Wall -Wshadow -Wundef -Wmaybe-uninitialized
+CFLAGS = -Wall -Wshadow -Wundef -Wmaybe-uninitialized -fbounds-check
+
 CFLAGS += -O3 -g3 -I./
 LDFLAGS += -lSDL2 -lm
 BIN = demo
@@ -16,7 +17,7 @@ MAINSRC = main.c
 include ./lvgl/lv_core/lv_core.mk
 include ./lvgl/lv_hal/lv_hal.mk
 include ./lvgl/lv_objx/lv_objx.mk
-include ./lvgl/lv_misc/lv_fonts/lv_fonts.mk
+include ./lvgl/lv_fonts/lv_fonts.mk
 include ./lvgl/lv_misc/lv_misc.mk
 include ./lvgl/lv_themes/lv_themes.mk
 include ./lvgl/lv_draw/lv_draw.mk
@@ -69,6 +70,9 @@ include ./lv_examples/lv_tutorial/6_images/lv_tutorial_images.mk
 include ./lv_examples/lv_tutorial/7_fonts/lv_tutorial_fonts.mk
 include ./lv_examples/lv_tutorial/8_animations/lv_tutorial_animations.mk
 include ./lv_examples/lv_tutorial/9_responsive/lv_tutorial_responsive.mk
+
+#OTHERS
+CSRCS += mouse_cursor_icon.c
 
 OBJEXT ?= .o
 

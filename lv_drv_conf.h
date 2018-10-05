@@ -1,10 +1,15 @@
 /**
  * @file lv_drv_conf.h
- * 
+ *
  */
 
 #ifndef LV_DRV_CONF_H
 #define LV_DRV_CONF_H
+/*
+ * COPY THIS FILE AS lv_drv_conf.h
+ */
+
+#if 1 /*Set it to "1" to enable the content*/
 
 #include "lv_conf.h"
 
@@ -80,7 +85,9 @@
 #if USE_MONITOR
 #define MONITOR_HOR_RES     LV_HOR_RES
 #define MONITOR_VER_RES     LV_VER_RES
-#define MONITOR_UPSCALE		1			/*Draw 2x2 pixels instead of one*/
+#define MONITOR_ZOOM        1                       /* Scale window by this factor (useful when simulating small screens) */
+#define MONITOR_SDL_INCLUDE_PATH    <SDL2/SDL.h>    /*Eclipse: <SDL2/SDL.h>    Visual Studio: <SDL.h>*/
+#define MONITOR_VIRTUAL_MACHINE 0                   /*Different rendering should be used if running in a Virtual machine*/
 #endif
 
 /*----------------
@@ -153,11 +160,11 @@
 #define XPT2046_HOR_RES     480
 #define XPT2046_VER_RES     320
 #define XPT2046_X_MIN       200
-#define XPT2046_Y_MIN       200 
+#define XPT2046_Y_MIN       200
 #define XPT2046_X_MAX       3800
 #define XPT2046_Y_MAX       3800
-#define XPT2046_AVG         4 
-#define XPT2046_INV         0 
+#define XPT2046_AVG         4
+#define XPT2046_INV         0
 #endif
 
 /*-----------------
@@ -184,13 +191,20 @@
 #if USE_MOUSE
 /*No settings*/
 #endif
+/*-------------------------------------------
+ * Mousewheel as encoder on PC (using SDL)
+ *------------------------------------------*/
+#define USE_ENCODER     1
+#if USE_ENCODER
+/*No settings*/
+#endif
 
 /*-------------------------------------------------
- * Mouse as HID device (for Linux based systems)
+ * Mouse or touchpad as evdev interface (for Linux based systems)
  *------------------------------------------------*/
-#define USE_MOUSE_HID    0
-#if USE_MOUSE_HID
-#define MOUSE_HID_DEV   "/dev/input/event0"
+#define USE_EVDEV    0
+#if USE_EVDEV
+#define EVDEV_NAME   "/dev/input/event0"
 #endif
 
 /*-------------------------------
@@ -203,3 +217,4 @@
 
 #endif  /*LV_DRV_CONF_H*/
 
+#endif /*End of "Content enable"*/
