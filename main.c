@@ -148,7 +148,7 @@ static void hal_init(void)
     SDL_CreateThread(tick_thread, "tick", NULL);
 
     /* Optional:
-     * Create a memory monitor task which prints the memory usage in every second.*/
+     * Create a memory monitor task which prints the memory usage in periodically.*/
     lv_task_create(memory_monitor, 3000, LV_TASK_PRIO_LOWEST, NULL);
 }
 
