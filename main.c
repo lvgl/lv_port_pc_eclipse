@@ -146,10 +146,10 @@ static void hal_init(void)
     /* Add the keyboard as input device
 	 * Use the 'keyboard' driver which reads the PC's keyboard*/
     keyboard_init();
-	lv_indev_drv_init(&indev_drv);          /*Basic initialization*/
-	indev_drv.type = LV_INDEV_TYPE_KEYPAD;
-	indev_drv.read = keyboard_read;         /*This function will be called periodically (by the library) to get the keyboard state*/
-	lv_indev_t * keyboard_indev = lv_indev_drv_register(&indev_drv);
+    lv_indev_drv_init(&indev_drv);          /*Basic initialization*/
+    indev_drv.type = LV_INDEV_TYPE_KEYPAD;
+    indev_drv.read = keyboard_read;         /*This function will be called periodically (by the library) to get the keyboard state*/
+    lv_indev_t * keyboard_indev = lv_indev_drv_register(&indev_drv);
 
     /* Tick init.
      * You have to call 'lv_tick_inc()' in periodically to inform LittelvGL about how much time were elapsed
