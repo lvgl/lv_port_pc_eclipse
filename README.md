@@ -1,4 +1,4 @@
-# PC project for LittleV Graphics Library
+# PC project for Littlev Graphics Library
 
 The [Littlev Graphic Library](https://github.com/littlevgl/lvgl) is written mainly for microcontrollers and embedded systems however you can run the library **on your PC** as well without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system.
 
