@@ -14,12 +14,11 @@
 #include "lvgl/lvgl.h"
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/mouse.h"
-#include "lv_drivers/indev/encoder.h"
+#include "lv_drivers/indev/mousewheel.h"
 #include "lv_drivers/indev/keyboard.h"
 #include "lv_examples/lv_apps/demo/demo.h"
 #include "lv_examples/lv_apps/benchmark/benchmark.h"
-#include "lv_examples/lv_tests/lv_test_theme/lv_test_theme.h"
-#include "lv_examples/lv_tests/lv_test_group/lv_test_group.h"
+#include "lv_examples/lv_tests/lv_test.h"
 
 /*********************
  *      DEFINES
@@ -31,6 +30,7 @@
 #define SDL_APPLE
 # endif
 #endif
+
 
 /**********************
  *      TYPEDEFS
@@ -73,7 +73,7 @@ int main(int argc, char ** argv)
 //    benchmark_create();
 
     /*Check the themes too*/
-//    lv_test_theme_1(lv_theme_night_init(220, NULL));
+//    lv_test_theme_1(lv_theme_night_init(15, NULL));
 
     /* A keyboard and encoder (mouse wheel) control example*/
 //    lv_test_group_1();
@@ -83,7 +83,7 @@ int main(int argc, char ** argv)
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
 
-        usleep(10000);       /*Just to let the system breath*/
+        usleep(5 * 1000);       /*Just to let the system breath*/
 
         #ifdef SDL_APPLE
             SDL_Event event;
@@ -97,8 +97,8 @@ int main(int argc, char ** argv)
                     keyboard_handler(&event);
                 #endif
 
-                #if USE_ENCODER != 0
-                    encoder_handler(&event);
+                #if USE_MOUSEWHEEL != 0
+                    mousewheel_handler(&event);
                 #endif
             }
         #endif
@@ -111,7 +111,6 @@ int main(int argc, char ** argv)
 /**********************
  *   STATIC FUNCTIONS
  **********************/
-
 
 /**
  * Initialize the Hardware Abstraction Layer (HAL) for the Littlev graphics library
@@ -150,7 +149,7 @@ static void hal_init(void)
 
     /* Optional:
      * Create a memory monitor task which prints the memory usage in periodically.*/
-    lv_task_create(memory_monitor, 3000, LV_TASK_PRIO_LOWEST, NULL);
+    lv_task_create(memory_monitor, 3000, LV_TASK_PRIO_MID, NULL);
 }
 
 /**
