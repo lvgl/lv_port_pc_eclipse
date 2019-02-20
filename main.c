@@ -20,6 +20,8 @@
 #include "lv_examples/lv_apps/benchmark/benchmark.h"
 #include "lv_examples/lv_tests/lv_test.h"
 
+#include "lvgl/lv_misc/lv_math.h"
+
 /*********************
  *      DEFINES
  *********************/
@@ -46,6 +48,8 @@ static void memory_monitor(void * param);
 /**********************
  *  STATIC VARIABLES
  **********************/
+static lv_disp_t  * disp1;
+static lv_disp_t  * disp2;
 
 /**********************
  *      MACROS
@@ -54,6 +58,7 @@ static void memory_monitor(void * param);
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
+
 
 int main(int argc, char ** argv)
 {
@@ -66,7 +71,8 @@ int main(int argc, char ** argv)
     /*Initialize the HAL (display, input devices, tick) for LittlevGL*/
     hal_init();
 
-    /*Load a demo*/
+    /*Load a demo on disp1*/
+    lv_disp_set_default(disp1);
     demo_create();
 
     /*Try the benchmark to see how fast your GUI is*/
@@ -78,12 +84,14 @@ int main(int argc, char ** argv)
     /* A keyboard and encoder (mouse wheel) control example*/
 //    lv_test_group_1();
 
+    /*Run the stress test on disp2*/
+    lv_disp_set_default(disp2);
+    lv_test_stress_1();
+
     while(1) {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
-
-        usleep(5 * 1000);       /*Just to let the system breath*/
 
         #ifdef SDL_APPLE
             SDL_Event event;
@@ -117,15 +125,32 @@ int main(int argc, char ** argv)
  */
 static void hal_init(void)
 {
-    /* Add a display
-     * Use the 'monitor' driver which creates window on PC's monitor to simulate a display*/
+    /* Use the 'monitor' driver which creates window on PC's monitor to simulate a display*/
     monitor_init();
+
+    /*Create a display buffer*/
+    static lv_disp_buf_t disp_buf1;
+    static lv_color_t buf1_1[480*10];
+    lv_disp_buf_init(&disp_buf1, buf1_1, NULL, 480*10);
+
+    /*Create a display*/
     lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv);            /*Basic initialization*/
-    disp_drv.disp_flush = monitor_flush;    /*Used when `LV_VDB_SIZE != 0` in lv_conf.h (buffered drawing)*/
-    disp_drv.disp_fill = monitor_fill;      /*Used when `LV_VDB_SIZE == 0` in lv_conf.h (unbuffered drawing)*/
-    disp_drv.disp_map = monitor_map;        /*Used when `LV_VDB_SIZE == 0` in lv_conf.h (unbuffered drawing)*/
-    lv_disp_drv_register(&disp_drv);
+    disp_drv.buffer = &disp_buf1;
+    disp_drv.flush_cb = monitor_flush;    /*Used when `LV_VDB_SIZE != 0` in lv_conf.h (buffered drawing)*/
+    disp1 = lv_disp_drv_register(&disp_drv);
+
+    /*Create an other buffer for true double buffering*/
+    static lv_disp_buf_t disp_buf2;
+    static lv_color_t buf2_1[480*320];
+    static lv_color_t buf2_2[480*320];
+    lv_disp_buf_init(&disp_buf2, buf2_1, buf2_2, 480*32);
+
+    /*Create an other display*/
+    lv_disp_drv_init(&disp_drv);            /*Basic initialization*/
+    disp_drv.buffer = &disp_buf2;
+    disp_drv.flush_cb = monitor_flush2;    /*Used when `LV_VDB_SIZE != 0` in lv_conf.h (buffered drawing)*/
+    disp2 = lv_disp_drv_register(&disp_drv);
 
     /* Add the mouse as input device
      * Use the 'mouse' driver which reads the PC's mouse*/
@@ -133,12 +158,12 @@ static void hal_init(void)
     lv_indev_drv_t indev_drv;
     lv_indev_drv_init(&indev_drv);          /*Basic initialization*/
     indev_drv.type = LV_INDEV_TYPE_POINTER;
-    indev_drv.read = mouse_read;         /*This function will be called periodically (by the library) to get the mouse position and state*/
+    indev_drv.read_cb = mouse_read;         /*This function will be called periodically (by the library) to get the mouse position and state*/
     lv_indev_t * mouse_indev = lv_indev_drv_register(&indev_drv);
 
     /*Set a cursor for the mouse*/
     LV_IMG_DECLARE(mouse_cursor_icon);                          /*Declare the image file.*/
-    lv_obj_t * cursor_obj =  lv_img_create(lv_scr_act(), NULL); /*Create an image object for the cursor */
+    lv_obj_t * cursor_obj =  lv_img_create(lv_disp_get_scr_act(NULL), NULL); /*Create an image object for the cursor */
     lv_img_set_src(cursor_obj, &mouse_cursor_icon);             /*Set the image source*/
     lv_indev_set_cursor(mouse_indev, cursor_obj);               /*Connect the image  object to the driver*/
 
