@@ -1,13 +1,12 @@
 #
 # Makefile
 #
-CC = gcc
-CFLAGS = -Wall -Wshadow -Wundef -Wmaybe-uninitialized -fbounds-check
+CC ?= gcc
+LVGL_DIR ?= ${shell pwd}
 
-LVGL_DIR = ${shell pwd}
-
-CFLAGS += -O3 -g3 -I$(LVGL_DIR)/
+CFLAGS ?= -Wall -Wshadow -Wundef -Wmaybe-uninitialized -fbounds-check -O3 -I$(LVGL_DIR)/
 LDFLAGS += -lSDL2 -lm
+
 BIN = demo
 
 
@@ -32,7 +31,7 @@ OBJS = $(AOBJS) $(COBJS)
 
 ## MAINOBJ -> OBJFILES
 
-all: clean default
+all: default
 
 %.o: %.c
 	@$(CC)  $(CFLAGS) -c $< -o $@
