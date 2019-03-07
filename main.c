@@ -82,11 +82,11 @@ int main(int argc, char ** argv)
 //    lv_test_theme_1(lv_theme_night_init(15, NULL));
 
     /* A keyboard and encoder (mouse wheel) control example*/
-//    lv_test_group_1();
 
     /*Run the stress test on disp2*/
     lv_disp_set_default(disp2);
-    lv_test_stress_1();
+    lv_test_group_1();
+//    lv_test_stress_1();
 
     while(1) {
         /* Periodically call the lv_task handler.
