@@ -83,15 +83,15 @@ int main(int argc, char ** argv)
 
     /* A keyboard and encoder (mouse wheel) control example*/
 
-    /*Run the stress test on disp2*/
+    /*Do something on disp2*/
     lv_disp_set_default(disp2);
     lv_test_group_1();
-//    lv_test_stress_1();
 
     while(1) {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
+        usleep(10*1000);
 
         #ifdef SDL_APPLE
             SDL_Event event;
@@ -110,6 +110,7 @@ int main(int argc, char ** argv)
                 #endif
             }
         #endif
+
 
     }
 
@@ -140,11 +141,11 @@ static void hal_init(void)
     disp_drv.flush_cb = monitor_flush;    /*Used when `LV_VDB_SIZE != 0` in lv_conf.h (buffered drawing)*/
     disp1 = lv_disp_drv_register(&disp_drv);
 
-    /*Create an other buffer for true double buffering*/
+    /*Create an other buffer for double buffering*/
     static lv_disp_buf_t disp_buf2;
-    static lv_color_t buf2_1[480*320];
-    static lv_color_t buf2_2[480*320];
-    lv_disp_buf_init(&disp_buf2, buf2_1, buf2_2, 480*32);
+    static lv_color_t buf2_1[480*10];
+    static lv_color_t buf2_2[480*10];
+    lv_disp_buf_init(&disp_buf2, buf2_1, buf2_2, 480*10);
 
     /*Create an other display*/
     lv_disp_drv_init(&disp_drv);            /*Basic initialization*/
@@ -187,8 +188,8 @@ static int tick_thread(void * data)
     (void)data;
 
     while(1) {
-        SDL_Delay(5);   /*Sleep for 5 millisecond*/
-        lv_tick_inc(5); /*Tell LittelvGL that 5 milliseconds were elapsed*/
+        SDL_Delay(1);   /*Sleep for 33 millisecond*/
+        lv_tick_inc(1); /*Tell LittelvGL that 3 milliseconds were elapsed*/
     }
 
     return 0;

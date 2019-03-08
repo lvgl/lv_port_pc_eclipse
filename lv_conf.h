@@ -3,6 +3,10 @@
  *
  */
 
+/*
+ * COPY THIS FILE AS lv_conf.h
+ */
+
 #if 1 /*Set it to "1" to enable content*/
 
 
@@ -42,7 +46,7 @@
  * to store the graphical objects and other data */
 #define LV_MEM_CUSTOM      0                /*1: use custom malloc/free, 0: use the built-in lv_mem_alloc/lv_mem_free*/
 #if LV_MEM_CUSTOM == 0
-#  define LV_MEM_SIZE    (32U * 1024U)        /*Size memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
+#  define LV_MEM_SIZE    (128U * 1024U)       /*Size of the memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
 #  define LV_MEM_ATTR                         /*Complier prefix for big array declaration*/
 #  define LV_MEM_ADR          0               /*Set an address for memory pool instead of allocation it as an array. Can be in external SRAM too.*/
 #  define LV_MEM_AUTO_DEFRAG  1               /*Automatically defrag on free*/
@@ -86,12 +90,11 @@
 #define LV_USE_GROUP            1               /*1: Enable object groups (for keyboards)*/
 #if LV_USE_GROUP
 typedef void * lv_group_user_data_t;
-#endif
+#endif  /*LV_USE_GROUP*/
 #define LV_USE_GPU              1               /*1: Enable GPU interface*/
 #define LV_USE_FILESYSTEM       1               /*1: Enable file system (might be required for images*/
-#define LV_USE_I18N             1               /*1: Enable InternationalizatioN (multi-language) support*/
 #define LV_USE_USER_DATA_SINGLE 1               /*1: Add a `user_data` to drivers and objects*/
-#define LV_USE_USER_DATA_MULTI  1               /*1: Add separate `user_data` for every callback*/
+#define LV_USE_USER_DATA_MULTI  0               /*1: Add separate `user_data` for every callback*/
 
 /*Compiler settings*/
 #define LV_ATTRIBUTE_TICK_INC                   /* Define a custom attribute to `lv_tick_inc` function */
@@ -145,25 +148,25 @@ typedef void * lv_indev_drv_user_data_t;                /*Type of user data in t
 /* More info about fonts: https://docs.littlevgl.com/#Fonts
  * To enable a built-in font use 1,2,4 or 8 values
  * which will determine the bit-per-pixel. Higher value means smoother fonts */
-#define LV_USE_FONT_DEJAVU_10              0
-#define LV_USE_FONT_DEJAVU_10_LATIN_SUP    0
-#define LV_USE_FONT_DEJAVU_10_CYRILLIC     0
-#define LV_USE_FONT_SYMBOL_10              0
+#define LV_USE_FONT_DEJAVU_10              4
+#define LV_USE_FONT_DEJAVU_10_LATIN_SUP    4
+#define LV_USE_FONT_DEJAVU_10_CYRILLIC     4
+#define LV_USE_FONT_SYMBOL_10              4
 
 #define LV_USE_FONT_DEJAVU_20              4
 #define LV_USE_FONT_DEJAVU_20_LATIN_SUP    4
 #define LV_USE_FONT_DEJAVU_20_CYRILLIC     4
 #define LV_USE_FONT_SYMBOL_20              4
 
-#define LV_USE_FONT_DEJAVU_30              0
-#define LV_USE_FONT_DEJAVU_30_LATIN_SUP    0
-#define LV_USE_FONT_DEJAVU_30_CYRILLIC     0
-#define LV_USE_FONT_SYMBOL_30              0
+#define LV_USE_FONT_DEJAVU_30              4
+#define LV_USE_FONT_DEJAVU_30_LATIN_SUP    4
+#define LV_USE_FONT_DEJAVU_30_CYRILLIC     4
+#define LV_USE_FONT_SYMBOL_30              4
 
-#define LV_USE_FONT_DEJAVU_40              0
-#define LV_USE_FONT_DEJAVU_40_LATIN_SUP    0
-#define LV_USE_FONT_DEJAVU_40_CYRILLIC     0
-#define LV_USE_FONT_SYMBOL_40              0
+#define LV_USE_FONT_DEJAVU_40              4
+#define LV_USE_FONT_DEJAVU_40_LATIN_SUP    4
+#define LV_USE_FONT_DEJAVU_40_CYRILLIC     4
+#define LV_USE_FONT_SYMBOL_40              4
 
 #define LV_USE_FONT_MONOSPACE_8            1
 

@@ -30,7 +30,7 @@
 
 /* Test the graphical performance of your MCU
  * with different settings*/
-#define LV_USE_BENCHMARK   0
+#define LV_USE_BENCHMARK   1
 
 /*A demo application with Keyboard, Text area, List and Chart
  * placed on Tab view */
@@ -41,13 +41,13 @@
 #endif
 
 /*MCU and memory usage monitoring*/
-#define LV_USE_SYSMON      0
+#define LV_USE_SYSMON      1
 
 /*A terminal to display received characters*/
-#define LV_USE_TERMINAL    0
+#define LV_USE_TERMINAL    1
 
 /*Touch pad calibration with 4 points*/
-#define LV_USE_TPCAL       0
+#define LV_USE_TPCAL       1
 
 #endif /*LV_EX_CONF_H*/
 
