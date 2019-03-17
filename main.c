@@ -7,6 +7,7 @@
 /*********************
  *      INCLUDES
  *********************/
+#define _BSD_SOURCE /* needed for usleep() */
 #include <stdlib.h>
 #include <unistd.h>
 #define SDL_MAIN_HANDLED        /*To fix SDL's "undefined reference to WinMain" issue*/
