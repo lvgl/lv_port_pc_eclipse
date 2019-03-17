@@ -20,8 +20,6 @@
 #include "lv_examples/lv_apps/benchmark/benchmark.h"
 #include "lv_examples/lv_tests/lv_test.h"
 
-#include "lvgl/lv_misc/lv_math.h"
-
 /*********************
  *      DEFINES
  *********************/

@@ -132,7 +132,7 @@ typedef void * lv_indev_drv_user_data_t;                /*Type of user data in t
  *================*/
 #define LV_THEME_LIVE_UPDATE    0       /*1: Allow theme switching at run time. Uses 8..10 kB of RAM*/
 
-#define LV_USE_THEME_TEMPL      0       /*Just for test*/
+#define LV_USE_THEME_TEMPL      1       /*Just for test*/
 #define LV_USE_THEME_DEFAULT    1       /*Built mainly from the built-in styles. Consumes very few RAM*/
 #define LV_USE_THEME_ALIEN      1       /*Dark futuristic theme*/
 #define LV_USE_THEME_NIGHT      1       /*Dark elegant theme*/
@@ -352,7 +352,7 @@ typedef void * lv_obj_user_data_t;          /*Declare the type of the user data 
 /*--END OF LV_CONF_H--*/
 
 /*Be sure every define has a default value*/
-#include "lvgl/lv_conf_checker.h"
+#include "lvgl/src/lv_conf_checker.h"
 
 #endif /*LV_CONF_H*/
 
