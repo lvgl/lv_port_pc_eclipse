@@ -6,8 +6,8 @@ CFLAGS = -Wall -Wshadow -Wundef -Wmaybe-uninitialized -fbounds-check
 
 LVGL_DIR = ${shell pwd}
 
-CFLAGS += -O3 -g3 -I$(LVGL_DIR)/
-LDFLAGS += -lSDL2 -lm
+CFLAGS += -O0 -g0 -I$(LVGL_DIR)/
+LDFLAGS += -lSDL2 -lm -Xlinker -Map=output.map
 BIN = demo
 
 
