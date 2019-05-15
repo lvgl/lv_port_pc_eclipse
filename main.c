@@ -42,7 +42,7 @@
  **********************/
 static void hal_init(void);
 static int tick_thread(void * data);
-static void memory_monitor(void * param);
+static void memory_monitor(lv_task_t * param);
 
 /**********************
  *  STATIC VARIABLES
@@ -58,7 +58,6 @@ static lv_disp_t  * disp2;
  *   GLOBAL FUNCTIONS
  **********************/
 
-
 int main(int argc, char ** argv)
 {
     (void) argc;    /*Unused*/
@@ -72,6 +71,7 @@ int main(int argc, char ** argv)
 
     /*Load a demo on disp1*/
     lv_disp_set_default(disp1);
+
     demo_create();
 
     /*Try the benchmark to see how fast your GUI is*/
@@ -81,8 +81,6 @@ int main(int argc, char ** argv)
 //    lv_test_theme_1(lv_theme_night_init(15, NULL));
 
     /* A keyboard and encoder (mouse wheel) control example*/
-
-    /*Do something on disp2*/
     lv_disp_set_default(disp2);
     lv_test_group_1();
 
@@ -90,25 +88,25 @@ int main(int argc, char ** argv)
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
-        usleep(10*1000);
+        usleep(5*1000);
 
-        #ifdef SDL_APPLE
-            SDL_Event event;
-            
-            while(SDL_PollEvent(&event)) {
-                #if USE_MOUSE != 0
-                    mouse_handler(&event);
-                #endif
+#ifdef SDL_APPLE
+        SDL_Event event;
 
-                #if USE_KEYBOARD
-                    keyboard_handler(&event);
-                #endif
+        while(SDL_PollEvent(&event)) {
+#if USE_MOUSE != 0
+            mouse_handler(&event);
+#endif
 
-                #if USE_MOUSEWHEEL != 0
-                    mousewheel_handler(&event);
-                #endif
-            }
-        #endif
+#if USE_KEYBOARD
+            keyboard_handler(&event);
+#endif
+
+#if USE_MOUSEWHEEL != 0
+            mousewheel_handler(&event);
+#endif
+        }
+#endif
 
 
     }
@@ -130,8 +128,8 @@ static void hal_init(void)
 
     /*Create a display buffer*/
     static lv_disp_buf_t disp_buf1;
-    static lv_color_t buf1_1[480*10];
-    lv_disp_buf_init(&disp_buf1, buf1_1, NULL, 480*10);
+    static lv_color_t buf1_1[480*400];
+    lv_disp_buf_init(&disp_buf1, buf1_1, NULL, 480*400);
 
     /*Create a display*/
     lv_disp_drv_t disp_drv;
@@ -198,14 +196,15 @@ static int tick_thread(void * data)
  * Print the memory usage periodically
  * @param param
  */
-static void memory_monitor(void * param)
+static void memory_monitor(lv_task_t * param)
 {
+    return;
     (void) param; /*Unused*/
 
     lv_mem_monitor_t mon;
     lv_mem_monitor(&mon);
     printf("used: %6d (%3d %%), frag: %3d %%, biggest free: %6d\n", (int)mon.total_size - mon.free_size,
-           mon.used_pct,
-           mon.frag_pct,
-           (int)mon.free_biggest_size);
+            mon.used_pct,
+            mon.frag_pct,
+            (int)mon.free_biggest_size);
 }

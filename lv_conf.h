@@ -18,8 +18,8 @@
  *====================*/
 
 /* Maximal horizontal and vertical resolution to support by the library.*/
-#define LV_HOR_RES_MAX          (480)
-#define LV_VER_RES_MAX          (320)
+#define LV_HOR_RES_MAX          (640)
+#define LV_VER_RES_MAX          (480)
 
 /* Color depth:
  * - 1:  1 byte per pixel
@@ -120,6 +120,9 @@
 
 /*1: Enable the Animations */
 #define LV_USE_ANIMATION        1
+#if LV_USE_ANIMATION
+typedef void * lv_anim_user_data_t;      /*Type of user data in `lv_anim_t`*/
+#endif /*LV_USE_ANIMATION*/
 
 /* 1: Enable shadow drawing*/
 #define LV_USE_SHADOW           1
@@ -127,7 +130,7 @@
 /* 1: Enable object groups (for keyboard/encoder navigation) */
 #define LV_USE_GROUP            1
 #if LV_USE_GROUP
-typedef void * lv_group_user_data_t;
+typedef void * lv_group_user_data_t;     /*Type of user data in `lv_group_t`*/
 #endif  /*LV_USE_GROUP*/
 
 /* 1: Enable GPU interface*/
@@ -142,11 +145,11 @@ typedef void * lv_group_user_data_t;
 /* 1: Enable alpha indexed images */
 #define LV_IMG_CF_ALPHA     1
 
-/*1: Add a `user_data` to drivers and objects*/
-#define LV_USE_USER_DATA_SINGLE 1
+/*Declare the type of the user data of image decoder (can be e.g. `void *`, `int`, `struct`)*/
+typedef void * lv_img_decoder_user_data_t;
 
-/*1: Add separate `user_data` for every callback*/
-#define LV_USE_USER_DATA_MULTI  0
+/*1: Add a `user_data` to drivers and objects*/
+#define LV_USE_USER_DATA 1
 
 /*=====================
  *  Compiler settings
@@ -191,11 +194,11 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the d
  * LV_LOG_LEVEL_WARN        Log if something unwanted happened but didn't cause a problem
  * LV_LOG_LEVEL_ERROR       Only critical issue, when the system may fail
  */
-#  define LV_LOG_LEVEL    LV_LOG_LEVEL_WARN
+#  define LV_LOG_LEVEL    LV_LOG_LEVEL_INFO
 
 /* 1: Print the log with 'printf';
  * 0: user need to register a callback with `lv_log_register_print`*/
-#  define LV_LOG_PRINTF   0
+#  define LV_LOG_PRINTF   1
 #endif  /*LV_USE_LOG*/
 
 /*================
@@ -219,27 +222,27 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the d
 /* More info about fonts: https://docs.littlevgl.com/#Fonts
  * To enable a built-in font use 1,2,4 or 8 values
  * which will determine the bit-per-pixel. Higher value means smoother fonts */
-#define LV_USE_FONT_DEJAVU_10              4
-#define LV_USE_FONT_DEJAVU_10_LATIN_SUP    4
-#define LV_USE_FONT_DEJAVU_10_CYRILLIC     4
-#define LV_USE_FONT_SYMBOL_10              4
+#define LV_USE_FONT_DEJAVU_10              0
+#define LV_USE_FONT_DEJAVU_10_LATIN_SUP    0
+#define LV_USE_FONT_DEJAVU_10_CYRILLIC     0
+#define LV_USE_FONT_SYMBOL_10              0
 
 #define LV_USE_FONT_DEJAVU_20              4
-#define LV_USE_FONT_DEJAVU_20_LATIN_SUP    4
-#define LV_USE_FONT_DEJAVU_20_CYRILLIC     4
+#define LV_USE_FONT_DEJAVU_20_LATIN_SUP    0
+#define LV_USE_FONT_DEJAVU_20_CYRILLIC     0
 #define LV_USE_FONT_SYMBOL_20              4
 
-#define LV_USE_FONT_DEJAVU_30              4
-#define LV_USE_FONT_DEJAVU_30_LATIN_SUP    4
-#define LV_USE_FONT_DEJAVU_30_CYRILLIC     4
-#define LV_USE_FONT_SYMBOL_30              4
+#define LV_USE_FONT_DEJAVU_30              0
+#define LV_USE_FONT_DEJAVU_30_LATIN_SUP    0
+#define LV_USE_FONT_DEJAVU_30_CYRILLIC     0
+#define LV_USE_FONT_SYMBOL_30              0
 
 #define LV_USE_FONT_DEJAVU_40              4
-#define LV_USE_FONT_DEJAVU_40_LATIN_SUP    4
-#define LV_USE_FONT_DEJAVU_40_CYRILLIC     4
+#define LV_USE_FONT_DEJAVU_40_LATIN_SUP    0
+#define LV_USE_FONT_DEJAVU_40_CYRILLIC     0
 #define LV_USE_FONT_SYMBOL_40              4
 
-#define LV_USE_FONT_MONOSPACE_8            1
+#define LV_USE_FONT_MONOSPACE_8            0
 
 /* Optionally declare your custom fonts here.
  * You can use these fonts as default font too
@@ -255,7 +258,14 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the d
  *  Text settings
  *=================*/
 
- /*Can break (wrap) texts on these chars*/
+/* Select a character encoding for strings.
+ * Your IDE or editor should have the same character encoding
+ * - LV_TXT_ENC_UTF8
+ * - LV_TXT_ENC_ASCII
+ * */
+#define LV_TXT_ENC LV_TXT_ENC_UTF8
+
+/*Can break (wrap) texts on these chars*/
 #define LV_TXT_BREAK_CHARS                  " ,.;:-_"
 
 /* If a character is at least this long, will break wherever "prettiest" */
@@ -275,7 +285,14 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the d
 typedef void * lv_obj_user_data_t;
 
 /*1: enable `lv_obj_realaign()` based on `lv_obj_align()` parameters*/
-#define LV_OBJ_REALIGN          1
+#define LV_USE_OBJ_REALIGN          1
+
+/* Enable to make the object clickable on a larger area.
+ * LV_EXT_CLICK_AREA_OFF or 0: Disable this feature
+ * LV_EXT_CLICK_AREA_TINY: The extra area can be adjusted horizontally and vertically (0..255 px)
+ * LV_EXT_CLICK_AREA_FULL: The extra area can be adjusted in all 4 directions (-32k..+32k px)
+ */
+#define LV_USE_EXT_CLICK_AREA LV_EXT_CLICK_AREA_FULL
 
 /*==================
  *  LV OBJ X USAGE
@@ -344,8 +361,9 @@ typedef void * lv_obj_user_data_t;
 /*Label (dependencies: -*/
 #define LV_USE_LABEL    1
 #if LV_USE_LABEL != 0
-/*Hor, or ver. scroll speed [px/sec] in 'LV_LABEL_LONG_ROLL/ROLL_CIRC' mode*/
-#  define LV_LABEL_DEF_SCROLL_SPEED       25
+#  define LV_LABEL_DEF_SCROLL_SPEED       25  /*Hor/ver scroll speed [px/sec] in 'LV_LABEL_LONG_ROLL/ROLL_CIRC' mode*/
+#  define LV_LABEL_WAIT_CHAR_COUNT        3  /* Waiting period at start/end of animation cycle */
+#  define LV_LABEL_TEXT_SEL               1  /*Enable selecting text of the label */
 #endif
 
 /*LED (dependencies: -)*/
