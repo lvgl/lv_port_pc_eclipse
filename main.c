@@ -58,8 +58,12 @@ static lv_disp_t  * disp2;
  *   GLOBAL FUNCTIONS
  **********************/
 
+
 int main(int argc, char ** argv)
 {
+
+    printf("%d\n", LV_COORD_MAX);
+
     (void) argc;    /*Unused*/
     (void) argv;    /*Unused*/
 
@@ -72,13 +76,14 @@ int main(int argc, char ** argv)
     /*Load a demo on disp1*/
     lv_disp_set_default(disp1);
 
-    demo_create();
+//    demo_create();
 
     /*Try the benchmark to see how fast your GUI is*/
 //    benchmark_create();
 
     /*Check the themes too*/
-//    lv_test_theme_1(lv_theme_night_init(15, NULL));
+    lv_test_theme_1(lv_theme_night_init(15, NULL));
+
 
     /* A keyboard and encoder (mouse wheel) control example*/
     lv_disp_set_default(disp2);
@@ -88,7 +93,7 @@ int main(int argc, char ** argv)
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
-        usleep(5*1000);
+        usleep(5 * 1000);
 
 #ifdef SDL_APPLE
         SDL_Event event;
@@ -107,8 +112,6 @@ int main(int argc, char ** argv)
 #endif
         }
 #endif
-
-
     }
 
     return 0;
@@ -185,8 +188,8 @@ static int tick_thread(void * data)
     (void)data;
 
     while(1) {
-        SDL_Delay(1);   /*Sleep for 33 millisecond*/
-        lv_tick_inc(1); /*Tell LittelvGL that 3 milliseconds were elapsed*/
+        SDL_Delay(5);   /*Sleep for 5 millisecond*/
+        lv_tick_inc(5); /*Tell LittelvGL that 5 milliseconds were elapsed*/
     }
 
     return 0;
