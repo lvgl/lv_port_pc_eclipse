@@ -85,6 +85,9 @@ int main(int argc, char ** argv)
     lv_test_theme_1(lv_theme_night_init(15, NULL));
 
 
+
+    /* Stress test */
+    lv_test_stress_1();
     /* A keyboard and encoder (mouse wheel) control example*/
     lv_disp_set_default(disp2);
     lv_test_group_1();
