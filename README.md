@@ -57,6 +57,38 @@ and run a command similar to:
 docker run -e DISPLAY=10.103.56.101:0 lvgl_simulator
 ```
 
+## Ninja
+
+1. Install ninja
+
+```
+git clone git://github.com/ninja-build/ninja.git && cd ninja
+git checkout release
+./configure.py --bootstrap
+sudo cp ninja /usr/bin
+cd ..
+```
+
+2. build
+
+```
+mkdir build
+cd build 
+cmake -G Ninja ..
+ninja
+ninja run
+```
+
+## make
+
+```
+mkdir build
+cd build
+cmake ..
+make 
+make run
+```
+
 ## Contributing
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
