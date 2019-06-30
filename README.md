@@ -18,11 +18,12 @@ Using a PC simulator instead of an embedded hardware has got several advantages:
 ### Get the PC project
 
 Clone the PC project and the related sub modules:
+
 ```
 git clone --recursive https://github.com/littlevgl/pc_simulator_sdl_eclipse.git
 ```
 
-or download it as zip [here](https://littlevgl.com/download/pc_simulator_v5_1_1.zip).
+or download it as zip [here](https://github.com/littlevgl/pc_simulator_sdl_eclipse/archive/dev-6.0.zip).
 
 ### Install SDL
 You can download SDL from https://www.libsdl.org/
