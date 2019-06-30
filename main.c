@@ -32,7 +32,6 @@
 # endif
 #endif
 
-
 /**********************
  *      TYPEDEFS
  **********************/
@@ -47,8 +46,6 @@ static void memory_monitor(lv_task_t * param);
 /**********************
  *  STATIC VARIABLES
  **********************/
-static lv_disp_t  * disp1;
-static lv_disp_t  * disp2;
 
 /**********************
  *      MACROS
@@ -58,12 +55,8 @@ static lv_disp_t  * disp2;
  *   GLOBAL FUNCTIONS
  **********************/
 
-
 int main(int argc, char ** argv)
 {
-
-    printf("%d\n", LV_COORD_MAX);
-
     (void) argc;    /*Unused*/
     (void) argv;    /*Unused*/
 
@@ -72,9 +65,6 @@ int main(int argc, char ** argv)
 
     /*Initialize the HAL (display, input devices, tick) for LittlevGL*/
     hal_init();
-
-    /*Load a demo on disp1*/
-    lv_disp_set_default(disp1);
 
     /*Select display 1*/
     demo_create();
@@ -85,14 +75,9 @@ int main(int argc, char ** argv)
     /*Check the themes too*/
 //    lv_test_theme_1(lv_theme_night_init(15, NULL));
 
-    /* Stress test */
-//    lv_test_stress_1();
+    /*Try the touchpad-less navigation (use the Tab and Arrow keys or the Mousewheel)*/
+//    lv_test_group_1();
 
-    /*Select display 2*/
-    lv_disp_set_default(disp2);
-
-    /* A keyboard and encoder (mouse wheel) control example*/
-    lv_test_group_1();
 
     while(1) {
         /* Periodically call the lv_task handler.
@@ -144,19 +129,7 @@ static void hal_init(void)
     lv_disp_drv_init(&disp_drv);            /*Basic initialization*/
     disp_drv.buffer = &disp_buf1;
     disp_drv.flush_cb = monitor_flush;    /*Used when `LV_VDB_SIZE != 0` in lv_conf.h (buffered drawing)*/
-    disp1 = lv_disp_drv_register(&disp_drv);
-
-    /*Create an other buffer for double buffering*/
-    static lv_disp_buf_t disp_buf2;
-    static lv_color_t buf2_1[480*10];
-    static lv_color_t buf2_2[480*10];
-    lv_disp_buf_init(&disp_buf2, buf2_1, buf2_2, 480*10);
-
-    /*Create an other display*/
-    lv_disp_drv_init(&disp_drv);            /*Basic initialization*/
-    disp_drv.buffer = &disp_buf2;
-    disp_drv.flush_cb = monitor_flush2;    /*Used when `LV_VDB_SIZE != 0` in lv_conf.h (buffered drawing)*/
-    disp2 = lv_disp_drv_register(&disp_drv);
+    lv_disp_drv_register(&disp_drv);
 
     /* Add the mouse as input device
      * Use the 'mouse' driver which reads the PC's mouse*/
@@ -206,7 +179,6 @@ static int tick_thread(void * data)
  */
 static void memory_monitor(lv_task_t * param)
 {
-    return;
     (void) param; /*Unused*/
 
     lv_mem_monitor_t mon;
@@ -215,4 +187,5 @@ static void memory_monitor(lv_task_t * param)
             mon.used_pct,
             mon.frag_pct,
             (int)mon.free_biggest_size);
+
 }

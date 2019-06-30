@@ -13,6 +13,8 @@
 #define LV_CONF_H
 /* clang-format off */
 
+#include <stdint.h>
+
 /*====================
    Graphical settings
  *====================*/
@@ -53,6 +55,9 @@
  * (Not so important, you can adjust it to modify default sizes and spaces)*/
 #define LV_DPI              100     /*[px]*/
 
+/* Type of coordinates. Should be `int16_t` (or `int32_t` for extreme cases) */
+typedef int16_t lv_coord_t;
+
 /*=========================
    Memory manager settings
  *=========================*/
@@ -64,7 +69,7 @@
 #define LV_MEM_CUSTOM      0
 #if LV_MEM_CUSTOM == 0
 /* Size of the memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
-#  define LV_MEM_SIZE    (32U * 1024U)
+#  define LV_MEM_SIZE    (128U * 1024U)
 
 /* Complier prefix for a big array declaration */
 #  define LV_MEM_ATTR
@@ -121,7 +126,10 @@
 /*1: Enable the Animations */
 #define LV_USE_ANIMATION        1
 #if LV_USE_ANIMATION
+
+/*Declare the type of the user data of animations (can be e.g. `void *`, `int`, `struct`)*/
 typedef void * lv_anim_user_data_t;
+
 #endif
 
 /* 1: Enable shadow drawing*/
@@ -138,6 +146,17 @@ typedef void * lv_group_user_data_t;
 
 /* 1: Enable file system (might be required for images */
 #define LV_USE_FILESYSTEM       1
+#if LV_USE_FILESYSTEM
+/*Declare the type of the user data of file system drivers (can be e.g. `void *`, `int`, `struct`)*/
+typedef void * lv_fs_drv_user_data_t;
+#endif
+
+/*1: Add a `user_data` to drivers and objects*/
+#define LV_USE_USER_DATA        1
+
+/*========================
+ * Image decoder and cache
+ *========================*/
 
 /* 1: Enable indexed (palette) images */
 #define LV_IMG_CF_INDEXED       1
@@ -145,11 +164,16 @@ typedef void * lv_group_user_data_t;
 /* 1: Enable alpha indexed images */
 #define LV_IMG_CF_ALPHA         1
 
+/* Default image cache size. Image caching keeps the images opened.
+ * If only the built-in image formats are used there is no real advantage of caching.
+ * (I.e. no new image decoder is added)
+ * With complex image decoders (e.g. PNG or JPG) caching can save the continuous open/decode of images.
+ * However the opened images might consume additional RAM.
+ * LV_IMG_CACHE_DEF_SIZE must be >= 1 */
+#define LV_IMG_CACHE_DEF_SIZE       1
+
 /*Declare the type of the user data of image decoder (can be e.g. `void *`, `int`, `struct`)*/
 typedef void * lv_img_decoder_user_data_t;
-
-/*1: Add a `user_data` to drivers and objects*/
-#define LV_USE_USER_DATA        1
 
 /*=====================
  *  Compiler settings
@@ -168,12 +192,6 @@ typedef void * lv_img_decoder_user_data_t;
 /* Attribute to mark large constant arrays for example
  * font's bitmaps */
 #define LV_ATTRIBUTE_LARGE_CONST
-
-/* 1: Variable length array is supported*/
-#define LV_COMPILER_VLA_SUPPORTED            1
-
-/* 1: Initialization with non constant values are supported */
-#define LV_COMPILER_NON_CONST_INIT_SUPPORTED 1
 
 /*===================
  *  HAL settings
@@ -207,7 +225,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 
 /* 1: Print the log with 'printf';
  * 0: user need to register a callback with `lv_log_register_print`*/
-#  define LV_LOG_PRINTF   0
+#  define LV_LOG_PRINTF   1
 #endif  /*LV_USE_LOG*/
 
 /*================
@@ -233,10 +251,17 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  * More info about fonts: https://docs.littlevgl.com/#Fonts
  * To create a new font go to: https://littlevgl.com/ttf-font-to-c-array
  */
-#define LV_FONT_ROBOTO_12    0
+
+/* Robot fonts with bpp = 4
+ * https://fonts.google.com/specimen/Roboto  */
+#define LV_FONT_ROBOTO_12    1
 #define LV_FONT_ROBOTO_16    1
-#define LV_FONT_ROBOTO_22    0
-#define LV_FONT_ROBOTO_28    0
+#define LV_FONT_ROBOTO_22    1
+#define LV_FONT_ROBOTO_28    1
+
+/*Pixel perfect monospace font
+ * http://pelulamu.net/unscii/ */
+#define LV_FONT_UNSCII_8     1
 
 /* Optionally declare your custom fonts here.
  * You can use these fonts as default font too
@@ -266,15 +291,6 @@ typedef void * lv_font_user_data_t;
  /*Can break (wrap) texts on these chars*/
 #define LV_TXT_BREAK_CHARS                  " ,.;:-_"
 
-/* If a character is at least this long, will break wherever "prettiest" */
-#define LV_TXT_LINE_BREAK_LONG_LEN          12
-
-/* Minimum number of characters of a word to put on a line before a break */
-#define LV_TXT_LINE_BREAK_LONG_PRE_MIN_LEN  3
-
-/* Minimum number of characters of a word to put on a line after a break */
-#define LV_TXT_LINE_BREAK_LONG_POST_MIN_LEN 1
-
 /*===================
  *  LV_OBJ SETTINGS
  *==================*/
@@ -290,7 +306,7 @@ typedef void * lv_obj_user_data_t;
  * LV_EXT_CLICK_AREA_TINY: The extra area can be adjusted horizontally and vertically (0..255 px)
  * LV_EXT_CLICK_AREA_FULL: The extra area can be adjusted in all 4 directions (-32k..+32k px)
  */
-#define LV_USE_EXT_CLICK_AREA  LV_EXT_CLICK_AREA_OFF
+#define LV_USE_EXT_CLICK_AREA  LV_EXT_CLICK_AREA_FULL
 
 /*==================
  *  LV OBJ X USAGE
@@ -361,8 +377,15 @@ typedef void * lv_obj_user_data_t;
 #if LV_USE_LABEL != 0
 /*Hor, or ver. scroll speed [px/sec] in 'LV_LABEL_LONG_ROLL/ROLL_CIRC' mode*/
 #  define LV_LABEL_DEF_SCROLL_SPEED       25
-#  define LV_LABEL_WAIT_CHAR_COUNT        3 /* Waiting period at beginning/end of animation cycle */
-#  define LV_LABEL_TEXT_SEL               1  /*Enable selecting text of the label */
+
+/* Waiting period at beginning/end of animation cycle */
+#  define LV_LABEL_WAIT_CHAR_COUNT        3
+
+/*Enable selecting text of the label */
+#  define LV_LABEL_TEXT_SEL               1
+
+/*Store extra some info in labels (12 bytes) to speed up drawing of very long texts*/
+#  define LV_LABEL_LONG_TXT_HINT          0
 #endif
 
 /*LED (dependencies: -)*/
@@ -386,6 +409,10 @@ typedef void * lv_obj_user_data_t;
 
 /*Page (dependencies: lv_cont)*/
 #define LV_USE_PAGE     1
+#if LV_USE_PAGE != 0
+/*Focus default animation time [ms] (0: no animation)*/
+#  define LV_PAGE_DEF_ANIM_TIME     400
+#endif
 
 /*Preload (dependencies: lv_arc, lv_anim)*/
 #define LV_USE_PRELOAD      1
