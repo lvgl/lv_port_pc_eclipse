@@ -67,8 +67,8 @@ int main(int argc, char ** argv)
     /*Initialize the HAL (display, input devices, tick) for LittlevGL*/
     hal_init();
 
-    /*Select display 1*/
-    //    demo_create();
+    /*Create a demo*/
+    demo_create();
 
     /*Try the benchmark to see how fast your GUI is*/
     //    benchmark_create();
