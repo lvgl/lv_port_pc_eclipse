@@ -220,6 +220,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  * LV_LOG_LEVEL_INFO        Log important events
  * LV_LOG_LEVEL_WARN        Log if something unwanted happened but didn't cause a problem
  * LV_LOG_LEVEL_ERROR       Only critical issue, when the system may fail
+ * LV_LOG_LEVEL_NONE        Do not log anything
  */
 #  define LV_LOG_LEVEL    LV_LOG_LEVEL_WARN
 
@@ -231,7 +232,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 /*================
  *  THEME USAGE
  *================*/
-#define LV_THEME_LIVE_UPDATE    0   /*1: Allow theme switching at run time. Uses 8..10 kB of RAM*/
+#define LV_THEME_LIVE_UPDATE    1   /*1: Allow theme switching at run time. Uses 8..10 kB of RAM*/
 
 #define LV_USE_THEME_TEMPL      1   /*Just for test*/
 #define LV_USE_THEME_DEFAULT    1   /*Built mainly from the built-in styles. Consumes very few RAM*/
@@ -273,6 +274,11 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 
 /*Always set a default font from the built-in fonts*/
 #define LV_FONT_DEFAULT        &lv_font_roboto_16
+
+/* Enable it if you have fonts with a lot of characters.
+ * The limit depends on the font size, font face and bpp
+ * but with > 10,000 characters if you see issues probably you need to enable it.*/
+#define LV_FONT_FMT_TXT_LARGE   1
 
 /*Declare the type of the user data of fonts (can be e.g. `void *`, `int`, `struct`)*/
 typedef void * lv_font_user_data_t;

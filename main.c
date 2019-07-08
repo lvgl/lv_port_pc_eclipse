@@ -19,7 +19,8 @@
 #include "lv_drivers/indev/keyboard.h"
 #include "lv_examples/lv_apps/demo/demo.h"
 #include "lv_examples/lv_apps/benchmark/benchmark.h"
-#include "lv_examples/lv_tests/lv_test.h"
+#include "lv_examples/lv_examples.h"
+
 
 /*********************
  *      DEFINES
@@ -67,16 +68,17 @@ int main(int argc, char ** argv)
     hal_init();
 
     /*Select display 1*/
-    demo_create();
+    //    demo_create();
 
     /*Try the benchmark to see how fast your GUI is*/
-//    benchmark_create();
+    //    benchmark_create();
 
     /*Check the themes too*/
-//    lv_test_theme_1(lv_theme_night_init(15, NULL));
+    //    lv_test_theme_1(lv_theme_night_init(15, NULL));
 
+    //    lv_test_theme_2();
     /*Try the touchpad-less navigation (use the Tab and Arrow keys or the Mousewheel)*/
-//    lv_test_group_1();
+    //    lv_test_group_1();
 
 
     while(1) {
@@ -107,6 +109,24 @@ int main(int argc, char ** argv)
     return 0;
 }
 
+lv_res_t ICON_LVGL_runLength_info(lv_img_decoder_t * decoder, const void * src, lv_img_header_t * header)
+{
+    (void)decoder; /*Unused*/
+
+    lv_img_src_t src_type = lv_img_src_get_type(src);
+    if(src_type == LV_IMG_SRC_VARIABLE) {
+        lv_img_cf_t cf = ((lv_img_dsc_t *)src)->header.cf;
+        if(cf != LV_IMG_CF_USER_ENCODED_0) return LV_RES_INV;
+
+        header->w  = ((lv_img_dsc_t *)src)->header.w;
+        header->h  = ((lv_img_dsc_t *)src)->header.h;
+        header->cf = ((lv_img_dsc_t *)src)->header.cf;
+        return LV_RES_OK;
+    } else {
+        return LV_RES_INV;
+    }
+}
+
 /**********************
  *   STATIC FUNCTIONS
  **********************/
@@ -121,14 +141,16 @@ static void hal_init(void)
 
     /*Create a display buffer*/
     static lv_disp_buf_t disp_buf1;
-    static lv_color_t buf1_1[480*400];
-    lv_disp_buf_init(&disp_buf1, buf1_1, NULL, 480*400);
+    static lv_color_t buf1_1[480*10];
+    lv_disp_buf_init(&disp_buf1, buf1_1, NULL, 480*10);
 
     /*Create a display*/
     lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv);            /*Basic initialization*/
     disp_drv.buffer = &disp_buf1;
     disp_drv.flush_cb = monitor_flush;    /*Used when `LV_VDB_SIZE != 0` in lv_conf.h (buffered drawing)*/
+    //    disp_drv.hor_res = 200;
+    //    disp_drv.ver_res = 100;
     lv_disp_drv_register(&disp_drv);
 
     /* Add the mouse as input device

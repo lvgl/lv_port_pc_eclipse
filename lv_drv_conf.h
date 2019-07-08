@@ -87,8 +87,8 @@
 #endif
 
 #if USE_MONITOR
-#  define MONITOR_HOR_RES     LV_HOR_RES
-#  define MONITOR_VER_RES     LV_VER_RES
+#  define MONITOR_HOR_RES     LV_HOR_RES_MAX
+#  define MONITOR_VER_RES     LV_VER_RES_MAX
 
 /* Scale window by this factor (useful when simulating small screens) */
 #  define MONITOR_ZOOM        1
@@ -183,7 +183,7 @@
  *  Linux frame buffer device (/dev/fbx)
  *-----------------------------------------*/
 #ifndef USE_FBDEV
-#  define USE_FBDEV           0
+#  define USE_FBDEV           1
 #endif
 
 #if USE_FBDEV
