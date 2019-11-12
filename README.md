@@ -1,15 +1,15 @@
-# PC project for Littlev Graphics Library
+# Simulator project for LittlevGL embedded GUI Library
 
-The [Littlev Graphic Library](https://github.com/littlevgl/lvgl) is written mainly for microcontrollers and embedded systems however you can run the library **on your PC** as well without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system.
+The [LittlevGL](https://github.com/littlevgl/lvgl) is written mainly for microcontrollers and embedded systems however you can run the library **on your PC** as well without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system.
 
-Using a PC simulator instead of an embedded hardware has got several advantages:
+Using a PC simulator instead of an embedded hardware has several advantages:
 * **Costs $0** because you you don't have to buy design PCB
 * **Fast** because you don't have to design an manufacture PCB
 * **Collaborative** because any number of developers can work without hardware requirements
 * **Developer friendly** because much easier and faster to debug on PC
 
 ## Requirements
-* The PC simulator is cross platform so **Windows, Linux and OSX** is supported
+* The PC simulator is cross platform.  **Windows, Linux and OSX** are supported, however on Windows it's easier to get started with a [another simulator](https://github.com/littlevgl/lvgl/#quick-start-in-a-simulator) project. 
 * **SDL** a low level driver library to use graphics, handle mouse, keyboard etc.
 * This project (configured for **Eclipse CDT IDE**)
 
