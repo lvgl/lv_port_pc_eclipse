@@ -109,24 +109,6 @@ int main(int argc, char ** argv)
     return 0;
 }
 
-lv_res_t ICON_LVGL_runLength_info(lv_img_decoder_t * decoder, const void * src, lv_img_header_t * header)
-{
-    (void)decoder; /*Unused*/
-
-    lv_img_src_t src_type = lv_img_src_get_type(src);
-    if(src_type == LV_IMG_SRC_VARIABLE) {
-        lv_img_cf_t cf = ((lv_img_dsc_t *)src)->header.cf;
-        if(cf != LV_IMG_CF_USER_ENCODED_0) return LV_RES_INV;
-
-        header->w  = ((lv_img_dsc_t *)src)->header.w;
-        header->h  = ((lv_img_dsc_t *)src)->header.h;
-        header->cf = ((lv_img_dsc_t *)src)->header.cf;
-        return LV_RES_OK;
-    } else {
-        return LV_RES_INV;
-    }
-}
-
 /**********************
  *   STATIC FUNCTIONS
  **********************/
@@ -149,8 +131,6 @@ static void hal_init(void)
     lv_disp_drv_init(&disp_drv);            /*Basic initialization*/
     disp_drv.buffer = &disp_buf1;
     disp_drv.flush_cb = monitor_flush;    /*Used when `LV_VDB_SIZE != 0` in lv_conf.h (buffered drawing)*/
-    //    disp_drv.hor_res = 200;
-    //    disp_drv.ver_res = 100;
     lv_disp_drv_register(&disp_drv);
 
     /* Add the mouse as input device
