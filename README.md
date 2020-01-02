@@ -58,6 +58,13 @@ and run a command similar to:
 docker run -e DISPLAY=10.103.56.101:0 lvgl_simulator
 ```
 
+For an environment with X server, the following will the `docker run` command. Note that the first command, `xhost +` grants access to X server to everyone.
+
+```
+xhost +
+docker run -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp/.X11-unix:ro -t lvgl_simulator
+```
+
 ## Contributing
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
