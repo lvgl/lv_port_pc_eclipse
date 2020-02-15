@@ -13,22 +13,14 @@
 #define SDL_MAIN_HANDLED /*To fix SDL's "undefined reference to WinMain" \
                             issue*/
 #include <SDL2/SDL.h>
-#include "lv_drivers/display/monitor.h"
-#include "lv_drivers/indev/keyboard.h"
-#include "lv_drivers/indev/mouse.h"
-#include "lv_drivers/indev/mousewheel.h"
 #include "lvgl/lvgl.h"
-//#include "lv_examples/lv_apps/demo/demo.h"
-//#include "lv_examples/lv_apps/benchmark/benchmark.h"
+#include "lv_drivers/display/monitor.h"
+#include "lv_drivers/indev/mouse.h"
 #include "lv_examples/lv_examples.h"
-//#include "lv_apps/src/lv_settings/lv_settings.h"
-//#include "lv_lib_qrcode/lv_qrcode.h"
 
-#include "lvgl/src/lv_misc/lv_math.h"
-//#include "lv_png_decoder/lv_lodepng.h"
-//#include "lv_freetype/lv_freetype.h"
-
-#include "lv_i18n.h"
+#include "lv_lib_qrcode/lv_qrcode.h"
+#include "lv_lib_freetype/lv_freetype.h"
+#include "lv_lib_lodepng/lv_lodepng.h"
 
 /*********************
  *      DEFINES
@@ -118,8 +110,7 @@ int main(int argc, char **argv)
  * library
  */
 static void hal_init(void) {
-  /* Use the 'monitor' driver which creates window on PC's monitor to simulate a
-   * display*/
+  /* Use the 'monitor' driver which creates window on PC's monitor to simulate a display*/
   monitor_init();
 
   /*Create a display buffer*/
@@ -140,28 +131,16 @@ static void hal_init(void) {
   lv_indev_drv_t indev_drv;
   lv_indev_drv_init(&indev_drv); /*Basic initialization*/
   indev_drv.type = LV_INDEV_TYPE_POINTER;
-  /*This function will be called periodically (by the library)
-                       to get the mouse position and state*/
+
+  /*This function will be called periodically (by the library) to get the mouse position and state*/
   indev_drv.read_cb = mouse_read;
   lv_indev_t *mouse_indev = lv_indev_drv_register(&indev_drv);
 
   /*Set a cursor for the mouse*/
-//      LV_IMG_DECLARE(mouse_cursor_icon);                          /*Declare the image file.*/
-//  lv_obj_t * cursor_obj = lv_img_create(lv_disp_get_scr_act(NULL), NULL); /*Create an image object for the cursor */
-//      lv_img_set_src(cursor_obj, &mouse_cursor_icon); /*Set the image source*/
-//      lv_indev_set_cursor(mouse_indev, cursor_obj);
-      /*Connect the image  object to the driver*/
-
-
-      keyboard_init();
-      lv_indev_drv_init(&indev_drv); /*Basic initialization*/
-      indev_drv.type = LV_INDEV_TYPE_KEYPAD;
-      indev_drv.read_cb = keyboard_read; /*This function will be called periodically (by the library)
-                                  to get the mouse position and state*/
-      kb_indev = lv_indev_drv_register(&indev_drv);
-
-
-
+  LV_IMG_DECLARE(mouse_cursor_icon); /*Declare the image file.*/
+  lv_obj_t * cursor_obj = lv_img_create(lv_scr_act() NULL); /*Create an image object for the cursor */
+  lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
+  lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
 
   /* Tick init.
    * You have to call 'lv_tick_inc()' in periodically to inform LittelvGL about

@@ -16,3 +16,6 @@
 [submodule "lv_lib_lodepng"]
 	path = lv_lib_lodepng
 	url = https://github.com/littlevgl/lv_lib_lodepng.git
+[submodule "lv_lib_qrcode"]
+	path = lv_lib_qrcode
+	url = https://github.com/littlevgl/lv_lib_qrcode.git
