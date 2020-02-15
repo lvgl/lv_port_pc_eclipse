@@ -10,9 +10,6 @@
 [submodule "lv_apps"]
 	path = lv_apps
 	url = https://github.com/littlevgl/lv_apps.git
-[submodule "lv_png_decoder"]
-	path = lv_png_decoder
-	url = https://github.com/littlevgl/lv_png_decoder.git
 [submodule "lv_lib_qrcode"]
 	path = lv_lib_qrcode
 	url = https://github.com/littlevgl/lv_lib_qrcode.git
