@@ -57,9 +57,6 @@ lv_indev_t *kb_indev;
  *   GLOBAL FUNCTIONS
  **********************/
 
-
-
-
 int main(int argc, char **argv)
 {
   (void)argc; /*Unused*/
@@ -71,7 +68,7 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LittlevGL*/
   hal_init();
 
-  lv_demo_widget();
+  lv_demo_widgets();
 
    while (1) {
     /* Periodically call the lv_task handler.
@@ -138,7 +135,7 @@ static void hal_init(void) {
 
   /*Set a cursor for the mouse*/
   LV_IMG_DECLARE(mouse_cursor_icon); /*Declare the image file.*/
-  lv_obj_t * cursor_obj = lv_img_create(lv_scr_act() NULL); /*Create an image object for the cursor */
+  lv_obj_t * cursor_obj = lv_img_create(lv_scr_act(), NULL); /*Create an image object for the cursor */
   lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
   lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
 

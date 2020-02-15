@@ -14,40 +14,12 @@
 #define LV_EX_KEYBOARD     1       /*Add PC keyboard support to some examples (`lv_drvers` repository is required)*/
 #define LV_EX_MOUSEWHEEL   1       /*Add 'encoder' (mouse wheel) support to some examples (`lv_drivers` repository is required)*/
 
-/*******************
- *   TEST USAGE
- *******************/
-#define LV_USE_TESTS       0
-
-/*******************
- * TUTORIAL USAGE
- *******************/
-#define LV_USE_TUTORIALS   0
-
 /*********************
- * APPLICATION USAGE
+ * DEMO USAGE
  *********************/
 
-/* Test the graphical performance of your MCU
- * with different settings*/
-#define LV_USE_BENCHMARK   0
-
-/*A demo application with Keyboard, Text area, List and Chart
- * placed on Tab view */
-#define LV_USE_DEMO        0
-#if LV_USE_DEMO
-#define LV_DEMO_WALLPAPER  1    /*Create a wallpaper too*/
-#define LV_DEMO_SLIDE_SHOW 0    /*Automatically switch between tabs*/
-#endif
-
-/*MCU and memory usage monitoring*/
-#define LV_USE_SYSMON      0
-
-/*A terminal to display received characters*/
-#define LV_USE_TERMINAL    0
-
-/*Touch pad calibration with 4 points*/
-#define LV_USE_TPCAL       0
+/*Show some widgets in action*/
+#define LV_USE_DEMO_WIDGETS   1
 
 #endif /*LV_EX_CONF_H*/
 
