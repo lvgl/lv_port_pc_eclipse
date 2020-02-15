@@ -3,9 +3,6 @@
  *
  */
 
-/*
- * COPY THIS FILE AS `lv_conf.h` NEXT TO the `lvgl` FOLDER
- */
 
 #if 1 /*Set it to "1" to enable content*/
 
@@ -29,7 +26,7 @@
  * - 16: RGB565
  * - 32: ARGB8888
  */
-#define LV_COLOR_DEPTH     32
+#define LV_COLOR_DEPTH     16
 
 /* Swap the 2 bytes of RGB565 color.
  * Useful if the display has a 8 bit interface (e.g. SPI)*/
@@ -42,6 +39,9 @@
 
 /*Images pixels with this color will not be drawn (with chroma keying)*/
 #define LV_COLOR_TRANSP    LV_COLOR_LIME         /*LV_COLOR_LIME: pure green*/
+
+/* Enable chroma keying for indexed images. */
+#define LV_INDEXED_CHROMA    1
 
 /* Enable anti-aliasing (lines, and radiuses will be smoothed) */
 #define LV_ANTIALIAS        1
@@ -69,7 +69,7 @@ typedef int16_t lv_coord_t;
 #define LV_MEM_CUSTOM      0
 #if LV_MEM_CUSTOM == 0
 /* Size of the memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
-#  define LV_MEM_SIZE    (128U * 1024U)
+#  define LV_MEM_SIZE    (32U * 1024U)
 
 /* Complier prefix for a big array declaration */
 #  define LV_MEM_ATTR
@@ -119,6 +119,13 @@ typedef int16_t lv_coord_t;
  * Time between `LV_EVENT_LONG_PRESSED_REPEAT */
 #define LV_INDEV_DEF_LONG_PRESS_REP_TIME  100
 
+
+/* Gesture threshold in pixels */
+#define LV_INDEV_DEF_GESTURE_LIMIT        50
+
+/* Gesture min velocity at release before swipe (pixels)*/
+#define LV_INDEV_DEF_GESTURE_MIN_VELOCITY 3
+
 /*==================
  * Feature usage
  *==================*/
@@ -152,7 +159,7 @@ typedef void * lv_fs_drv_user_data_t;
 #endif
 
 /*1: Add a `user_data` to drivers and objects*/
-#define LV_USE_USER_DATA        1
+#define LV_USE_USER_DATA        0
 
 /*========================
  * Image decoder and cache
@@ -193,6 +200,14 @@ typedef void * lv_img_decoder_user_data_t;
  * font's bitmaps */
 #define LV_ATTRIBUTE_LARGE_CONST
 
+/* Export integer constant to binding.
+ * This macro is used with constants in the form of LV_<CONST> that
+ * should also appear on lvgl binding API such as Micropython
+ *
+ * The default value just prevents a GCC warning.
+ */
+#define LV_EXPORT_CONST_INT(int_value) struct _silence_gcc_warning
+
 /*===================
  *  HAL settings
  *==================*/
@@ -213,7 +228,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  *===============*/
 
 /*1: Enable the log module*/
-#define LV_USE_LOG      1
+#define LV_USE_LOG      0
 #if LV_USE_LOG
 /* How important log should be added:
  * LV_LOG_LEVEL_TRACE       A lot of logs to give detailed information
@@ -225,23 +240,50 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 #  define LV_LOG_LEVEL    LV_LOG_LEVEL_WARN
 
 /* 1: Print the log with 'printf';
- * 0: user need to register a callback with `lv_log_register_print`*/
-#  define LV_LOG_PRINTF   1
+ * 0: user need to register a callback with `lv_log_register_print_cb`*/
+#  define LV_LOG_PRINTF   0
 #endif  /*LV_USE_LOG*/
 
-/*================
- *  THEME USAGE
+/*=================
+ * Debug settings
  *================*/
-#define LV_THEME_LIVE_UPDATE    1   /*1: Allow theme switching at run time. Uses 8..10 kB of RAM*/
 
-#define LV_USE_THEME_TEMPL      1   /*Just for test*/
-#define LV_USE_THEME_DEFAULT    1   /*Built mainly from the built-in styles. Consumes very few RAM*/
-#define LV_USE_THEME_ALIEN      1   /*Dark futuristic theme*/
-#define LV_USE_THEME_NIGHT      1   /*Dark elegant theme*/
-#define LV_USE_THEME_MONO       1   /*Mono color theme for monochrome displays*/
-#define LV_USE_THEME_MATERIAL   1   /*Flat theme with bold colors and light shadows*/
-#define LV_USE_THEME_ZEN        1   /*Peaceful, mainly light theme */
-#define LV_USE_THEME_NEMO       1   /*Water-like theme based on the movie "Finding Nemo"*/
+/* If Debug is enabled LittelvGL validates the parameters of the functions.
+ * If an invalid parameter is found an error log message is printed and
+ * the MCU halts at the error. (`LV_USE_LOG` should be enabled)
+ * If you are debugging the MCU you can pause
+ * the debugger to see exactly where  the issue is.
+ *
+ * The behavior of asserts can be overwritten by redefining them here.
+ * E.g. #define LV_ASSERT_MEM(p)  <my_assert_code>
+ */
+#define LV_USE_DEBUG        1
+#if LV_USE_DEBUG
+
+/*Check if the parameter is NULL. (Quite fast) */
+#define LV_USE_ASSERT_NULL      1
+
+/*Checks is the memory is successfully allocated or no. (Quite fast)*/
+#define LV_USE_ASSERT_MEM       1
+
+/*Check the integrity of `lv_mem` after critical operations. (Slow)*/
+#ifndef LV_USE_ASSERT_MEM_INTEGRITY
+#define LV_USE_ASSERT_MEM_INTEGRITY       0
+#endif
+
+/* Check the strings.
+ * Search for NULL, very long strings, invalid characters, and unnatural repetitions. (Slow)
+ * If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled) */
+#define LV_USE_ASSERT_STR       0
+
+/* Check NULL, the object's type and existence (e.g. not deleted). (Quite slow)
+ * If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled) */
+#define LV_USE_ASSERT_OBJ       0
+
+/*Check if the styles are properly initialized. (Fast)*/
+#define LV_USE_ASSERT_STYLE     0
+
+#endif /*LV_USE_DEBUG*/
 
 /*==================
  *    FONT USAGE
@@ -260,9 +302,13 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 #define LV_FONT_ROBOTO_22    1
 #define LV_FONT_ROBOTO_28    1
 
+/* Demonstrate special features */
+#define LV_FONT_ROBOTO_12_SUBPX 1
+#define LV_FONT_ROBOTO_28_COMPRESSED 1  /*bpp = 3*/
+
 /*Pixel perfect monospace font
  * http://pelulamu.net/unscii/ */
-#define LV_FONT_UNSCII_8     1
+#define LV_FONT_UNSCII_8     0
 
 /* Optionally declare your custom fonts here.
  * You can use these fonts as default font too
@@ -272,16 +318,36 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  */
 #define LV_FONT_CUSTOM_DECLARE
 
-/*Always set a default font from the built-in fonts*/
-#define LV_FONT_DEFAULT        &lv_font_roboto_16
-
 /* Enable it if you have fonts with a lot of characters.
  * The limit depends on the font size, font face and bpp
  * but with > 10,000 characters if you see issues probably you need to enable it.*/
 #define LV_FONT_FMT_TXT_LARGE   1
 
+/* Set the pixel order of the display.
+ * Important only if "subpx fonts" are used.
+ * With "normal" font it doesn't matter.
+ */
+#define LV_FONT_SUBPX_BGR    0
+
 /*Declare the type of the user data of fonts (can be e.g. `void *`, `int`, `struct`)*/
 typedef void * lv_font_user_data_t;
+
+
+/*================
+ *  THEME USAGE
+ *================*/
+
+/*Always enable at least on theme*/
+#define LV_USE_THEME_MATERIAL    1   /*A fast and impressive theme*/
+
+#define LV_THEME_DEFAULT_INIT               lv_theme_material_init
+#define LV_THEME_DEFAULT_COLOR_PRIMARY      LV_COLOR_RED
+#define LV_THEME_DEFAULT_COLOR_SECONDARY    LV_COLOR_BLUE
+#define LV_THEME_DEFAULT_FLAGS              LV_THEME_MATERIAL_FLAG_NONE
+#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_roboto_12
+#define LV_THEME_DEFAULT_FONT_NORMAL        &lv_font_roboto_16
+#define LV_THEME_DEFAULT_FONT_SUBTITLE      &lv_font_roboto_22
+#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_roboto_28
 
 /*=================
  *  Text settings
@@ -296,6 +362,42 @@ typedef void * lv_font_user_data_t;
 
  /*Can break (wrap) texts on these chars*/
 #define LV_TXT_BREAK_CHARS                  " ,.;:-_"
+
+/* If a word is at least this long, will break wherever "prettiest"
+ * To disable, set to a value <= 0 */
+#define LV_TXT_LINE_BREAK_LONG_LEN          12
+
+/* Minimum number of characters in a long word to put on a line before a break.
+ * Depends on LV_TXT_LINE_BREAK_LONG_LEN. */
+#define LV_TXT_LINE_BREAK_LONG_PRE_MIN_LEN  3
+
+/* Minimum number of characters in a long word to put on a line after a break.
+ * Depends on LV_TXT_LINE_BREAK_LONG_LEN. */
+#define LV_TXT_LINE_BREAK_LONG_POST_MIN_LEN 3
+
+/* The control character to use for signalling text recoloring. */
+#define LV_TXT_COLOR_CMD "#"
+
+/* Support bidirectional texts.
+ * Allows mixing Left-to-Right and Right-to-Left texts.
+ * The direction will be processed according to the Unicode Bidirectioanl Algorithm:
+ * https://www.w3.org/International/articles/inline-bidi-markup/uba-basics*/
+#define LV_USE_BIDI     0
+#if LV_USE_BIDI
+/* Set the default direction. Supported values:
+ * `LV_BIDI_DIR_LTR` Left-to-Right
+ * `LV_BIDI_DIR_RTL` Right-to-Left
+ * `LV_BIDI_DIR_AUTO` detect texts base direction */
+#define LV_BIDI_BASE_DIR_DEF  LV_BIDI_DIR_AUTO
+#endif
+
+/*Change the built in (v)snprintf functions*/
+#define LV_SPRINTF_CUSTOM   0
+#if LV_SPRINTF_CUSTOM
+#  define LV_SPRINTF_INCLUDE <stdio.h>
+#  define lv_snprintf     snprintf
+#  define lv_vsnprintf    vsnprintf
+#endif  /*LV_SPRINTF_CUSTOM*/
 
 /*===================
  *  LV_OBJ SETTINGS
@@ -312,7 +414,7 @@ typedef void * lv_obj_user_data_t;
  * LV_EXT_CLICK_AREA_TINY: The extra area can be adjusted horizontally and vertically (0..255 px)
  * LV_EXT_CLICK_AREA_FULL: The extra area can be adjusted in all 4 directions (-32k..+32k px)
  */
-#define LV_USE_EXT_CLICK_AREA  LV_EXT_CLICK_AREA_FULL
+#define LV_USE_EXT_CLICK_AREA  LV_EXT_CLICK_AREA_OFF
 
 /*==================
  *  LV OBJ X USAGE
@@ -331,11 +433,11 @@ typedef void * lv_obj_user_data_t;
 #define LV_USE_BTN      1
 #if LV_USE_BTN != 0
 /*Enable button-state animations - draw a circle on click (dependencies: LV_USE_ANIMATION)*/
-#  define LV_BTN_INK_EFFECT   1
+#  define LV_BTN_INK_EFFECT   0
 #endif
 
 /*Button matrix (dependencies: -)*/
-#define LV_USE_BTNM     1
+#define LV_USE_BTNMATRIX     1
 
 /*Calendar (dependencies: -)*/
 #define LV_USE_CALENDAR 1
@@ -344,7 +446,7 @@ typedef void * lv_obj_user_data_t;
 #define LV_USE_CANVAS   1
 
 /*Check box (dependencies: lv_btn, lv_label)*/
-#define LV_USE_CB       1
+#define LV_USE_CHECKBOX       1
 
 /*Chart (dependencies: -)*/
 #define LV_USE_CHART    1
@@ -355,14 +457,17 @@ typedef void * lv_obj_user_data_t;
 /*Container (dependencies: -*/
 #define LV_USE_CONT     1
 
+/*Color picker (dependencies: -*/
+#define LV_USE_CPICKER   1
+
 /*Drop down list (dependencies: lv_page, lv_label, lv_symbol_def.h)*/
-#define LV_USE_DDLIST    1
-#if LV_USE_DDLIST != 0
+#define LV_USE_DROPDOWN    1
+#if LV_USE_DROPDOWN != 0
 /*Open and close default animation time [ms] (0: no animation)*/
-#  define LV_DDLIST_DEF_ANIM_TIME     200
+#  define LV_DROPDOWN_DEF_ANIM_TIME     200
 #endif
 
-/*Gauge (dependencies:lv_bar, lv_lmeter)*/
+/*Gauge (dependencies:lv_bar, lv_linemeter)*/
 #define LV_USE_GAUGE    1
 
 /*Image (dependencies: lv_label*/
@@ -376,7 +481,7 @@ typedef void * lv_obj_user_data_t;
 #endif
 
 /*Keyboard (dependencies: lv_btnm)*/
-#define LV_USE_KB       1
+#define LV_USE_KEYBOARD       1
 
 /*Label (dependencies: -*/
 #define LV_USE_LABEL    1
@@ -388,7 +493,7 @@ typedef void * lv_obj_user_data_t;
 #  define LV_LABEL_WAIT_CHAR_COUNT        3
 
 /*Enable selecting text of the label */
-#  define LV_LABEL_TEXT_SEL               1
+#  define LV_LABEL_TEXT_SEL               0
 
 /*Store extra some info in labels (12 bytes) to speed up drawing of very long texts*/
 #  define LV_LABEL_LONG_TXT_HINT          0
@@ -410,8 +515,11 @@ typedef void * lv_obj_user_data_t;
 /*Line meter (dependencies: *;)*/
 #define LV_USE_LMETER   1
 
+/*Mask (dependencies: -)*/
+#define LV_USE_OBJMASK  1
+
 /*Message box (dependencies: lv_rect, lv_btnm, lv_label)*/
-#define LV_USE_MBOX     1
+#define LV_USE_MSGBOX     1
 
 /*Page (dependencies: lv_cont)*/
 #define LV_USE_PAGE     1
@@ -421,11 +529,11 @@ typedef void * lv_obj_user_data_t;
 #endif
 
 /*Preload (dependencies: lv_arc, lv_anim)*/
-#define LV_USE_PRELOAD      1
-#if LV_USE_PRELOAD != 0
-#  define LV_PRELOAD_DEF_ARC_LENGTH   60      /*[deg]*/
-#  define LV_PRELOAD_DEF_SPIN_TIME    1000    /*[ms]*/
-#  define LV_PRELOAD_DEF_ANIM         LV_PRELOAD_TYPE_SPINNING_ARC
+#define LV_USE_SPINNER      1
+#if LV_USE_SPINNER != 0
+#  define LV_SPINNER_DEF_ARC_LENGTH   60      /*[deg]*/
+#  define LV_SPINNER_DEF_SPIN_TIME    1000    /*[ms]*/
+#  define LV_SPINNER_DEF_ANIM         LV_SPINNER_TYPE_SPINNING_ARC
 #endif
 
 /*Roller (dependencies: lv_ddlist)*/
@@ -445,13 +553,13 @@ typedef void * lv_obj_user_data_t;
 #define LV_USE_SPINBOX       1
 
 /*Switch (dependencies: lv_slider)*/
-#define LV_USE_SW       1
+#define LV_USE_SWITCH       1
 
 /*Text area (dependencies: lv_label, lv_page)*/
-#define LV_USE_TA       1
-#if LV_USE_TA != 0
-#  define LV_TA_DEF_CURSOR_BLINK_TIME 400     /*ms*/
-#  define LV_TA_DEF_PWD_SHOW_TIME     1500    /*ms*/
+#define LV_USE_TEXTAREA       1
+#if LV_USE_TEXTAREA != 0
+#  define LV_TEXTAREA_DEF_CURSOR_BLINK_TIME 400     /*ms*/
+#  define LV_TEXTAREA_DEF_PWD_SHOW_TIME     1500    /*ms*/
 #endif
 
 /*Table (dependencies: lv_label)*/
@@ -486,9 +594,6 @@ typedef void * lv_obj_user_data_t;
 #endif
 
 /*--END OF LV_CONF_H--*/
-
-/*Be sure every define has a default value*/
-#include "lvgl/src/lv_conf_checker.h"
 
 #endif /*LV_CONF_H*/
 
