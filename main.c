@@ -112,8 +112,8 @@ static void hal_init(void) {
 
   /*Create a display buffer*/
   static lv_disp_buf_t disp_buf1;
-  static lv_color_t buf1_1[800 * 480];
-  lv_disp_buf_init(&disp_buf1, buf1_1, NULL, 800 * 480);
+  static lv_color_t buf1_1[800 * 48];
+  lv_disp_buf_init(&disp_buf1, buf1_1, NULL, 800 * 48);
 
   /*Create a display*/
   lv_disp_drv_t disp_drv;
@@ -147,7 +147,7 @@ static void hal_init(void) {
   /* Optional:
    * Create a memory monitor task which prints the memory usage in
    * periodically.*/
-  lv_task_create(memory_monitor, 3000, LV_TASK_PRIO_MID, NULL);
+  lv_task_create(memory_monitor, 5000, LV_TASK_PRIO_MID, NULL);
 }
 
 /**
