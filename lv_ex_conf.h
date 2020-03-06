@@ -44,7 +44,7 @@
 #define LV_USE_SYSMON      1
 
 /*A terminal to display received characters*/
-#define LV_USE_TERMINAL    1
+#define LV_USE_TERMINAL    0
 
 /*Touch pad calibration with 4 points*/
 #define LV_USE_TPCAL       1

@@ -20,8 +20,8 @@
  *====================*/
 
 /* Maximal horizontal and vertical resolution to support by the library.*/
-#define LV_HOR_RES_MAX          (480)
-#define LV_VER_RES_MAX          (320)
+#define LV_HOR_RES_MAX          480
+#define LV_VER_RES_MAX          272
 
 /* Color depth:
  * - 1:  1 byte per pixel
@@ -42,9 +42,6 @@
 
 /*Images pixels with this color will not be drawn (with chroma keying)*/
 #define LV_COLOR_TRANSP    LV_COLOR_LIME         /*LV_COLOR_LIME: pure green*/
-
-/* Enable chroma keying for indexed images. */
-#define LV_INDEXED_CHROMA    1
 
 /* Enable anti-aliasing (lines, and radiuses will be smoothed) */
 #define LV_ANTIALIAS        1
@@ -72,7 +69,7 @@ typedef int16_t lv_coord_t;
 #define LV_MEM_CUSTOM      0
 #if LV_MEM_CUSTOM == 0
 /* Size of the memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
-#  define LV_MEM_SIZE    (128U * 1024U)
+#  define LV_MEM_SIZE    (32U * 1024U)
 
 /* Complier prefix for a big array declaration */
 #  define LV_MEM_ATTR
@@ -155,7 +152,7 @@ typedef void * lv_fs_drv_user_data_t;
 #endif
 
 /*1: Add a `user_data` to drivers and objects*/
-#define LV_USE_USER_DATA        1
+#define LV_USE_USER_DATA        0
 
 /*========================
  * Image decoder and cache
@@ -196,14 +193,6 @@ typedef void * lv_img_decoder_user_data_t;
  * font's bitmaps */
 #define LV_ATTRIBUTE_LARGE_CONST
 
-/* Export integer constant to binding.
- * This macro is used with constants in the form of LV_<CONST> that
- * should also appear on lvgl binding API such as Micropython
- *
- * The default value just prevents a GCC warning.
- */
-#define LV_EXPORT_CONST_INT(int_value) struct _silence_gcc_warning
-
 /*===================
  *  HAL settings
  *==================*/
@@ -224,7 +213,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  *===============*/
 
 /*1: Enable the log module*/
-#define LV_USE_LOG      1
+#define LV_USE_LOG      0
 #if LV_USE_LOG
 /* How important log should be added:
  * LV_LOG_LEVEL_TRACE       A lot of logs to give detailed information
@@ -237,51 +226,15 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 
 /* 1: Print the log with 'printf';
  * 0: user need to register a callback with `lv_log_register_print_cb`*/
-#  define LV_LOG_PRINTF   1
+#  define LV_LOG_PRINTF   0
 #endif  /*LV_USE_LOG*/
-
-/*=================
- * Debug settings
- *================*/
-
-/* If Debug is enabled LittelvGL validates the parameters of the functions.
- * If an invalid parameter is found an error log message is printed and
- * the MCU halts at the error. (`LV_USE_LOG` should be enabled)
- * If you are debugging the MCU you can pause
- * the debugger to see exactly where  the issue is.
- *
- * The behavior of asserts can be overwritten by redefining them here.
- * E.g. #define LV_ASSERT_MEM(p)  <my_assert_code>
- */
-#define LV_USE_DEBUG        1
-#if LV_USE_DEBUG
-
-/*Check if the parameter is NULL. (Quite fast) */
-#define LV_USE_ASSERT_NULL      1
-
-/*Checks is the memory is successfully allocated or no. (Quite fast)*/
-#define LV_USE_ASSERT_MEM       1
-
-/* Check the strings.
- * Search for NULL, very long strings, invalid characters, and unnatural repetitions. (Slow)
- * If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled) */
-#define LV_USE_ASSERT_STR       1
-
-/* Check NULL, the object's type and existence (e.g. not deleted). (Quite slow)
- * If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled) */
-#define LV_USE_ASSERT_OBJ       1
-
-/*Check if the styles are properly initialized. (Fast)*/
-#define LV_USE_ASSERT_STYLE     1
-
-#endif /*LV_USE_DEBUG*/
 
 /*================
  *  THEME USAGE
  *================*/
 #define LV_THEME_LIVE_UPDATE    0   /*1: Allow theme switching at run time. Uses 8..10 kB of RAM*/
 
-#define LV_USE_THEME_TEMPL      0   /*Just for test*/
+#define LV_USE_THEME_TEMPL      1   /*Just for test*/
 #define LV_USE_THEME_DEFAULT    1   /*Built mainly from the built-in styles. Consumes very few RAM*/
 #define LV_USE_THEME_ALIEN      1   /*Dark futuristic theme*/
 #define LV_USE_THEME_NIGHT      1   /*Dark elegant theme*/
@@ -302,14 +255,10 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 
 /* Robot fonts with bpp = 4
  * https://fonts.google.com/specimen/Roboto  */
-#define LV_FONT_ROBOTO_12       1
-#define LV_FONT_ROBOTO_16       1
-#define LV_FONT_ROBOTO_22       1
-#define LV_FONT_ROBOTO_28       1
-
-/* Demonstrate special features */
-#define LV_FONT_ROBOTO_12_SUBPX 1
-#define LV_FONT_ROBOTO_28_COMPRESSED 1  /*bpp = 3*/
+#define LV_FONT_ROBOTO_12    1
+#define LV_FONT_ROBOTO_16    1
+#define LV_FONT_ROBOTO_22    1
+#define LV_FONT_ROBOTO_28    1
 
 /*Pixel perfect monospace font
  * http://pelulamu.net/unscii/ */
@@ -321,21 +270,17 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  * #define LV_FONT_CUSTOM_DECLARE LV_FONT_DECLARE(my_font_1) \
  *                                LV_FONT_DECLARE(my_font_2)
  */
-#define LV_FONT_CUSTOM_DECLARE
+#define LV_FONT_CUSTOM_DECLARE LV_FONT_DECLARE(RB_LV_FONT_ROBOTO_16) //GABOR
+
 
 /*Always set a default font from the built-in fonts*/
 #define LV_FONT_DEFAULT        &lv_font_roboto_16
+//#define LV_FONT_DEFAULT        &RB_lv_font_roboto_16  //GABOR
 
 /* Enable it if you have fonts with a lot of characters.
  * The limit depends on the font size, font face and bpp
  * but with > 10,000 characters if you see issues probably you need to enable it.*/
 #define LV_FONT_FMT_TXT_LARGE   0
-
-/* Set the pixel order of the display.
- * Important only if "subpx fonts" are used.
- * With "normal" font it doesn't matter.
- */
-#define LV_FONT_SUBPX_BGR    0
 
 /*Declare the type of the user data of fonts (can be e.g. `void *`, `int`, `struct`)*/
 typedef void * lv_font_user_data_t;
@@ -353,43 +298,6 @@ typedef void * lv_font_user_data_t;
 
  /*Can break (wrap) texts on these chars*/
 #define LV_TXT_BREAK_CHARS                  " ,.;:-_"
-
-
-/* If a word is at least this long, will break wherever "prettiest"
- * To disable, set to a value <= 0 */
-#define LV_TXT_LINE_BREAK_LONG_LEN          12
-
-/* Minimum number of characters in a long word to put on a line before a break.
- * Depends on LV_TXT_LINE_BREAK_LONG_LEN. */
-#define LV_TXT_LINE_BREAK_LONG_PRE_MIN_LEN  3
-
-/* Minimum number of characters in a long word to put on a line after a break.
- * Depends on LV_TXT_LINE_BREAK_LONG_LEN. */
-#define LV_TXT_LINE_BREAK_LONG_POST_MIN_LEN 3
-
-/* The control character to use for signalling text recoloring. */
-#define LV_TXT_COLOR_CMD "#"
-
-/* Support bidirectional texts.
- * Allows mixing Left-to-Right and Right-to-Left texts.
- * The direction will be processed according to the Unicode Bidirectioanl Algorithm:
- * https://www.w3.org/International/articles/inline-bidi-markup/uba-basics*/
-#define LV_USE_BIDI     1
-#if LV_USE_BIDI
-/* Set the default direction. Supported values:
- * `LV_BIDI_DIR_LTR` Left-to-Right
- * `LV_BIDI_DIR_RTL` Right-to-Left
- * `LV_BIDI_DIR_AUTO` detect texts base direction */
-#define LV_BIDI_BASE_DIR_DEF  LV_BIDI_DIR_AUTO
-#endif
-
-/*Change the built in (v)snprintf functions*/
-#define LV_SPRINTF_CUSTOM   0
-#if LV_SPRINTF_CUSTOM
-#  define LV_SPRINTF_INCLUDE <stdio.h>
-#  define lv_snprintf     snprintf
-#  define lv_vsnprintf    vsnprintf
-#endif  /*LV_SPRINTF_CUSTOM*/
 
 /*===================
  *  LV_OBJ SETTINGS
@@ -425,7 +333,7 @@ typedef void * lv_obj_user_data_t;
 #define LV_USE_BTN      1
 #if LV_USE_BTN != 0
 /*Enable button-state animations - draw a circle on click (dependencies: LV_USE_ANIMATION)*/
-#  define LV_BTN_INK_EFFECT   0
+#  define LV_BTN_INK_EFFECT   1
 #endif
 
 /*Button matrix (dependencies: -)*/
@@ -448,9 +356,6 @@ typedef void * lv_obj_user_data_t;
 
 /*Container (dependencies: -*/
 #define LV_USE_CONT     1
-
-/*Color picker (dependencies: -*/
-#define LV_USE_CPICKER   1
 
 /*Drop down list (dependencies: lv_page, lv_label, lv_symbol_def.h)*/
 #define LV_USE_DDLIST    1

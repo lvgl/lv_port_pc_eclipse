@@ -1,4 +1,5 @@
 
+
 /**
  * @file main
  *
@@ -20,6 +21,7 @@
 #include "lv_examples/lv_apps/demo/demo.h"
 #include "lv_examples/lv_apps/benchmark/benchmark.h"
 #include "lv_examples/lv_examples.h"
+#include "lv_lib_freetype/lv_freetype.h"
 
 
 /*********************
@@ -56,6 +58,7 @@ static void memory_monitor(lv_task_t * param);
  *   GLOBAL FUNCTIONS
  **********************/
 
+
 int main(int argc, char ** argv)
 {
     (void) argc;    /*Unused*/
@@ -68,18 +71,21 @@ int main(int argc, char ** argv)
     hal_init();
 
     /*Create a demo*/
-    demo_create();
+//    demo_create();
 
-    /*Try the benchmark to see how fast your GUI is*/
-    //    benchmark_create();
 
-    /*Check the themes too*/
-    //    lv_test_theme_1(lv_theme_night_init(15, NULL));
+    lv_freetype_init();
 
-    //    lv_test_theme_2();
-    /*Try the touchpad-less navigation (use the Tab and Arrow keys or the Mousewheel)*/
-    //    lv_test_group_1();
+    static lv_font_t font1;
+    lv_freetype_font_init(&font1, "./lv_lib_freetype/arial.ttf", 32);
 
+    static lv_style_t style1;
+    lv_style_copy(&style1, &lv_style_plain);
+    style1.text.font = &font1;
+
+    lv_obj_t * label = lv_label_create(lv_scr_act(), NULL);
+    lv_label_set_style(label, LV_LABEL_STYLE_MAIN, &style1);
+    lv_label_set_text(label, "Hello world");
 
     while(1) {
         /* Periodically call the lv_task handler.
