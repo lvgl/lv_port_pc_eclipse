@@ -53,11 +53,6 @@ lv_indev_t *kb_indev;
  *   GLOBAL FUNCTIONS
  **********************/
 
-void event_cb(lv_obj_t* room, lv_event_t event)
-{
-     if(event != LV_EVENT_PRESSED) return;
-     printf("Pressed\n");  // ---> can't receive LV_EVENT_PRESSED for displaying this info.
-}
 int main(int argc, char **argv)
 {
   (void)argc; /*Unused*/
