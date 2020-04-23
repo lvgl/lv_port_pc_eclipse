@@ -10,12 +10,3 @@
 [submodule "lv_apps"]
 	path = lv_apps
 	url = https://github.com/littlevgl/lv_apps.git
-[submodule "lv_lib_freetype"]
-	path = lv_lib_freetype
-	url = https://github.com/littlevgl/lv_lib_freetype.git
-[submodule "lv_lib_lodepng"]
-	path = lv_lib_lodepng
-	url = https://github.com/littlevgl/lv_lib_lodepng.git
-[submodule "lv_lib_qrcode"]
-	path = lv_lib_qrcode
-	url = https://github.com/littlevgl/lv_lib_qrcode.git
