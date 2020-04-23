@@ -18,10 +18,6 @@
 #include "lv_drivers/indev/mouse.h"
 #include "lv_examples/lv_examples.h"
 
-#include "lv_lib_qrcode/lv_qrcode.h"
-#include "lv_lib_freetype/lv_freetype.h"
-#include "lv_lib_lodepng/lv_lodepng.h"
-
 /*********************
  *      DEFINES
  *********************/
@@ -57,6 +53,11 @@ lv_indev_t *kb_indev;
  *   GLOBAL FUNCTIONS
  **********************/
 
+void event_cb(lv_obj_t* room, lv_event_t event)
+{
+     if(event != LV_EVENT_PRESSED) return;
+     printf("Pressed\n");  // ---> can't receive LV_EVENT_PRESSED for displaying this info.
+}
 int main(int argc, char **argv)
 {
   (void)argc; /*Unused*/
@@ -70,11 +71,11 @@ int main(int argc, char **argv)
 
   lv_demo_widgets();
 
-   while (1) {
+  while (1) {
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
     lv_task_handler();
-    usleep(30 * 1000);
+    usleep(5 * 1000);
 
 #ifdef SDL_APPLE
     SDL_Event event;
@@ -135,9 +136,9 @@ static void hal_init(void) {
 
   /*Set a cursor for the mouse*/
   LV_IMG_DECLARE(mouse_cursor_icon); /*Declare the image file.*/
-  lv_obj_t * cursor_obj = lv_img_create(lv_scr_act(), NULL); /*Create an image object for the cursor */
-  lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
-  lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
+//  lv_obj_t * cursor_obj = lv_img_create(lv_scr_act(), NULL); /*Create an image object for the cursor */
+//  lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
+//  lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
 
   /* Tick init.
    * You have to call 'lv_tick_inc()' in periodically to inform LittelvGL about

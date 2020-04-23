@@ -17,8 +17,8 @@
  *====================*/
 
 /* Maximal horizontal and vertical resolution to support by the library.*/
-#define LV_HOR_RES_MAX          (800)
-#define LV_VER_RES_MAX          (700)
+#define LV_HOR_RES_MAX          (480)
+#define LV_VER_RES_MAX          (320)
 
 /* Color depth:
  * - 1:  1 byte per pixel
@@ -30,7 +30,7 @@
 
 /* Swap the 2 bytes of RGB565 color.
  * Useful if the display has a 8 bit interface (e.g. SPI)*/
-#define LV_COLOR_16_SWAP   0
+#define LV_COLOR_16_SWAP   1
 
 /* 1: Enable screen transparency.
  * Useful for OSD or other overlapping GUIs.
@@ -54,6 +54,17 @@
  * E.g. a button with width = LV_DPI / 2 -> half inch wide
  * (Not so important, you can adjust it to modify default sizes and spaces)*/
 #define LV_DPI              130     /*[px]*/
+
+/* The the real width of the display changes some default values:
+ * default object sizes, layout of examples, etc.
+ * According to the width of the display (hor. res. / dpi)
+ * the displays fall in 4 categories.
+ * The 4th is extra large which has no upper limit so not listed here
+ * The upper limit of the categories are set below in 0.1 inch unit.
+ */
+#define LV_DISP_SMALL_LIMIT 25
+#define LV_DISP_MEDIUM_LIMIT 45
+#define LV_DISP_LARGE_LIMIT 65
 
 /* Type of coordinates. Should be `int16_t` (or `int32_t` for extreme cases) */
 typedef int16_t lv_coord_t;
@@ -143,10 +154,10 @@ typedef void * lv_anim_user_data_t;
 #define LV_USE_SHADOW           1
 
 /* 1: Use other blend modes than normal (`LV_BLEND_MODE_...`)*/
-#define LV_USE_BLEND_MODES      0
+#define LV_USE_BLEND_MODES      1
 
 /* 1: Use the `opa_scale` style property to set the opacity of an object and its children at once*/
-#define LV_USE_OPA_SCALE        0
+#define LV_USE_OPA_SCALE        1
 
 /* 1: Enable object groups (for keyboard/encoder navigation) */
 #define LV_USE_GROUP            1
@@ -165,7 +176,7 @@ typedef void * lv_fs_drv_user_data_t;
 #endif
 
 /*1: Add a `user_data` to drivers and objects*/
-#define LV_USE_USER_DATA        0
+#define LV_USE_USER_DATA        1
 
 /*1: Show CPU usage and FPS count in the right bottom corner*/
 #define LV_USE_PERF_MONITOR     0
@@ -277,7 +288,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 
 /*Check the integrity of `lv_mem` after critical operations. (Slow)*/
 #ifndef LV_USE_ASSERT_MEM_INTEGRITY
-#define LV_USE_ASSERT_MEM_INTEGRITY       0
+#define LV_USE_ASSERT_MEM_INTEGRITY       1
 #endif
 
 /* Check the strings.
@@ -304,16 +315,31 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  * To create a new font go to: https://littlevgl.com/ttf-font-to-c-array
  */
 
-/* Robot fonts with bpp = 4
- * https://fonts.google.com/specimen/Roboto  */
-#define LV_FONT_ROBOTO_12    1
-#define LV_FONT_ROBOTO_16    1
-#define LV_FONT_ROBOTO_22    1
-#define LV_FONT_ROBOTO_28    1
+/* Montserrat fonts with bpp = 4
+ * https://fonts.google.com/specimen/Montserrat  */
+#define LV_FONT_MONTSERRAT_12    1
+#define LV_FONT_MONTSERRAT_14    1
+#define LV_FONT_MONTSERRAT_16    1
+#define LV_FONT_MONTSERRAT_18    1
+#define LV_FONT_MONTSERRAT_20    1
+#define LV_FONT_MONTSERRAT_22    1
+#define LV_FONT_MONTSERRAT_24    1
+#define LV_FONT_MONTSERRAT_26    1
+#define LV_FONT_MONTSERRAT_28    1
+#define LV_FONT_MONTSERRAT_30    1
+#define LV_FONT_MONTSERRAT_32    1
+#define LV_FONT_MONTSERRAT_34    1
+#define LV_FONT_MONTSERRAT_36    1
+#define LV_FONT_MONTSERRAT_38    1
+#define LV_FONT_MONTSERRAT_40    1
+#define LV_FONT_MONTSERRAT_42    1
+#define LV_FONT_MONTSERRAT_44    1
+#define LV_FONT_MONTSERRAT_46    1
+#define LV_FONT_MONTSERRAT_48    1
 
 /* Demonstrate special features */
-#define LV_FONT_ROBOTO_12_SUBPX 1
-#define LV_FONT_ROBOTO_28_COMPRESSED 1  /*bpp = 3*/
+#define LV_FONT_MONTSERRAT_12_SUBPX 1
+#define LV_FONT_MONTSERRAT_28_COMPRESSED 1  /*bpp = 3*/
 
 /*Pixel perfect monospace font
  * http://pelulamu.net/unscii/ */
@@ -347,17 +373,19 @@ typedef void * lv_font_user_data_t;
  *================*/
 
 /*Always enable at least on theme*/
+#define LV_USE_THEME_EMPTY       1   /*No theme, you can apply your styles as you need*/
+#define LV_USE_THEME_TEMPLATE    0   /*Simple to the create your theme based on it*/
 #define LV_USE_THEME_MATERIAL    1   /*A fast and impressive theme*/
-#define LV_USE_THEME_TEMPLATE    1   /*A fast and impressive theme*/
+#define LV_USE_THEME_MONO    1   /*A fast and impressive theme*/
 
 #define LV_THEME_DEFAULT_INIT               lv_theme_material_init
 #define LV_THEME_DEFAULT_COLOR_PRIMARY      lv_color_hex(0x01a2b1)
 #define LV_THEME_DEFAULT_COLOR_SECONDARY    lv_color_hex(0x44d1b6)
-#define LV_THEME_DEFAULT_FLAGS              LV_THEME_MATERIAL_FLAG_NONE
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_roboto_12
-#define LV_THEME_DEFAULT_FONT_NORMAL        &lv_font_roboto_16
-#define LV_THEME_DEFAULT_FONT_SUBTITLE      &lv_font_roboto_22
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_roboto_28
+#define LV_THEME_DEFAULT_FLAG               LV_THEME_MATERIAL_FLAG_LIGHT
+#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_12
+#define LV_THEME_DEFAULT_FONT_NORMAL        &lv_font_montserrat_16
+#define LV_THEME_DEFAULT_FONT_SUBTITLE      &lv_font_montserrat_20
+#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_24
 
 /*=================
  *  Text settings
@@ -400,6 +428,11 @@ typedef void * lv_font_user_data_t;
  * `LV_BIDI_DIR_AUTO` detect texts base direction */
 #define LV_BIDI_BASE_DIR_DEF  LV_BIDI_DIR_AUTO
 #endif
+
+/* Enable Arabic/Persian processing
+ * In these languages characters should be replaced with
+ * an other form based on their position in the text */
+#define LV_USE_ARABIC_PERSIAN_CHARS 1
 
 /*Change the built in (v)snprintf functions*/
 #define LV_SPRINTF_CUSTOM   0
@@ -512,10 +545,10 @@ typedef void * lv_obj_user_data_t;
 #  define LV_LABEL_WAIT_CHAR_COUNT        3
 
 /*Enable selecting text of the label */
-#  define LV_LABEL_TEXT_SEL               0
+#  define LV_LABEL_TEXT_SEL               1
 
 /*Store extra some info in labels (12 bytes) to speed up drawing of very long texts*/
-#  define LV_LABEL_LONG_TXT_HINT          0
+#  define LV_LABEL_LONG_TXT_HINT          1
 #endif
 
 /*LED (dependencies: -)*/
