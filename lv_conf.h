@@ -17,8 +17,8 @@
  *====================*/
 
 /* Maximal horizontal and vertical resolution to support by the library.*/
-#define LV_HOR_RES_MAX          (480)
-#define LV_VER_RES_MAX          (320)
+#define LV_HOR_RES_MAX          (800)
+#define LV_VER_RES_MAX          (480)
 
 /* Color depth:
  * - 1:  1 byte per pixel
@@ -26,11 +26,11 @@
  * - 16: RGB565
  * - 32: ARGB8888
  */
-#define LV_COLOR_DEPTH     16
+#define LV_COLOR_DEPTH     32
 
 /* Swap the 2 bytes of RGB565 color.
  * Useful if the display has a 8 bit interface (e.g. SPI)*/
-#define LV_COLOR_16_SWAP   1
+#define LV_COLOR_16_SWAP   0
 
 /* 1: Enable screen transparency.
  * Useful for OSD or other overlapping GUIs.
@@ -62,9 +62,9 @@
  * The 4th is extra large which has no upper limit so not listed here
  * The upper limit of the categories are set below in 0.1 inch unit.
  */
-#define LV_DISP_SMALL_LIMIT 25
-#define LV_DISP_MEDIUM_LIMIT 45
-#define LV_DISP_LARGE_LIMIT 65
+#define LV_DISP_SMALL_LIMIT  30
+#define LV_DISP_MEDIUM_LIMIT 50
+#define LV_DISP_LARGE_LIMIT  70
 
 /* Type of coordinates. Should be `int16_t` (or `int32_t` for extreme cases) */
 typedef int16_t lv_coord_t;
@@ -376,7 +376,7 @@ typedef void * lv_font_user_data_t;
 #define LV_USE_THEME_EMPTY       1   /*No theme, you can apply your styles as you need*/
 #define LV_USE_THEME_TEMPLATE    0   /*Simple to the create your theme based on it*/
 #define LV_USE_THEME_MATERIAL    1   /*A fast and impressive theme*/
-#define LV_USE_THEME_MONO    1   /*A fast and impressive theme*/
+#define LV_USE_THEME_MONO        1   /*A fast and impressive theme*/
 
 #define LV_THEME_DEFAULT_INIT               lv_theme_material_init
 #define LV_THEME_DEFAULT_COLOR_PRIMARY      lv_color_hex(0x01a2b1)

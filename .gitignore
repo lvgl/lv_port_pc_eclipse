@@ -5,3 +5,4 @@ lv_dev_tools/
 demo
 .pydevproject
 /.metadata/
+/.tracecompass
