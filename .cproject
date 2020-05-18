@@ -41,7 +41,6 @@
 								<option id="gnu.c.link.option.libs.1470306445" name="Libraries (-l)" superClass="gnu.c.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="SDL2main"/>
 									<listOptionValue builtIn="false" value="SDL2"/>
-									<listOptionValue builtIn="false" value="m"/>
 								</option>
 								<option id="gnu.c.link.option.ldflags.371206369" name="Linker flags" superClass="gnu.c.link.option.ldflags" useByScannerDiscovery="false" value="" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.413725007" superClass="cdt.managedbuild.tool.gnu.c.linker.input">

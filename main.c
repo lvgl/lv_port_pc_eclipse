@@ -22,13 +22,6 @@
  *      DEFINES
  *********************/
 
-/*On OSX SDL needs different handling*/
-#if defined(__APPLE__) && defined(TARGET_OS_MAC)
-#if __APPLE__ && TARGET_OS_MAC
-#define SDL_APPLE
-#endif
-#endif
-
 /**********************
  *      TYPEDEFS
  **********************/
@@ -58,37 +51,20 @@ int main(int argc, char **argv)
   (void)argc; /*Unused*/
   (void)argv; /*Unused*/
 
-  /*Initialize LittlevGL*/
+  /*Initialize LVGL*/
   lv_init();
 
-  /*Initialize the HAL (display, input devices, tick) for LittlevGL*/
+  /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
   lv_demo_widgets();
+//  lv_demo_printer();
 
   while (1) {
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
     lv_task_handler();
     usleep(5 * 1000);
-
-#ifdef SDL_APPLE
-    SDL_Event event;
-
-    while (SDL_PollEvent(&event)) {
-#if USE_MOUSE != 0
-      mouse_handler(&event);
-#endif
-
-#if USE_KEYBOARD
-      keyboard_handler(&event);
-#endif
-
-#if USE_MOUSEWHEEL != 0
-      mousewheel_handler(&event);
-#endif
-    }
-#endif
   }
 
   return 0;
@@ -108,8 +84,8 @@ static void hal_init(void) {
 
   /*Create a display buffer*/
   static lv_disp_buf_t disp_buf1;
-  static lv_color_t buf1_1[LV_HOR_RES_MAX * 300];
-  lv_disp_buf_init(&disp_buf1, buf1_1, NULL, LV_HOR_RES_MAX * 300);
+  static lv_color_t buf1_1[LV_HOR_RES_MAX * 120];
+  lv_disp_buf_init(&disp_buf1, buf1_1, NULL, LV_HOR_RES_MAX * 120);
 
   /*Create a display*/
   lv_disp_drv_t disp_drv;
@@ -131,9 +107,9 @@ static void hal_init(void) {
 
   /*Set a cursor for the mouse*/
   LV_IMG_DECLARE(mouse_cursor_icon); /*Declare the image file.*/
-//  lv_obj_t * cursor_obj = lv_img_create(lv_scr_act(), NULL); /*Create an image object for the cursor */
-//  lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
-//  lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
+  lv_obj_t * cursor_obj = lv_img_create(lv_scr_act(), NULL); /*Create an image object for the cursor */
+  lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
+  lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
 
   /* Tick init.
    * You have to call 'lv_tick_inc()' in periodically to inform LittelvGL about
@@ -147,7 +123,7 @@ static void hal_init(void) {
 }
 
 /**
- * A task to measure the elapsed time for LittlevGL
+ * A task to measure the elapsed time for LVGL
  * @param data unused
  * @return never return
  */
