@@ -1,15 +1,16 @@
-# Simulator project for LittlevGL embedded GUI Library
+# Simulator project for LVGL embedded GUI Library
 
-The [LittlevGL](https://github.com/littlevgl/lvgl) is written mainly for microcontrollers and embedded systems however you can run the library **on your PC** as well without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system.
+The [LVGL](https://github.com/lvgl/lvgl) is written mainly for microcontrollers and embedded systems however you can run the library **on your PC** as well without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system.
 
 Using a PC simulator instead of an embedded hardware has several advantages:
-* **Costs $0** because you you don't have to buy design PCB
+* **Costs $0** because you you don't have to buy or design PCB
 * **Fast** because you don't have to design an manufacture PCB
-* **Collaborative** because any number of developers can work without hardware requirements
+* **Collaborative** because any number of developers can work in the same environment
 * **Developer friendly** because much easier and faster to debug on PC
 
 ## Requirements
-* The PC simulator is cross platform.  **Windows, Linux and OSX** are supported, however on Windows it's easier to get started with a [another simulator](https://github.com/littlevgl/lvgl/#quick-start-in-a-simulator) project. 
+The PC simulator is cross platform.  **Windows, Linux and OSX** are supported, however on Windows it's easier to get started with a [another simulator](https://docs.lvgl.io/latest/en/html/get-started/pc-simulator.html) project. 
+
 * **SDL** a low level driver library to use graphics, handle mouse, keyboard etc.
 * This project (configured for **Eclipse CDT IDE**)
 
@@ -23,12 +24,10 @@ Clone the PC project and the related sub modules:
 git clone --recursive https://github.com/littlevgl/pc_simulator_sdl_eclipse.git
 ```
 
-or download it as zip [here](https://github.com/littlevgl/pc_simulator_sdl_eclipse/archive/dev-6.0.zip).
-
 ### Install SDL
 You can download SDL from https://www.libsdl.org/
 
-On Linux you can install it via terminal:
+On on Linux you can install it via terminal:
 ```
 sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev
 ```
@@ -73,8 +72,3 @@ docker run -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp/.X11-unix:ro -t lvgl_simu
 5. Submit a pull request!
 
 If you find an issue, please report it via GitHub!
-
-## Donate
-If you are pleased with the graphics library and found it useful pleas support its further development:
-
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LWHHAQYZMRQJS)
