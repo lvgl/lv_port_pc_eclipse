@@ -1,6 +1,6 @@
 /**
  * @file lv_conf.h
- * Configuration file for v7.3.1
+ * Configuration file for v7.5.0-dev
  */
 
 /*
@@ -457,10 +457,10 @@ typedef void * lv_font_user_data_t;
 #define LV_THEME_DEFAULT_COLOR_PRIMARY      lv_color_hex(0x01a2b1)
 #define LV_THEME_DEFAULT_COLOR_SECONDARY    lv_color_hex(0x44d1b6)
 #define LV_THEME_DEFAULT_FLAG               LV_THEME_MATERIAL_FLAG_LIGHT
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_14
-#define LV_THEME_DEFAULT_FONT_NORMAL        &lv_font_montserrat_14
-#define LV_THEME_DEFAULT_FONT_SUBTITLE      &lv_font_montserrat_14
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_14
+#define LV_THEME_DEFAULT_FONT_SMALL &lv_font_montserrat_12
+#define LV_THEME_DEFAULT_FONT_NORMAL &lv_font_montserrat_14
+#define LV_THEME_DEFAULT_FONT_SUBTITLE &lv_font_montserrat_16
+#define LV_THEME_DEFAULT_FONT_TITLE &lv_font_montserrat_18
 
 /*=================
  *  Text settings
@@ -653,7 +653,7 @@ typedef void * lv_obj_user_data_t;
  * 1: Some extra precision
  * 2: Best precision
  */
-#  define LV_LINEMETER_PRECISE    0
+#  define LV_LINEMETER_PRECISE    1
 #endif
 
 /*Mask (dependencies: -)*/
