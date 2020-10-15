@@ -529,7 +529,7 @@ typedef void * lv_font_user_data_t;
 /*Declare the type of the user data of object (can be e.g. `void *`, `int`, `struct`)*/
 typedef void * lv_obj_user_data_t;
 /*Provide a function to free user data*/
-#define LV_USE_USER_DATA 1
+#define LV_USE_USER_DATA_FREE 1
 #if LV_USE_USER_DATA_FREE
 #  define LV_USER_DATA_FREE_INCLUDE  "something.h"  /*Header for user data free function*/
 /* Function prototype : void user_data_free(lv_obj_t * obj); */
