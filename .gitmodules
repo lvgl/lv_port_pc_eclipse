@@ -10,3 +10,6 @@
 [submodule "lv_apps"]
 	path = lv_apps
 	url = https://github.com/littlevgl/lv_apps.git
+[submodule "lv_components"]
+	path = lv_components
+	url = https://github.com/lvgl/lv_components.git

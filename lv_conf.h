@@ -20,8 +20,8 @@
  *====================*/
 
 /* Maximal horizontal and vertical resolution to support by the library.*/
-#define LV_HOR_RES_MAX          (800)
-#define LV_VER_RES_MAX          (480)
+#define LV_HOR_RES_MAX          (320)
+#define LV_VER_RES_MAX          (240)
 
 /* Color depth:
  * - 1:  1 byte per pixel
@@ -70,7 +70,7 @@
 #define LV_DISP_LARGE_LIMIT  70
 
 /* Type of coordinates. Should be `int16_t` (or `int32_t` for extreme cases) */
-typedef int16_t lv_coord_t;
+typedef int32_t lv_coord_t;
 
 /*=========================
    Memory manager settings
@@ -80,10 +80,10 @@ typedef int16_t lv_coord_t;
  * The graphical objects and other related data are stored here. */
 
 /* 1: use custom malloc/free, 0: use the built-in `lv_mem_alloc` and `lv_mem_free` */
-#define LV_MEM_CUSTOM      0
+#define LV_MEM_CUSTOM      1
 #if LV_MEM_CUSTOM == 0
 /* Size of the memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
-#  define LV_MEM_SIZE    (64U * 1024U)
+#  define LV_MEM_SIZE    (3000U * 1024U)
 
 /* Complier prefix for a big array declaration */
 #  define LV_MEM_ATTR
@@ -123,7 +123,7 @@ typedef int16_t lv_coord_t;
 #define LV_INDEV_DEF_DRAG_LIMIT           10
 
 /* Drag throw slow-down in [%]. Greater value -> faster slow-down */
-#define LV_INDEV_DEF_DRAG_THROW           20
+#define LV_INDEV_DEF_DRAG_THROW           10
 
 /* Long press time in milliseconds.
  * Time to send `LV_EVENT_LONG_PRESSSED`) */
@@ -295,7 +295,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  * The behavior of asserts can be overwritten by redefining them here.
  * E.g. #define LV_ASSERT_MEM(p)  <my_assert_code>
  */
-#define LV_USE_DEBUG        1
+#define LV_USE_DEBUG        0
 #if LV_USE_DEBUG
 
 /*Check if the parameter is NULL. (Quite fast) */
@@ -314,7 +314,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 
 /* Check NULL, the object's type and existence (e.g. not deleted). (Quite slow)
  * If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled) */
-#define LV_USE_ASSERT_OBJ       1
+#define LV_USE_ASSERT_OBJ       0
 
 /*Check if the styles are properly initialized. (Fast)*/
 #define LV_USE_ASSERT_STYLE     1
@@ -333,6 +333,8 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 
 /* Montserrat fonts with bpp = 4
  * https://fonts.google.com/specimen/Montserrat  */
+#define LV_FONT_MONTSERRAT_8     1
+#define LV_FONT_MONTSERRAT_10    1
 #define LV_FONT_MONTSERRAT_12    1
 #define LV_FONT_MONTSERRAT_14    1
 #define LV_FONT_MONTSERRAT_16    1
@@ -467,7 +469,7 @@ typedef void * lv_font_user_data_t;
 /* Enable Arabic/Persian processing
  * In these languages characters should be replaced with
  * an other form based on their position in the text */
-#define LV_USE_ARABIC_PERSIAN_CHARS 1
+#define LV_USE_ARABIC_PERSIAN_CHARS 0
 
 /*Change the built in (v)snprintf functions*/
 #define LV_SPRINTF_CUSTOM   0
@@ -476,6 +478,18 @@ typedef void * lv_font_user_data_t;
 #  define lv_snprintf     snprintf
 #  define lv_vsnprintf    vsnprintf
 #endif  /*LV_SPRINTF_CUSTOM*/
+
+/*=================
+ * STYLE SETTINGS
+ *================*/
+
+/* Enable/Disable caching some information about the most common style properties.
+ * Results in faster drawing but has some memory cost per object per part.
+ * LEVEL 0: no caching
+ * LEVEL 1: mark if a property is different from its default value (uses 4 extra byte)
+ * LEVEL 2: LEVEL 1 + cache the value of some common properties (uses 8 extra bytes)
+ */
+#define LV_STYLE_CACHE_LEVEL   2   /*Cache level*/
 
 /*===================
  *  LV_OBJ SETTINGS
@@ -520,38 +534,29 @@ typedef void * lv_obj_user_data_t;
 #define LV_USE_BTN      1
 
 /*Button matrix (dependencies: -)*/
-#define LV_USE_BTNMATRIX     1
-
-/*Calendar (dependencies: -)*/
-#define LV_USE_CALENDAR 1
+#define LV_USE_BTNMATRIX   1
 
 /*Canvas (dependencies: lv_img)*/
 #define LV_USE_CANVAS   1
 
 /*Check box (dependencies: lv_btn, lv_label)*/
-#define LV_USE_CHECKBOX       1
+#define LV_USE_CHECKBOX  1
 
 /*Chart (dependencies: -)*/
-#define LV_USE_CHART    1
+#define LV_USE_CHART    0
 #if LV_USE_CHART
 #  define LV_CHART_AXIS_TICK_LABEL_MAX_LEN    256
 #endif
 
-/*Container (dependencies: -*/
-#define LV_USE_CONT     1
-
-/*Color picker (dependencies: -*/
-#define LV_USE_CPICKER   1
-
 /*Drop down list (dependencies: lv_page, lv_label, lv_symbol_def.h)*/
-#define LV_USE_DROPDOWN    1
+#define LV_USE_DROPDOWN  1
 #if LV_USE_DROPDOWN != 0
 /*Open and close default animation time [ms] (0: no animation)*/
 #  define LV_DROPDOWN_DEF_ANIM_TIME     200
 #endif
 
 /*Gauge (dependencies:lv_bar, lv_linemeter)*/
-#define LV_USE_GAUGE    1
+#define LV_USE_GAUGE    0
 
 /*Image (dependencies: lv_label*/
 #define LV_USE_IMG      1
@@ -562,9 +567,6 @@ typedef void * lv_obj_user_data_t;
 /*1: The imgbtn requires left, mid and right parts and the width can be set freely*/
 #  define LV_IMGBTN_TILED 0
 #endif
-
-/*Keyboard (dependencies: lv_btnm)*/
-#define LV_USE_KEYBOARD       1
 
 /*Label (dependencies: -*/
 #define LV_USE_LABEL    1
@@ -582,61 +584,16 @@ typedef void * lv_obj_user_data_t;
 #  define LV_LABEL_LONG_TXT_HINT          0
 #endif
 
-/*LED (dependencies: -)*/
-#define LV_USE_LED      1
-#if LV_USE_LED
-#  define LV_LED_BRIGHT_MIN  120      /*Minimal brightness*/
-#  define LV_LED_BRIGHT_MAX  255     /*Maximal brightness*/
-#endif
-
-/*Line (dependencies: -*/
-#define LV_USE_LINE     1
-
-/*List (dependencies: lv_page, lv_btn, lv_label, (lv_img optionally for icons ))*/
-#define LV_USE_LIST     1
-#if LV_USE_LIST != 0
-/*Default animation time of focusing to a list element [ms] (0: no animation)  */
-#  define LV_LIST_DEF_ANIM_TIME  100
-#endif
-
-/*Line meter (dependencies: *;)*/
-#define LV_USE_LINEMETER   1
-#if LV_USE_LINEMETER
-/* Draw line more precisely at cost of performance.
- * Useful if there are lot of lines any minor are visible
- * 0: No extra precision
- * 1: Some extra precision
- * 2: Best precision
- */
-#  define LV_LINEMETER_PRECISE    0
-#endif
+#define LV_USE_LINE  1
 
 /*Mask (dependencies: -)*/
-#define LV_USE_OBJMASK  1
-
-/*Message box (dependencies: lv_rect, lv_btnm, lv_label)*/
-#define LV_USE_MSGBOX     1
-
-/*Page (dependencies: lv_cont)*/
-#define LV_USE_PAGE     1
-#if LV_USE_PAGE != 0
-/*Focus default animation time [ms] (0: no animation)*/
-#  define LV_PAGE_DEF_ANIM_TIME     400
-#endif
-
-/*Preload (dependencies: lv_arc, lv_anim)*/
-#define LV_USE_SPINNER      1
-#if LV_USE_SPINNER != 0
-#  define LV_SPINNER_DEF_ARC_LENGTH   60      /*[deg]*/
-#  define LV_SPINNER_DEF_SPIN_TIME    1000    /*[ms]*/
-#  define LV_SPINNER_DEF_ANIM         LV_SPINNER_TYPE_SPINNING_ARC
-#endif
+#define LV_USE_OBJMASK  0
 
 /*Roller (dependencies: lv_ddlist)*/
 #define LV_USE_ROLLER    1
 #if LV_USE_ROLLER != 0
 /*Focus animation time [ms] (0: no animation)*/
-#  define LV_ROLLER_DEF_ANIM_TIME     200
+#  define LV_ROLLER_DEF_ANIM_TIME     600
 
 /*Number of extra "pages" when the roller is infinite*/
 #  define LV_ROLLER_INF_PAGES         7
@@ -645,14 +602,11 @@ typedef void * lv_obj_user_data_t;
 /*Slider (dependencies: lv_bar)*/
 #define LV_USE_SLIDER    1
 
-/*Spinbox (dependencies: lv_ta)*/
-#define LV_USE_SPINBOX       1
-
 /*Switch (dependencies: lv_slider)*/
-#define LV_USE_SWITCH       1
+#define LV_USE_SWITCH     1
 
 /*Text area (dependencies: lv_label, lv_page)*/
-#define LV_USE_TEXTAREA       1
+#define LV_USE_TEXTAREA    1
 #if LV_USE_TEXTAREA != 0
 #  define LV_TEXTAREA_DEF_CURSOR_BLINK_TIME 400     /*ms*/
 #  define LV_TEXTAREA_DEF_PWD_SHOW_TIME     1500    /*ms*/
@@ -660,26 +614,6 @@ typedef void * lv_obj_user_data_t;
 
 /*Table (dependencies: lv_label)*/
 #define LV_USE_TABLE    1
-#if LV_USE_TABLE
-#  define LV_TABLE_COL_MAX    12
-#endif
-
-/*Tab (dependencies: lv_page, lv_btnm)*/
-#define LV_USE_TABVIEW      1
-#  if LV_USE_TABVIEW != 0
-/*Time of slide animation [ms] (0: no animation)*/
-#  define LV_TABVIEW_DEF_ANIM_TIME    300
-#endif
-
-/*Tileview (dependencies: lv_page) */
-#define LV_USE_TILEVIEW     1
-#if LV_USE_TILEVIEW
-/*Time of slide animation [ms] (0: no animation)*/
-#  define LV_TILEVIEW_DEF_ANIM_TIME   300
-#endif
-
-/*Window (dependencies: lv_cont, lv_btn, lv_label, lv_img, lv_page)*/
-#define LV_USE_WIN      1
 
 /*==================
  * Non-user section

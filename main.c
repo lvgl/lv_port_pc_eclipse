@@ -1,4 +1,3 @@
-
 /**
  * @file main
  *
@@ -17,6 +16,13 @@
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/mouse.h"
 #include "lv_examples/lv_examples.h"
+#include "lv_components/lv_tabview.h"
+#include "lv_components/lv_win.h"
+#include "lv_components/lv_colorwheel.h"
+#include "lv_components/lv_calendar/lv_calendar.h"
+#include "lv_components/lv_calendar/lv_calendar_header_arrow.h"
+#include "lv_components/lv_list.h"
+#include "lv_components/lv_spinner.h"
 
 /*********************
  *      DEFINES
@@ -57,13 +63,43 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
-  lv_demo_widgets();
-//  lv_demo_printer();
+  lv_obj_t * list = lv_list_create(lv_scr_act());
+  for(int i = 0; i < 20; i++) {
+      lv_list_add_btn_with_icon(list, LV_SYMBOL_OK, "hello list button");
+  }
+
+  /* Change the size.
+   * All percentage based and flex item should be updated
+   * With > 240 px height the screen will overflow so scroll chaining can be tested as well*/
+  lv_obj_set_size(list, 180, 300);
+
+
+  /*Some other things to try*/
+//  lv_tabview_create(lv_scr_act(), LV_DIR_TOP, 50);
+
+
+//  lv_obj_t * calendar_cont = lv_obj_create(lv_scr_act(), NULL);
+//  lv_obj_set_size(calendar_cont, 220, 220);
+//  lv_obj_set_flex_cont(calendar_cont, LV_FLEX_DIR_COLUMN);
+//
+//  lv_obj_t * calendar_header = lv_calendar_header_arrow_create(calendar_cont, NULL, 25);
+//  lv_obj_set_flex_item(calendar_header, LV_FLEX_CENTER);
+//  lv_obj_set_width(calendar_header, LV_COORD_PCT(100));
+//
+//  lv_obj_t * calendar = lv_calendar_create(calendar_cont, NULL);
+//  lv_obj_set_size(calendar, LV_COORD_PCT(100), LV_FLEX_GROW(1));
+//  lv_obj_set_flex_item(calendar, LV_FLEX_CENTER);
+//
+//  lv_calendar_header_arrow_set_calendar(calendar_header, calendar);
+
+
+//  lv_ex_dropdown_2();
 
   while (1) {
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
     lv_task_handler();
+    LV_ASSERT_MEM_INTEGRITY();
     usleep(5 * 1000);
   }
 
