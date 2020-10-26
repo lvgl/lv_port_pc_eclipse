@@ -16,13 +16,7 @@
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/mouse.h"
 #include "lv_examples/lv_examples.h"
-#include "lv_components/lv_tabview.h"
-#include "lv_components/lv_win.h"
-#include "lv_components/lv_colorwheel.h"
-#include "lv_components/lv_calendar/lv_calendar.h"
-#include "lv_components/lv_calendar/lv_calendar_header_arrow.h"
-#include "lv_components/lv_list.h"
-#include "lv_components/lv_spinner.h"
+#include "lv_components/lv_components.h"
 
 /*********************
  *      DEFINES
@@ -63,15 +57,15 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
-  lv_obj_t * list = lv_list_create(lv_scr_act());
-  for(int i = 0; i < 20; i++) {
-      lv_list_add_btn_with_icon(list, LV_SYMBOL_OK, "hello list button");
-  }
-
-  /* Change the size.
-   * All percentage based and flex item should be updated
-   * With > 240 px height the screen will overflow so scroll chaining can be tested as well*/
-  lv_obj_set_size(list, 180, 300);
+//  lv_obj_t * list = lv_list_create(lv_scr_act());
+//  for(int i = 0; i < 20; i++) {
+//      lv_list_add_btn_with_icon(list, LV_SYMBOL_OK, "hello list button");
+//  }
+//
+//  /* Change the size.
+//   * All percentage based and flex item should be updated
+//   * With > 240 px height the screen will overflow so scroll chaining can be tested as well*/
+//  lv_obj_set_size(list, 180, 300);
 
 
   /*Some other things to try*/
@@ -94,6 +88,41 @@ int main(int argc, char **argv)
 
 
 //  lv_ex_dropdown_2();
+
+
+
+//
+//  lv_obj_t * tv = lv_tileview_create(lv_scr_act());
+//  lv_obj_t * t;
+//  lv_obj_t * l;
+//  t = lv_tileview_add_tile(tv, 0, 0, LV_DIR_VER);
+//  l = lv_label_create(t, NULL);
+//  lv_label_set_text(l, "c0, r0");
+//
+//  t = lv_tileview_add_tile(tv, 1, 0, LV_DIR_HOR);
+//  l = lv_label_create(t, NULL);
+//  lv_label_set_text(l, "c1, r0");
+//
+//  t = lv_tileview_add_tile(tv, 2, 0, LV_DIR_ALL);
+//  l = lv_label_create(t, NULL);
+//  lv_label_set_text(l, "c2, r0");
+//
+//  t = lv_tileview_add_tile(tv, 0, 1, LV_DIR_ALL);
+//  l = lv_label_create(t, NULL);
+//  lv_label_set_text(l, "c0, r1");
+//
+//  t = lv_tileview_add_tile(tv, 2, 1, LV_DIR_ALL);
+//  l = lv_label_create(t, NULL);
+//  lv_label_set_text(l, "c2, r1");
+
+
+//  const char * btns[] = {"Ok", "Cancel", ""};
+//  lv_msgbox_create("Hello,", "Some text\nvery very long text it should be wrapped do you see it heeee?", btns, true);
+
+//  lv_spinbox_create(lv_scr_act());
+
+//  lv_ex_colorwheel_1();
+  lv_ex_calendar_1();
 
   while (1) {
     /* Periodically call the lv_task handler.
