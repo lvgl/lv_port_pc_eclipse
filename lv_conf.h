@@ -80,10 +80,10 @@ typedef int32_t lv_coord_t;
  * The graphical objects and other related data are stored here. */
 
 /* 1: use custom malloc/free, 0: use the built-in `lv_mem_alloc` and `lv_mem_free` */
-#define LV_MEM_CUSTOM      1
+#define LV_MEM_CUSTOM      0
 #if LV_MEM_CUSTOM == 0
 /* Size of the memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
-#  define LV_MEM_SIZE    (3000U * 1024U)
+#  define LV_MEM_SIZE    (2200U * 1024U)
 
 /* Complier prefix for a big array declaration */
 #  define LV_MEM_ATTR
@@ -489,7 +489,7 @@ typedef void * lv_font_user_data_t;
  * LEVEL 1: mark if a property is different from its default value (uses 4 extra byte)
  * LEVEL 2: LEVEL 1 + cache the value of some common properties (uses 8 extra bytes)
  */
-#define LV_STYLE_CACHE_LEVEL   2   /*Cache level*/
+#define LV_STYLE_CACHE_LEVEL   0   /*Cache level*/
 
 /*===================
  *  LV_OBJ SETTINGS

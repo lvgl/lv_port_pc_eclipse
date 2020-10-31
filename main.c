@@ -46,6 +46,51 @@ lv_indev_t *kb_indev;
  *   GLOBAL FUNCTIONS
  **********************/
 
+
+
+//
+//typedef struct {
+//    lv_obj_t * parent; /**< Pointer to the parent object*/
+//
+//    lv_area_t coords; /**< Coordinates of the object (x1, y1, x2, y2)*/
+//
+//    lv_signal_cb_t signal_cb; /**< Object type specific signal function*/
+//    lv_design_cb_t design_cb; /**< Object type specific design function*/
+//
+//    void * ext_attr;            /**< Object type specific extended data*/
+//    lv_style_list_t  style_list;
+//
+//    /*Attributes and states*/
+//    lv_obj_flag_t flags;
+//
+//    lv_state_t state;
+//
+//    lv_coord_t x_set;
+//    lv_coord_t y_set;
+//    lv_coord_t w_set;
+//    lv_coord_t h_set;
+//
+//}lv_obj1_t;
+//
+//typedef struct {
+////
+//    lv_flex_cont_t flex_cont;
+//
+//    lv_scroll_mode_t scroll_mode :2; /**< How to display scrollbars*/
+//    lv_scroll_snap_align_t snap_align_x : 2;
+//    lv_scroll_snap_align_t snap_align_y : 2;
+//    lv_scroll_dir_t scroll_dir :4;
+//    lv_bidi_dir_t base_dir  : 2; /**< Base direction of texts related to this object */
+//
+//
+//}lv_obj2_t;
+//
+//
+//
+
+
+
+
 int main(int argc, char **argv)
 {
   (void)argc; /*Unused*/
@@ -89,8 +134,6 @@ int main(int argc, char **argv)
 
 //  lv_ex_dropdown_2();
 
-
-
 //
 //  lv_obj_t * tv = lv_tileview_create(lv_scr_act());
 //  lv_obj_t * t;
@@ -122,13 +165,19 @@ int main(int argc, char **argv)
 //  lv_spinbox_create(lv_scr_act());
 
 //  lv_ex_colorwheel_1();
+
+  lv_ex_list_1();
+  lv_ex_msgbox_1();
   lv_ex_calendar_1();
+  lv_ex_tabview_1();
+  lv_ex_tileview_1();
+  lv_ex_led_1();
+  lv_ex_spinbox_1();
 
   while (1) {
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
     lv_task_handler();
-    LV_ASSERT_MEM_INTEGRITY();
     usleep(5 * 1000);
   }
 
