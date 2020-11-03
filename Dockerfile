@@ -21,8 +21,8 @@ RUN apt update && apt install -y \
 
 ENV DISPLAY=:0 \
     LV_SIM_BRANCH=master \
-    LV_SIM_REPO=pc_simulator_sdl_eclipse \
-    LV_USER=littlevgl
+    LV_SIM_REPO=lv_sim_eclipse_sdl \
+    LV_USER=lvgl
 
 # Prevents Docker from caching
 ADD https://api.github.com/repos/$LV_USER/$LV_SIM_REPO/git/refs/heads/$LV_BRANCH version.json
