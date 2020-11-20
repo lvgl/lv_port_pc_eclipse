@@ -15,8 +15,10 @@
 #include <SDL2/SDL.h>
 #include "lvgl/lvgl.h"
 #include "lv_drivers/display/monitor.h"
+#include "lv_drivers/gtkdrv/gtkdrv.h"
 #include "lv_drivers/indev/mouse.h"
-#include "lv_examples/lv_examples.h"
+#include "lv_drivers/indev/keyboard.h"
+//#include "lv_examples/lv_examples.h"
 
 /*********************
  *      DEFINES
@@ -46,6 +48,31 @@ lv_indev_t *kb_indev;
  *   GLOBAL FUNCTIONS
  **********************/
 
+
+/*********************
+ *      DEFINES
+ *********************/
+
+/**********************
+ *      TYPEDEFS
+ **********************/
+
+/**********************
+ *      VARIABLES
+ **********************/
+
+/**********************
+ *  STATIC PROTOTYPES
+ **********************/
+
+/**********************
+ *  FUNCTIONS
+ **********************/
+
+/**********************
+ *   GLOBAL FUNCTIONS
+ **********************/
+
 int main(int argc, char **argv)
 {
   (void)argc; /*Unused*/
@@ -57,41 +84,69 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
-  lv_demo_widgets();
-//  lv_demo_printer();
+//  lv_demo_music();
+//  lv_demo_widgets();
 
-  while (1) {
-    /* Periodically call the lv_task handler.
-     * It could be done in a timer interrupt or an OS task too.*/
-    lv_task_handler();
-    usleep(5 * 1000);
+//  lv_ex_spinbox_1();
+
+//  lv_ex_spinbox_1();
+
+  lv_ex_btnmatrix_1();
+
+  //
+//  lv_obj_t * scr = lv_obj_create(NULL, NULL);
+//  lv_obj_set_style_local_bg_color(scr, 0, 0, LV_COLOR_RED);
+//
+//  lv_scr_load_anim( scr, LV_SCR_LOAD_ANIM_MOVE_TOP, 2000, 1000, true );
+
+//  lv_obj_t * arc = lv_arc_create(lv_scr_act(), NULL);
+//  lv_arc_set_bg_angles(arc, 0, 360);
+//  lv_obj_align(arc, NULL, LV_ALIGN_CENTER, 0, 0);
+//  lv_arc_set_adjustable(arc, true);
+
+  while(1) {
+      /* Periodically call the lv_task handler.
+       * It could be done in a timer interrupt or an OS task too.*/
+      lv_task_handler();
+      usleep(5 * 1000);
+//      printf("x: %d, y: %d\n", lv_obj_get_x(o1), lv_obj_get_y(o1));
   }
 
   return 0;
 }
 
 /**********************
- *   STATIC FUNCTIONS
+ *   STATIC FUNCTIONSlv_mem_alloc_aligned(size, align)
  **********************/
 
 /**
  * Initialize the Hardware Abstraction Layer (HAL) for the Littlev graphics
  * library
  */
-static void hal_init(void) {
+static void hal_init(void)
+{
+
   /* Use the 'monitor' driver which creates window on PC's monitor to simulate a display*/
   monitor_init();
 
+  /* Tick init.
+   * You have to call 'lv_tick_inc()' in periodically to inform LittelvGL about
+   * how much time were elapsed Create an SDL thread to do this*/
+  SDL_CreateThread(tick_thread, "tick", NULL);
+
   /*Create a display buffer*/
   static lv_disp_buf_t disp_buf1;
-  static lv_color_t buf1_1[LV_HOR_RES_MAX * 120];
-  lv_disp_buf_init(&disp_buf1, buf1_1, NULL, LV_HOR_RES_MAX * 120);
+  static lv_color_t buf1_1[LV_HOR_RES_MAX * LV_VER_RES_MAX];
+  static lv_color_t buf1_2[LV_HOR_RES_MAX * LV_VER_RES_MAX];
+  lv_disp_buf_init(&disp_buf1, buf1_1, buf1_2, LV_HOR_RES_MAX * LV_VER_RES_MAX);
 
   /*Create a display*/
   lv_disp_drv_t disp_drv;
   lv_disp_drv_init(&disp_drv); /*Basic initialization*/
   disp_drv.buffer = &disp_buf1;
   disp_drv.flush_cb = monitor_flush;
+  disp_drv.antialiasing = 1;
+
   lv_disp_drv_register(&disp_drv);
 
   /* Add the mouse as input device
@@ -105,16 +160,17 @@ static void hal_init(void) {
   indev_drv.read_cb = mouse_read;
   lv_indev_t *mouse_indev = lv_indev_drv_register(&indev_drv);
 
+  keyboard_init();
+  lv_indev_drv_init(&indev_drv); /*Basic initialization*/
+  indev_drv.type = LV_INDEV_TYPE_KEYPAD;
+  indev_drv.read_cb = keyboard_read;
+  kb_indev = lv_indev_drv_register(&indev_drv);
+
   /*Set a cursor for the mouse*/
   LV_IMG_DECLARE(mouse_cursor_icon); /*Declare the image file.*/
   lv_obj_t * cursor_obj = lv_img_create(lv_scr_act(), NULL); /*Create an image object for the cursor */
   lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
   lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
-
-  /* Tick init.
-   * You have to call 'lv_tick_inc()' in periodically to inform LittelvGL about
-   * how much time were elapsed Create an SDL thread to do this*/
-  SDL_CreateThread(tick_thread, "tick", NULL);
 
   /* Optional:
    * Create a memory monitor task which prints the memory usage in
@@ -128,14 +184,14 @@ static void hal_init(void) {
  * @return never return
  */
 static int tick_thread(void *data) {
-  (void)data;
+    (void)data;
 
-  while (1) {
-    SDL_Delay(5);   /*Sleep for 5 millisecond*/
-    lv_tick_inc(5); /*Tell LittelvGL that 5 milliseconds were elapsed*/
-  }
+    while(1) {
+        SDL_Delay(5);   /*Sleep for 5 millisecond*/
+        lv_tick_inc(5); /*Tell LittelvGL that 5 milliseconds were elapsed*/
+    }
 
-  return 0;
+    return 0;
 }
 
 /**
@@ -144,7 +200,7 @@ static int tick_thread(void *data) {
  */
 static void memory_monitor(lv_task_t *param) {
   (void)param; /*Unused*/
-
+//  lv_event_queue_refresh_recursive(NULL);
   lv_mem_monitor_t mon;
   lv_mem_monitor(&mon);
   printf("used: %6d (%3d %%), frag: %3d %%, biggest free: %6d\n",

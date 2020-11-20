@@ -40,6 +40,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1598103499" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker">
 								<option id="gnu.c.link.option.libs.1470306445" name="Libraries (-l)" superClass="gnu.c.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="SDL2main"/>
+									<listOptionValue builtIn="false" value="m"/>
+									<listOptionValue builtIn="false" value="png"/>
 									<listOptionValue builtIn="false" value="SDL2"/>
 								</option>
 								<option id="gnu.c.link.option.ldflags.371206369" name="Linker flags" superClass="gnu.c.link.option.ldflags" useByScannerDiscovery="false" value="" valueType="string"/>
