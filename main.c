@@ -84,25 +84,9 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
-//  lv_demo_music();
-//  lv_demo_widgets();
-
-//  lv_ex_spinbox_1();
-
-//  lv_ex_spinbox_1();
-
-  lv_ex_btnmatrix_1();
-
-  //
-//  lv_obj_t * scr = lv_obj_create(NULL, NULL);
-//  lv_obj_set_style_local_bg_color(scr, 0, 0, LV_COLOR_RED);
-//
-//  lv_scr_load_anim( scr, LV_SCR_LOAD_ANIM_MOVE_TOP, 2000, 1000, true );
-
-//  lv_obj_t * arc = lv_arc_create(lv_scr_act(), NULL);
-//  lv_arc_set_bg_angles(arc, 0, 360);
-//  lv_obj_align(arc, NULL, LV_ALIGN_CENTER, 0, 0);
-//  lv_arc_set_adjustable(arc, true);
+//  lv_ex_flex_1();
+//  lv_ex_grid_1();
+  lv_ex_spinbox_1();
 
   while(1) {
       /* Periodically call the lv_task handler.

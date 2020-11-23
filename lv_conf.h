@@ -546,7 +546,7 @@ typedef void * lv_font_user_data_t;
  * LEVEL 1: mark if a property is different from its default value (uses 4 extra byte)
  * LEVEL 2: LEVEL 1 + cache the value of some common properties (uses 8 extra bytes)
  */
-#define LV_STYLE_CACHE_LEVEL   0   /*Cache level*/
+#define LV_STYLE_CACHE_LEVEL   2   /*Cache level*/
 
 /*===================
  *  LV_OBJ SETTINGS
