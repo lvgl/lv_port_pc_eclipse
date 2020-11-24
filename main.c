@@ -33,7 +33,7 @@
  **********************/
 static void hal_init(void);
 static int tick_thread(void *data);
-static void memory_monitor(lv_task_t *param);
+static void memory_monitor(lv_tmr_t *param);
 
 /**********************
  *  STATIC VARIABLES
@@ -86,12 +86,13 @@ int main(int argc, char **argv)
 
 //  lv_ex_flex_1();
 //  lv_ex_grid_1();
-  lv_ex_spinbox_1();
+//  lv_ex_spinbox_1();
+  lv_ex_calendar_1();
 
   while(1) {
       /* Periodically call the lv_task handler.
        * It could be done in a timer interrupt or an OS task too.*/
-      lv_task_handler();
+      lv_tmr_handler();
       usleep(5 * 1000);
 //      printf("x: %d, y: %d\n", lv_obj_get_x(o1), lv_obj_get_y(o1));
   }
@@ -159,7 +160,7 @@ static void hal_init(void)
   /* Optional:
    * Create a memory monitor task which prints the memory usage in
    * periodically.*/
-  lv_task_create(memory_monitor, 5000, LV_TASK_PRIO_MID, NULL);
+  lv_tmr_create(memory_monitor, 5000, NULL);
 }
 
 /**
@@ -182,7 +183,7 @@ static int tick_thread(void *data) {
  * Print the memory usage periodically
  * @param param
  */
-static void memory_monitor(lv_task_t *param) {
+static void memory_monitor(lv_tmr_t *param) {
   (void)param; /*Unused*/
 //  lv_event_queue_refresh_recursive(NULL);
   lv_mem_monitor_t mon;
