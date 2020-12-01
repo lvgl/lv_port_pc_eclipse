@@ -57,6 +57,12 @@ and run a command similar to:
 docker run -e DISPLAY=10.103.56.101:0 lvgl_simulator
 ```
 
+Note that on macOS, you may need to enable indirect GLX rendering before starting Xquartz:
+```
+defaults write org.macosforge.xquartz.X11 enable_iglx -bool true
+open -a Xquartz
+```
+
 For Linux environments with X Server, the following will the `docker run` command. Note that the first command, `xhost +` grants access to X server to everyone.
 
 ```
