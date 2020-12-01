@@ -19,17 +19,9 @@ RUN apt update && apt install -y \
     libgl1-mesa-glx \
     x11-apps
 
-ENV DISPLAY=:0 \
-    LV_SIM_BRANCH=master \
-    LV_SIM_REPO=lv_sim_eclipse_sdl \
-    LV_USER=lvgl
+ENV DISPLAY=:0
 
-# Prevents Docker from caching
-ADD https://api.github.com/repos/$LV_USER/$LV_SIM_REPO/git/refs/heads/$LV_BRANCH version.json
-
-RUN git clone --recursive -b$LV_SIM_BRANCH https://github.com/$LV_USER/$LV_SIM_REPO.git
-
-WORKDIR /$LV_SIM_REPO
+ADD . .
 
 RUN make -j3
 
