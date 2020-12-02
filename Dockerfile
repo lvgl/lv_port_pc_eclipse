@@ -21,7 +21,7 @@ RUN apt update && apt install -y \
 
 ENV DISPLAY=:0
 
-ADD . .
+COPY . .
 
 RUN make -j3
 
