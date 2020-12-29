@@ -41,6 +41,17 @@ Download and install Eclipse CDT from  http://www.eclipse.org/cdt/
 3. Browse the root directory of the project and click Finish
 4. Build your project and run it
 
+## CMake
+
+The following steps can be used with CMake on a Unix-like system. This may also work on other OSes but has not been tested.
+
+1. Ensure CMake is installed, i.e. the `cmake` command works on the terminal.
+2. Make a new directory. The name doesn't matter but `build` will be used for this tutorial.
+3. Type `cd build`.
+4. Type `cmake ..`. CMake will generate the appropriate build files.
+5. Type `make -j4` or (more portable) `cmake --build . --parallel`.
+6. The binary will be in `../bin/main`, and can be run by typing that command.
+
 ## Docker
 1. Build the docker container
 ```
