@@ -7,3 +7,6 @@
 [submodule "lv_drivers"]
 	path = lv_drivers
 	url = https://github.com/littlevgl/lv_drivers.git 
+[submodule "lv_lib_rlottie"]
+	path = lv_lib_rlottie
+	url = https://github.com/lvgl/lv_lib_rlottie.git
