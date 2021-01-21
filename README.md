@@ -50,6 +50,9 @@ The following steps can be used with CMake on a Unix-like system. This may also 
 3. Type `cd build`.
 4. Type `cmake ..`. CMake will generate the appropriate build files.
 5. Type `make -j4` or (more portable) `cmake --build . --parallel`.
+
+**NOTE:** `--parallel` is supported from CMake v3.12 onwards. If you are using an older version of CMake, remove `--parallel` from the command or use the make option.
+
 6. The binary will be in `../bin/main`, and can be run by typing that command.
 
 ## Docker
