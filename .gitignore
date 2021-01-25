@@ -7,3 +7,4 @@ demo
 /.metadata/
 /.tracecompass
 build/
+lvgl_lib_cmake/
