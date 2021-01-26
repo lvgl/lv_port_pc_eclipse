@@ -6,6 +6,7 @@ option(USE_CONAN OFF)
 
 set (SDL_TARGET_NAME "")
 if( USE_CONAN )
+    set( CONAN_DISABLE_CHECK_COMPILER TRUE )
     include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
     conan_basic_setup(TARGETS)
     set(SDL_TARGET_NAME CONAN_PKG::sdl2)
@@ -34,7 +35,7 @@ target_link_libraries(lv_examples PUBLIC lvgl_conf lvgl lv_drivers)
 
 add_executable(lvgl_sim_eclipse main.c mouse_cursor_icon.c)
 
-#add_subdirectory (lv_lib_rlottie)
+add_subdirectory (lv_lib_rlottie)
 
 target_include_directories(
     lvgl_sim_eclipse
@@ -48,4 +49,4 @@ target_compile_features(
     cxx_std_17
 )
 
-target_link_libraries(lvgl_sim_eclipse PRIVATE lvgl lv_examples lv_lib_rlotti)
+target_link_libraries(lvgl_sim_eclipse PRIVATE lvgl lv_examples lv_lib_rlottie)
