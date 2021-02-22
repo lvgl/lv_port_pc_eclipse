@@ -33,7 +33,7 @@
  **********************/
 static void hal_init(void);
 static int tick_thread(void *data);
-static void memory_monitor(lv_tmr_t *param);
+static void memory_monitor(lv_timer_t *param);
 
 /**********************
  *  STATIC VARIABLES
@@ -47,7 +47,6 @@ lv_indev_t *kb_indev;
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-
 
 /*********************
  *      DEFINES
@@ -72,6 +71,63 @@ lv_indev_t *kb_indev;
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
+//#include "lvgl/src/lv_misc/lv_class.h"
+
+/**********************
+ * IN HEADER FILES
+ *********************/
+
+void my_draw_table(lv_obj_t * obj, lv_event_t e)
+{
+    lv_obj_draw_hook_dsc_t * hook_dsc = lv_event_get_param();
+    if(!hook_dsc || hook_dsc->part != LV_PART_ITEMS) return;
+
+    if(e == LV_EVENT_DRAW_PART_BEGIN) {
+        uint32_t row = hook_dsc->id /  lv_table_get_col_cnt(obj);
+        uint32_t col = hook_dsc->id - row * lv_table_get_col_cnt(obj);
+        if(row % 2 && col % 2) hook_dsc->rect_dsc->bg_color = lv_color_hex3(0xbbd);
+        else if(row % 2) hook_dsc->rect_dsc->bg_color = lv_color_darken(hook_dsc->rect_dsc->bg_color, LV_OPA_10);
+        else if(col % 2) hook_dsc->rect_dsc->bg_color = lv_color_hex3(0xeef);
+
+        if(row == 2 && col == 1) {
+            hook_dsc->rect_dsc->bg_color = lv_color_hex3(0xf00);
+        }
+    }
+    else if(e == LV_EVENT_DRAW_PART_END) {
+        uint32_t row = hook_dsc->id /  lv_table_get_col_cnt(obj);
+        uint32_t col = hook_dsc->id - row * lv_table_get_col_cnt(obj);
+        if(col == 0) {
+            lv_draw_rect_dsc_t dsc;
+            lv_draw_rect_dsc_init(&dsc);
+            dsc.bg_color = LV_COLOR_WHITE;
+            dsc.border_color = LV_COLOR_GRAY;
+            dsc.border_width = 2;
+            dsc.radius = 2;
+            dsc.content_text = LV_SYMBOL_OK;
+
+            lv_area_t area;
+            area.x1 = hook_dsc->draw_area->x1 + 50;
+            area.x2 = hook_dsc->draw_area->x1 + 60;
+            area.y1 = hook_dsc->draw_area->y1 + 10;
+            area.y2 = hook_dsc->draw_area->y1 + 20;
+
+            lv_draw_rect(&area, hook_dsc->clip_area, &dsc);
+        }
+    }
+}
+//
+//lv_draw_res_t my_draw(const lv_draw_t * draw, lv_obj_t * obj, lv_draw_mode_t mode, const lv_area_t * clip_area, void * param)
+//{
+//    if(mode == LV_DRAW_MODE_PART_AFTER) {
+//        lv_draw_label_dsc_t dsc;
+//        lv_draw_label_dsc_init(&dsc);
+//
+//        lv_draw_label(&obj->coords, clip_area, &dsc, "Hello", NULL);
+//    }
+//    return LV_DRAW_RES_OK;
+//}
+
+#define TEXT(a) printf("%s\n", #a)
 
 int main(int argc, char **argv)
 {
@@ -84,28 +140,39 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
-//  lv_ex_flex_1();
-//  lv_ex_grid_1();
-//  lv_ex_spinbox_1();
-  lv_ex_calendar_1();
+  const char * symbol = LV_SYMBOL_BLUETOOTH;
+
+  lv_obj_t * labelObj = lv_label_create(lv_scr_act(), NULL);
+  lv_label_set_text(labelObj, LV_SYMBOL_BLUETOOTH);
+  char * labelText = lv_label_get_text(labelObj);
+
+  printf("%s\n", strcmp(symbol, labelText) == 0 ? "eq" : "neq");
+
+  memory_monitor(NULL);
+
+//  lv_obj_create(lv_scr_act(), NULL);
+
+  lv_example_img_4();
+
+//  lv_example_grid_6();
 
   while(1) {
       /* Periodically call the lv_task handler.
        * It could be done in a timer interrupt or an OS task too.*/
-      lv_tmr_handler();
+      lv_timer_handler();
       usleep(5 * 1000);
-//      printf("x: %d, y: %d\n", lv_obj_get_x(o1), lv_obj_get_y(o1));
+//      lv_obj_invalidate(lv_scr_act());
   }
 
   return 0;
 }
 
 /**********************
- *   STATIC FUNCTIONSlv_mem_alloc_aligned(size, align)
+ *   STATIC FUNCTIONS
  **********************/
 
 /**
- * Initialize the Hardware Abstraction Layer (HAL) for the Littlev graphics
+ * Initialize the Hardware Abstraction Layer (HAL) for the LVGL graphics
  * library
  */
 static void hal_init(void)
@@ -121,15 +188,17 @@ static void hal_init(void)
 
   /*Create a display buffer*/
   static lv_disp_buf_t disp_buf1;
-  static lv_color_t buf1_1[LV_HOR_RES_MAX * LV_VER_RES_MAX];
-  static lv_color_t buf1_2[LV_HOR_RES_MAX * LV_VER_RES_MAX];
-  lv_disp_buf_init(&disp_buf1, buf1_1, buf1_2, LV_HOR_RES_MAX * LV_VER_RES_MAX);
+  static lv_color_t buf1_1[MONITOR_HOR_RES * MONITOR_VER_RES];
+  static lv_color_t buf1_2[MONITOR_HOR_RES * MONITOR_VER_RES];
+  lv_disp_buf_init(&disp_buf1, buf1_1, buf1_2, MONITOR_HOR_RES * MONITOR_VER_RES);
 
   /*Create a display*/
   lv_disp_drv_t disp_drv;
   lv_disp_drv_init(&disp_drv); /*Basic initialization*/
   disp_drv.buffer = &disp_buf1;
   disp_drv.flush_cb = monitor_flush;
+  disp_drv.hor_res = MONITOR_HOR_RES;
+  disp_drv.ver_res = MONITOR_VER_RES;
   disp_drv.antialiasing = 1;
 
   lv_disp_drv_register(&disp_drv);
@@ -160,7 +229,7 @@ static void hal_init(void)
   /* Optional:
    * Create a memory monitor task which prints the memory usage in
    * periodically.*/
-  lv_tmr_create(memory_monitor, 5000, NULL);
+  lv_timer_create(memory_monitor, 10000, NULL);
 }
 
 /**
@@ -183,7 +252,7 @@ static int tick_thread(void *data) {
  * Print the memory usage periodically
  * @param param
  */
-static void memory_monitor(lv_tmr_t *param) {
+static void memory_monitor(lv_timer_t *param) {
   (void)param; /*Unused*/
 //  lv_event_queue_refresh_recursive(NULL);
   lv_mem_monitor_t mon;
