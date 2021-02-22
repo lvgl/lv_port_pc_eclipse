@@ -7,9 +7,8 @@
 /*********************
  *      INCLUDES
  *********************/
-#define _DEFAULT_SOURCE /* needed for usleep() */
 #include <stdlib.h>
-#include <unistd.h>
+#include <stdio.h>
 #define SDL_MAIN_HANDLED /*To fix SDL's "undefined reference to WinMain" \
                             issue*/
 #include <SDL2/SDL.h>
@@ -83,7 +82,7 @@ int main(int argc, char **argv)
     /* Periodically call the lv_task handler.
      * It could be done in a timer interrupt or an OS task too.*/
     lv_task_handler();
-    usleep(5 * 1000);
+    SDL_Delay(5);
   }
 
   return 0;

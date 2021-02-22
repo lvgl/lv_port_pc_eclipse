@@ -1,0 +1,12 @@
+[requires]
+sdl2/2.0.10@bincrafters/stable
+
+[options]
+sdl2_image:tif=False
+sdl2:shared=True
+
+[imports]
+bin, *.dll -> bin
+
+[generators]
+cmake
