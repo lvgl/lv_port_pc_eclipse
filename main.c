@@ -18,7 +18,6 @@
 #include "lv_drivers/gtkdrv/gtkdrv.h"
 #include "lv_drivers/indev/mouse.h"
 #include "lv_drivers/indev/keyboard.h"
-//#include "lv_examples/lv_examples.h"
 
 /*********************
  *      DEFINES
@@ -65,69 +64,9 @@ lv_indev_t *kb_indev;
  **********************/
 
 /**********************
- *  FUNCTIONS
- **********************/
-
-/**********************
  *   GLOBAL FUNCTIONS
  **********************/
-//#include "lvgl/src/lv_misc/lv_class.h"
 
-/**********************
- * IN HEADER FILES
- *********************/
-
-void my_draw_table(lv_obj_t * obj, lv_event_t e)
-{
-    lv_obj_draw_hook_dsc_t * hook_dsc = lv_event_get_param();
-    if(!hook_dsc || hook_dsc->part != LV_PART_ITEMS) return;
-
-    if(e == LV_EVENT_DRAW_PART_BEGIN) {
-        uint32_t row = hook_dsc->id /  lv_table_get_col_cnt(obj);
-        uint32_t col = hook_dsc->id - row * lv_table_get_col_cnt(obj);
-        if(row % 2 && col % 2) hook_dsc->rect_dsc->bg_color = lv_color_hex3(0xbbd);
-        else if(row % 2) hook_dsc->rect_dsc->bg_color = lv_color_darken(hook_dsc->rect_dsc->bg_color, LV_OPA_10);
-        else if(col % 2) hook_dsc->rect_dsc->bg_color = lv_color_hex3(0xeef);
-
-        if(row == 2 && col == 1) {
-            hook_dsc->rect_dsc->bg_color = lv_color_hex3(0xf00);
-        }
-    }
-    else if(e == LV_EVENT_DRAW_PART_END) {
-        uint32_t row = hook_dsc->id /  lv_table_get_col_cnt(obj);
-        uint32_t col = hook_dsc->id - row * lv_table_get_col_cnt(obj);
-        if(col == 0) {
-            lv_draw_rect_dsc_t dsc;
-            lv_draw_rect_dsc_init(&dsc);
-            dsc.bg_color = LV_COLOR_WHITE;
-            dsc.border_color = LV_COLOR_GRAY;
-            dsc.border_width = 2;
-            dsc.radius = 2;
-            dsc.content_text = LV_SYMBOL_OK;
-
-            lv_area_t area;
-            area.x1 = hook_dsc->draw_area->x1 + 50;
-            area.x2 = hook_dsc->draw_area->x1 + 60;
-            area.y1 = hook_dsc->draw_area->y1 + 10;
-            area.y2 = hook_dsc->draw_area->y1 + 20;
-
-            lv_draw_rect(&area, hook_dsc->clip_area, &dsc);
-        }
-    }
-}
-//
-//lv_draw_res_t my_draw(const lv_draw_t * draw, lv_obj_t * obj, lv_draw_mode_t mode, const lv_area_t * clip_area, void * param)
-//{
-//    if(mode == LV_DRAW_MODE_PART_AFTER) {
-//        lv_draw_label_dsc_t dsc;
-//        lv_draw_label_dsc_init(&dsc);
-//
-//        lv_draw_label(&obj->coords, clip_area, &dsc, "Hello", NULL);
-//    }
-//    return LV_DRAW_RES_OK;
-//}
-
-#define TEXT(a) printf("%s\n", #a)
 
 int main(int argc, char **argv)
 {
@@ -140,21 +79,10 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
-  const char * symbol = LV_SYMBOL_BLUETOOTH;
-
-  lv_obj_t * labelObj = lv_label_create(lv_scr_act(), NULL);
-  lv_label_set_text(labelObj, LV_SYMBOL_BLUETOOTH);
-  char * labelText = lv_label_get_text(labelObj);
-
-  printf("%s\n", strcmp(symbol, labelText) == 0 ? "eq" : "neq");
-
-  memory_monitor(NULL);
-
-//  lv_obj_create(lv_scr_act(), NULL);
-
-  lv_example_img_4();
-
-//  lv_example_grid_6();
+  lv_example_btn_2();
+//  lv_example_btnmatrix_2();
+//  lv_example_tabview_1();
+//  lv_example_colorwheel_1();
 
   while(1) {
       /* Periodically call the lv_task handler.
