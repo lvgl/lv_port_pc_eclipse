@@ -31,7 +31,7 @@
 #define LV_COLOR_SCREEN_TRANSP    0
 
 /*Images pixels with this color will not be drawn if they are  chroma keyed)*/
-#define LV_COLOR_CHROMA_KEY    LV_COLOR_LIME         /*pure green*/
+#define LV_COLOR_CHROMA_KEY    lv_color_hex(0x00FF00)         /*pure green*/
 
 /*=========================
    MEMORY SETTINGS
@@ -286,6 +286,9 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
  * E.g. #define LV_FONT_CUSTOM_DECLARE   LV_FONT_DECLARE(my_font_1) LV_FONT_DECLARE(my_font_2) */
 #define LV_FONT_CUSTOM_DECLARE
 
+/*Always set a default font*/
+#define LV_FONT_DEFAULT &lv_font_montserrat_14
+
 /* Enable handling large font and/or fonts with a lot of characters.
  * The limit depends on the font size, font face and bpp.
  * Compiler error will be triggered if a font needs it.*/
@@ -338,25 +341,6 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 /* Enable Arabic/Persian processing
  * In these languages characters should be replaced with an other form based on their position in the text */
 #define LV_USE_ARABIC_PERSIAN_CHARS 1
-
-
-/*==================
- *  THEME USAGE
- *================*/
-/*Set the very basic the attributes*/
-#define LV_THEME_COLOR_PRIMARY      lv_color_hex(0x01a2b1)
-#define LV_THEME_COLOR_SECONDARY    lv_color_hex(0x44d1b6)
-#define LV_THEME_FONT_SMALL         &lv_font_montserrat_10
-#define LV_THEME_FONT_NORMAL        &lv_font_montserrat_14
-#define LV_THEME_FONT_LARGE         &lv_font_montserrat_18
-#define LV_THEME_FONT_EXTRA_LARGE   &lv_font_montserrat_22
-
-/* An external include file required to see the theme init function.
- * Relative to "lv_core/lv_obj" */
-#define LV_THEME_INIT_INCLUDE "../extra/themes/lv_themes.h"
-
-/* Set a theme initialization function */
-#define LV_THEME_INIT lv_theme_default_init
 
 /*==================
  *  WIDGET USAGE

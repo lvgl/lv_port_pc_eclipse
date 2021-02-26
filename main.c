@@ -79,10 +79,17 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
-  lv_example_btn_2();
+//  lv_example_btn_1();
+//  lv_example_calendar_1();
 //  lv_example_btnmatrix_2();
 //  lv_example_tabview_1();
+//  lv_example_chart_3();
 //  lv_example_colorwheel_1();
+//  lv_example_meter_4();
+//  lv_example_table_2();
+//  lv_example_scroll_2();
+
+//  lv_demo_keypad_encoder();
 
   while(1) {
       /* Periodically call the lv_task handler.
@@ -118,7 +125,7 @@ static void hal_init(void)
   static lv_disp_buf_t disp_buf1;
   static lv_color_t buf1_1[MONITOR_HOR_RES * MONITOR_VER_RES];
   static lv_color_t buf1_2[MONITOR_HOR_RES * MONITOR_VER_RES];
-  lv_disp_buf_init(&disp_buf1, buf1_1, buf1_2, MONITOR_HOR_RES * MONITOR_VER_RES);
+  lv_disp_buf_init(&disp_buf1, buf1_1, buf1_2, MONITOR_HOR_RES * MONITOR_VER_RES / 2);
 
   /*Create a display*/
   lv_disp_drv_t disp_drv;
@@ -129,7 +136,10 @@ static void hal_init(void)
   disp_drv.ver_res = MONITOR_VER_RES;
   disp_drv.antialiasing = 1;
 
-  lv_disp_drv_register(&disp_drv);
+  lv_disp_t * disp = lv_disp_drv_register(&disp_drv);
+
+  lv_theme_t * th = lv_theme_default_init(disp, lv_color_red(), lv_color_indigo(), LV_FONT_DEFAULT, LV_FONT_DEFAULT, LV_FONT_DEFAULT);
+  lv_disp_set_theme(disp, th);
 
   /* Add the mouse as input device
    * Use the 'mouse' driver which reads the PC's mouse*/
