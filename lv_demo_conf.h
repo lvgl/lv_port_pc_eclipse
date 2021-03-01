@@ -19,7 +19,7 @@
  *********************/
 
 /*Show some widget*/
-#define LV_USE_DEMO_WIDGETS        1
+#define LV_USE_DEMO_WIDGETS        0
 #if LV_USE_DEMO_WIDGETS
 #define LV_DEMO_WIDGETS_SLIDESHOW  0
 #endif
@@ -28,19 +28,13 @@
 #define LV_USE_DEMO_PRINTER   0
 
 /*Demonstrate the usage of encoder and keyboard*/
-#define LV_USE_DEMO_KEYPAD_AND_ENCODER     1
+#define LV_USE_DEMO_KEYPAD_AND_ENCODER    0
 
 /*Benchmark your system*/
-#define LV_USE_DEMO_BENCHMARK   1
+#define LV_USE_DEMO_BENCHMARK   0
 
 /*Stress test for LVGL*/
-#define LV_USE_DEMO_STRESS     1
-
-
-/*********************
- * COMPONENT USAGE
- *********************/
-#define LV_USE_COMPONENT_EXAMPLES   1
+#define LV_USE_DEMO_STRESS     0
 
 
 
