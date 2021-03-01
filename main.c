@@ -92,10 +92,10 @@ int main(int argc, char **argv)
 
 
 //  lv_example_btn_1();
-  lv_example_dropdown_3();
+//  lv_example_dropdown_3();
 
 //  lv_demo_keypad_encoder();
-//  lv_demo_widgets();
+  lv_demo_widgets();
 
 
   while(1) {
@@ -146,8 +146,8 @@ static void hal_init(void)
 
   lv_disp_t * disp = lv_disp_drv_register(&disp_drv);
 
-//  lv_theme_t * th = lv_theme_default_init(disp, LV_COLOR_PALETTE_LIGHT_BLUE, LV_COLOR_PALETTE_LIGHT_BLUE, &lv_font_montserrat_10, LV_FONT_DEFAULT, &lv_font_montserrat_18);
-//  lv_disp_set_theme(disp, th);
+  lv_theme_t * th = lv_theme_default_init(disp, LV_COLOR_PALETTE_LIGHT_BLUE, LV_COLOR_PALETTE_LIGHT_BLUE, &lv_font_montserrat_10, LV_FONT_DEFAULT, &lv_font_montserrat_18);
+  lv_disp_set_theme(disp, th);
 
   /* Add the mouse as input device
    * Use the 'mouse' driver which reads the PC's mouse*/
