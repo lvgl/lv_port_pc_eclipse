@@ -34,7 +34,7 @@
 #define LV_USE_DEMO_BENCHMARK   0
 
 /*Stress test for LVGL*/
-#define LV_USE_DEMO_STRESS     0
+#define LV_USE_DEMO_STRESS     1
 
 
 

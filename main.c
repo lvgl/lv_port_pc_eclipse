@@ -67,7 +67,6 @@ lv_indev_t *kb_indev;
  *   GLOBAL FUNCTIONS
  **********************/
 
-
 int main(int argc, char **argv)
 {
   (void)argc; /*Unused*/
@@ -82,20 +81,20 @@ int main(int argc, char **argv)
 //  lv_example_table_2();
 //  lv_example_calendar_1();
 //  lv_example_btnmatrix_2();
-//  lv_example_tabview_1();
-//  lv_example_chart_3();
+//  lv_example_table_2();
+//  lv_example_chart_2();
 //  lv_example_colorwheel_1();
 //  lv_example_meter_4();
 //  lv_example_tabview_1();
 //  lv_example_scroll_3();
 //  lv_example_list_1();
-
-
 //  lv_example_btn_1();
-//  lv_example_dropdown_3();
+  lv_example_dropdown_2();
 
 //  lv_demo_keypad_encoder();
-  lv_demo_widgets();
+//  lv_demo_stress();
+
+
 
 
   while(1) {
@@ -130,15 +129,15 @@ static void hal_init(void)
 
 
   /*Create a display buffer*/
-  static lv_disp_buf_t disp_buf1;
+  static lv_disp_draw_buf_t disp_buf1;
   static lv_color_t buf1_1[MONITOR_HOR_RES * MONITOR_VER_RES];
   static lv_color_t buf1_2[MONITOR_HOR_RES * MONITOR_VER_RES];
-  lv_disp_buf_init(&disp_buf1, buf1_1, buf1_2, MONITOR_HOR_RES * MONITOR_VER_RES / 2);
+  lv_disp_draw_buf_init(&disp_buf1, buf1_1, buf1_2, MONITOR_HOR_RES * MONITOR_VER_RES / 2);
 
   /*Create a display*/
-  lv_disp_drv_t disp_drv;
+  static lv_disp_drv_t disp_drv;
   lv_disp_drv_init(&disp_drv); /*Basic initialization*/
-  disp_drv.buffer = &disp_buf1;
+  disp_drv.draw_buf = &disp_buf1;
   disp_drv.flush_cb = monitor_flush;
   disp_drv.hor_res = MONITOR_HOR_RES;
   disp_drv.ver_res = MONITOR_VER_RES;
