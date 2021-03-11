@@ -32,7 +32,6 @@
  **********************/
 static void hal_init(void);
 static int tick_thread(void *data);
-static void memory_monitor(lv_timer_t *param);
 
 /**********************
  *  STATIC VARIABLES
@@ -78,7 +77,6 @@ int main(int argc, char **argv)
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
 
-//  lv_example_table_2();
 //  lv_example_calendar_1();
 //  lv_example_btnmatrix_2();
 //  lv_example_table_2();
@@ -86,15 +84,15 @@ int main(int argc, char **argv)
 //  lv_example_colorwheel_1();
 //  lv_example_meter_4();
 //  lv_example_tabview_1();
-//  lv_example_scroll_3();
+  lv_example_scroll_3();
 //  lv_example_list_1();
-//  lv_example_btn_1();
-  lv_example_dropdown_2();
+//  lv_example_msgbox_1();
+//  lv_example_dropdown_2();
+//  lv_example_win_1();
 
 //  lv_demo_keypad_encoder();
 //  lv_demo_stress();
-
-
+//  lv_demo_widgets();
 
 
   while(1) {
@@ -130,9 +128,9 @@ static void hal_init(void)
 
   /*Create a display buffer*/
   static lv_disp_draw_buf_t disp_buf1;
-  static lv_color_t buf1_1[MONITOR_HOR_RES * MONITOR_VER_RES];
-  static lv_color_t buf1_2[MONITOR_HOR_RES * MONITOR_VER_RES];
-  lv_disp_draw_buf_init(&disp_buf1, buf1_1, buf1_2, MONITOR_HOR_RES * MONITOR_VER_RES / 2);
+  static lv_color_t buf1_1[MONITOR_HOR_RES * 100];
+  static lv_color_t buf1_2[MONITOR_HOR_RES * 100];
+  lv_disp_draw_buf_init(&disp_buf1, buf1_1, buf1_2, MONITOR_HOR_RES * 100);
 
   /*Create a display*/
   static lv_disp_drv_t disp_drv;
@@ -145,7 +143,7 @@ static void hal_init(void)
 
   lv_disp_t * disp = lv_disp_drv_register(&disp_drv);
 
-  lv_theme_t * th = lv_theme_default_init(disp, LV_COLOR_PALETTE_LIGHT_BLUE, LV_COLOR_PALETTE_LIGHT_BLUE, &lv_font_montserrat_10, LV_FONT_DEFAULT, &lv_font_montserrat_18);
+  lv_theme_t * th = lv_theme_default_init(disp, LV_COLOR_PALETTE_LIGHT_BLUE, LV_COLOR_PALETTE_RED, &lv_font_montserrat_10, LV_FONT_DEFAULT, &lv_font_montserrat_18);
   lv_disp_set_theme(disp, th);
 
   /* Add the mouse as input device
@@ -170,11 +168,6 @@ static void hal_init(void)
   lv_obj_t * cursor_obj = lv_img_create(lv_scr_act(), NULL); /*Create an image object for the cursor */
   lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
   lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
-
-  /* Optional:
-   * Create a memory monitor task which prints the memory usage in
-   * periodically.*/
-  lv_timer_create(memory_monitor, 10000, NULL);
 }
 
 /**
@@ -191,18 +184,4 @@ static int tick_thread(void *data) {
     }
 
     return 0;
-}
-
-/**
- * Print the memory usage periodically
- * @param param
- */
-static void memory_monitor(lv_timer_t *param) {
-  (void)param; /*Unused*/
-//  lv_event_queue_refresh_recursive(NULL);
-  lv_mem_monitor_t mon;
-  lv_mem_monitor(&mon);
-  printf("used: %6d (%3d %%), frag: %3d %%, biggest free: %6d\n",
-         (int)mon.total_size - mon.free_size, mon.used_pct, mon.frag_pct,
-         (int)mon.free_biggest_size);
 }
