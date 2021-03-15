@@ -7,3 +7,6 @@
 [submodule "lv_drivers"]
 	path = lv_drivers
 	url = https://github.com/littlevgl/lv_drivers.git 
+[submodule "lv_lib_freetype"]
+	path = lv_lib_freetype
+	url = https://github.com/lvgl/lv_lib_freetype.git

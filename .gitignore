@@ -1,8 +1,48 @@
-Debug/
-.settings/
-lv_dev_tools/
-**/*.o
-demo
-.pydevproject
-/.metadata/
-/.tracecompass
+.config
+*.o
+*.obj
+
+# gtags
+GTAGS
+GRTAGS
+GPATH
+
+# emacs
+.dir-locals.el
+
+# emacs temp file suffixes
+*~
+.#*
+\#*#
+
+# eclipse setting
+.settings
+
+# MacOS directory files
+.DS_Store
+
+# VS Code Settings
+.vscode/
+
+# VIM files
+*.swp
+*.swo
+
+# Clion IDE CMake build & config
+.idea/
+cmake-build-*/
+
+# CMake files
+CMakeFiles
+cmake_install.cmake
+CMakeCache.txt
+
+# Make files
+Makefile
+
+# Ninja files
+*.ninja*
+
+#Build files
+bin
+build
