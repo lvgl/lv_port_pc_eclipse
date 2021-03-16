@@ -80,11 +80,11 @@ int main(int argc, char **argv)
 //  lv_example_calendar_1();
 //  lv_example_btnmatrix_2();
 //  lv_example_table_2();
-//  lv_example_chart_2();
+//  lv_example_chart_6();
 //  lv_example_colorwheel_1();
-//  lv_example_meter_4();
+//  lv_example_meter_2();
 //  lv_example_tabview_1();
-  lv_example_scroll_3();
+//  lv_example_scroll_3();
 //  lv_example_list_1();
 //  lv_example_msgbox_1();
 //  lv_example_dropdown_2();
@@ -92,15 +92,13 @@ int main(int argc, char **argv)
 
 //  lv_demo_keypad_encoder();
 //  lv_demo_stress();
-//  lv_demo_widgets();
-
+  lv_demo_widgets();
 
   while(1) {
       /* Periodically call the lv_task handler.
        * It could be done in a timer interrupt or an OS task too.*/
       lv_timer_handler();
       usleep(5 * 1000);
-//      lv_obj_invalidate(lv_scr_act());
   }
 
   return 0;
@@ -149,19 +147,20 @@ static void hal_init(void)
   /* Add the mouse as input device
    * Use the 'mouse' driver which reads the PC's mouse*/
   mouse_init();
-  lv_indev_drv_t indev_drv;
-  lv_indev_drv_init(&indev_drv); /*Basic initialization*/
-  indev_drv.type = LV_INDEV_TYPE_POINTER;
+  static lv_indev_drv_t indev_drv_1;
+  lv_indev_drv_init(&indev_drv_1); /*Basic initialization*/
+  indev_drv_1.type = LV_INDEV_TYPE_POINTER;
 
   /*This function will be called periodically (by the library) to get the mouse position and state*/
-  indev_drv.read_cb = mouse_read;
-  lv_indev_t *mouse_indev = lv_indev_drv_register(&indev_drv);
+  indev_drv_1.read_cb = mouse_read;
+  lv_indev_t *mouse_indev = lv_indev_drv_register(&indev_drv_1);
 
   keyboard_init();
-  lv_indev_drv_init(&indev_drv); /*Basic initialization*/
-  indev_drv.type = LV_INDEV_TYPE_KEYPAD;
-  indev_drv.read_cb = keyboard_read;
-  kb_indev = lv_indev_drv_register(&indev_drv);
+  static lv_indev_drv_t indev_drv_2;
+  lv_indev_drv_init(&indev_drv_2); /*Basic initialization*/
+  indev_drv_2.type = LV_INDEV_TYPE_KEYPAD;
+  indev_drv_2.read_cb = keyboard_read;
+  kb_indev = lv_indev_drv_register(&indev_drv_2);
 
   /*Set a cursor for the mouse*/
   LV_IMG_DECLARE(mouse_cursor_icon); /*Declare the image file.*/

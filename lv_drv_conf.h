@@ -87,14 +87,14 @@
 #endif
 
 #if USE_MONITOR
-#  define MONITOR_HOR_RES     800
-#  define MONITOR_VER_RES     480
+#  define MONITOR_HOR_RES     480
+#  define MONITOR_VER_RES     320
 
 /* Scale window by this factor (useful when simulating small screens) */
 #  define MONITOR_ZOOM        1
 
 /* Used to test true double buffering with only address changing.
- * Set LV_VDB_SIZE = (LV_HOR_RES * LV_VER_RES) and  LV_VDB_DOUBLE = 1 and LV_COLOR_DEPTH = 32" */
+ * Set LV_draw_buf_SIZE = (LV_HOR_RES * LV_VER_RES) and  LV_draw_buf_DOUBLE = 1 and LV_COLOR_DEPTH = 32" */
 #  define MONITOR_DOUBLE_BUFFERED 0
 
 /*Eclipse: <SDL2/SDL.h>    Visual Studio: <SDL.h>*/
