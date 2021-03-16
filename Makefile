@@ -13,7 +13,7 @@ WARNINGS ?= -Wall -Wextra \
 						-Wempty-body -Wshift-negative-value -Wstack-usage=2048 \
             -Wtype-limits -Wsizeof-pointer-memaccess -Wpointer-arith
             
-CFLAGS ?= -O0 -g0 -I$(LVGL_DIR)/ $(WARNINGS)
+CFLAGS ?= -O3 -g0 -I$(LVGL_DIR)/ $(WARNINGS)
 LDFLAGS ?= -lSDL2 -lm
 BIN = demo
 
@@ -23,9 +23,9 @@ MAINSRC = ./main.c
 
 include $(LVGL_DIR)/lvgl/lvgl.mk
 include $(LVGL_DIR)/lv_drivers/lv_drivers.mk
-include $(LVGL_DIR)/lv_examples/lv_examples.mk
+include $(LVGL_DIR)/lv_examples/lv_demo.mk
 
-CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c conver_1.c
+CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c 
 
 OBJEXT ?= .o
 

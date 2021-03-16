@@ -93,7 +93,7 @@
 /* Allow buffering some shadow calculation.
  * LV_SHADOW_CACHE_SIZE is the max. shadow size to buffer, where shadow size is `shadow_width + radius`
  * Caching has LV_SHADOW_CACHE_SIZE^2 RAM cost*/
-#define LV_SHADOW_CACHE_SIZE    0
+#define LV_SHADOW_CACHE_SIZE    32
 
 /* Set the pixel order of the display. Physical order of RGB channels. Doesn't matter with "normal" fonts.*/
 #define LV_FONT_SUBPX_BGR       0  /*0: RGB; 1:BGR order*/
@@ -105,7 +105,7 @@
  * With complex image decoders (e.g. PNG or JPG) caching can save the continuous open/decode of images.
  * However the opened images might consume additional RAM.
  * 0: to disable caching */
-#define LV_IMG_CACHE_DEF_SIZE       0
+#define LV_IMG_CACHE_DEF_SIZE       8
 
 /* Maximum buffer size to allocate for rotation. Only used if software rotation is enabled in the display driver. */
 #define LV_DISP_ROT_MAX_BUF         (10*1024)

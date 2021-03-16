@@ -36,6 +36,8 @@
 /*Stress test for LVGL*/
 #define LV_USE_DEMO_STRESS     1
 
+#define LV_USE_DEMO_MUSIC      0
+
 
 
 #endif /*LV_EX_CONF_H*/
