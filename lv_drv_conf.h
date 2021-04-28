@@ -78,7 +78,15 @@
 /*********************
  *  DISPLAY DRIVERS
  *********************/
+#ifndef USE_WAYLAND
+#  define USE_WAYLAND       0
+#endif
 
+#if USE_WAYLAND
+#  define WAYLAND_HOR_RES      480
+#  define WAYLAND_VER_RES      320
+#  define WAYLAND_SURF_TITLE   "LVGL"
+#endif
 /*-------------------
  *  Monitor of PC
  *-------------------*/
@@ -219,7 +227,7 @@
  *  Linux frame buffer device (/dev/fbx)
  *-----------------------------------------*/
 #ifndef USE_FBDEV
-#  define USE_FBDEV           0
+#  define USE_FBDEV           1
 #endif
 
 #if USE_FBDEV

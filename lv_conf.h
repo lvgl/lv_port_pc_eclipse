@@ -41,7 +41,7 @@
 #define LV_MEM_CUSTOM      0
 #if LV_MEM_CUSTOM == 0
 /* Size of the memory available for `lv_mem_alloc()` in bytes (>= 2kB)*/
-#  define LV_MEM_SIZE    (64U * 1024U)          /* [bytes] */
+#  define LV_MEM_SIZE    (1264U * 1024U)          /* [bytes] */
 
 /* Set an address for the memory pool instead of allocating it as a normal array. Can be in external SRAM too. */
 #  define LV_MEM_ADR          0     /*0: unused*/
@@ -69,8 +69,9 @@
  * It removes the need to manually update the tick with `lv_tick_inc()`) */
 #define LV_TICK_CUSTOM     0
 #if LV_TICK_CUSTOM
-#define LV_TICK_CUSTOM_INCLUDE  "Arduino.h"         /*Header for the system time function*/
-#define LV_TICK_CUSTOM_SYS_TIME_EXPR (millis())     /*Expression evaluating to current system time in ms*/
+#define LV_TICK_CUSTOM_INCLUDE  <stdint.h>         /*Header for the system time function*/
+uint32_t custom_tick_get(void);
+#define LV_TICK_CUSTOM_SYS_TIME_EXPR (custom_tick_get())     /*Expression evaluating to current system time in ms*/
 #endif   /*LV_TICK_CUSTOM*/
 
 /* Default Dot Per Inch. Used to initialize default sizes such as widgets sized, style paddings.
@@ -94,9 +95,6 @@
  * LV_SHADOW_CACHE_SIZE is the max. shadow size to buffer, where shadow size is `shadow_width + radius`
  * Caching has LV_SHADOW_CACHE_SIZE^2 RAM cost*/
 #define LV_SHADOW_CACHE_SIZE    32
-
-/* Set the pixel order of the display. Physical order of RGB channels. Doesn't matter with "normal" fonts.*/
-#define LV_FONT_SUBPX_BGR       0  /*0: RGB; 1:BGR order*/
 
 #endif /*LV_DRAW_COMPLEX*/
 
@@ -163,7 +161,6 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #  define LV_LOG_TRACE_INDEV          1
 #  define LV_LOG_TRACE_DISP_REFR      1
 #  define LV_LOG_TRACE_EVENT          1
-#  define LV_LOG_TRACE_SIGNAL         1
 #  define LV_LOG_TRACE_OBJ_CREATE     1
 #  define LV_LOG_TRACE_LAYOUT         1
 #  define LV_LOG_TRACE_ANIM           1
@@ -179,8 +176,8 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #define LV_USE_ASSERT_NULL          1   /*Check if the parameter is NULL. (Very fast, recommended) */
 #define LV_USE_ASSERT_MALLOC        1   /*Checks is the memory is successfully allocated or no. (Very fast, recommended)*/
 #define LV_USE_ASSERT_STYLE         1   /*Check if the styles are properly initialized. (Very fast, recommended)*/
-#define LV_USE_ASSERT_MEM_INTEGRITY 1   /*Check the integrity of `lv_mem` after critical operations. (Slow)*/
-#define LV_USE_ASSERT_OBJ           1   /*Check the object's type and existence (e.g. not deleted). (Slow) */
+#define LV_USE_ASSERT_MEM_INTEGRITY 0   /*Check the integrity of `lv_mem` after critical operations. (Slow)*/
+#define LV_USE_ASSERT_OBJ           0   /*Check the object's type and existence (e.g. not deleted). (Slow) */
 
 /*Add a custom handler when assert happens e.g. to restart the MCU*/
 #define LV_ASSERT_HANDLER_INCLUDE   <stdint.h>
@@ -191,11 +188,14 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
  *-----------*/
 
 /*1: Show CPU usage and FPS count in the right bottom corner*/
-#define LV_USE_PERF_MONITOR     1
+#define LV_USE_PERF_MONITOR     0
 
 /*1: Show the used memory and the memory fragmentation  in the left bottom corner
  * Requires LV_MEM_CUSTOM = 0*/
 #define LV_USE_MEM_MONITOR      1
+
+/*1: Draw random colored rectangles over the redrawn areas*/
+#define LV_USE_REFR_DEBUG       0
 
 /*Change the built in (v)snprintf functions*/
 #define LV_SPRINTF_CUSTOM   0
@@ -308,11 +308,17 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 /* Enable handling large font and/or fonts with a lot of characters.
  * The limit depends on the font size, font face and bpp.
  * Compiler error will be triggered if a font needs it.*/
-#define LV_FONT_FMT_TXT_LARGE   0
+#define LV_FONT_FMT_TXT_LARGE   1
 
 /* Enables/disables support for compressed fonts. */
-#define LV_USE_FONT_COMPRESSED  0
+#define LV_USE_FONT_COMPRESSED  1
 
+/*Enable subpixel rendering*/
+#define LV_USE_FONT_SUBPX       1
+#if LV_USE_FONT_SUBPX
+/*Set the pixel order of the display. Physical order of RGB channels. Doesn't matter with "normal" fonts.*/
+#define LV_FONT_SUBPX_BGR       0  /*0: RGB; 1:BGR order*/
+#endif
 /*=================
  *  TEXT SETTINGS
  *=================*/
@@ -380,7 +386,7 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 
 #define LV_USE_DROPDOWN     1   /*Requires: lv_label*/
 
-#define LV_USE_IMG          1   /*Requires: lv_label*/
+#define LV_USE_IMG          1
 
 #define LV_USE_LABEL        1
 #if LV_USE_LABEL
@@ -399,14 +405,14 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 
 #define LV_USE_SLIDER       1   /*Requires: lv_bar*/
 
-#define LV_USE_SWITCH    1
+#define LV_USE_SWITCH       1
 
-#define LV_USE_TEXTAREA   1     /*Requires: lv_label*/
+#define LV_USE_TEXTAREA     1    /*Requires: lv_label*/
 #if LV_USE_TEXTAREA != 0
 #  define LV_TEXTAREA_DEF_PWD_SHOW_TIME     1500    /*ms*/
 #endif
 
-#define LV_USE_TABLE  1
+#define LV_USE_TABLE        1
 
 /*==================
  * EXTRA COMPONENTS
@@ -458,12 +464,13 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 /* A simple, impressive and very complete theme */
 #define LV_USE_THEME_DEFAULT    1
 #if LV_USE_THEME_DEFAULT
-/* 1: Light mode; 0: Dark mode*/
-# define LV_THEME_DEFAULT_FLAG_LIGHT        1
 
 /*Default transition time in [ms]*/
 # define LV_THEME_DEFAULT_TRANSITON_TIME    80
 #endif /*LV_USE_THEME_DEFAULT*/
+
+/*An very simple them that is a good starting point for a custom theme*/
+#define LV_USE_THEME_BASIC    0
 
 /*-----------
  * Layouts

@@ -13,8 +13,8 @@ WARNINGS ?= -Wall -Wextra \
 						-Wempty-body -Wshift-negative-value -Wstack-usage=2048 \
             -Wtype-limits -Wsizeof-pointer-memaccess -Wpointer-arith
             
-CFLAGS ?= -O3 -g0 -I$(LVGL_DIR)/ $(WARNINGS)
-LDFLAGS ?= -lSDL2 -lm
+CFLAGS ?= -O3 -I$(LVGL_DIR)/ $(WARNINGS) `pkg-config --cflags wayland-client` `pkg-config --cflags xkbcommon`
+LDFLAGS ?= -lSDL2 -lm `pkg-config --libs wayland-client` `pkg-config --libs xkbcommon` -lpthread
 BIN = demo
 
 
