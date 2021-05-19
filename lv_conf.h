@@ -354,10 +354,10 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #define LV_USE_BIDI     1
 #if LV_USE_BIDI
 /* Set the default direction. Supported values:
- * `LV_BIDI_DIR_LTR` Left-to-Right
- * `LV_BIDI_DIR_RTL` Right-to-Left
- * `LV_BIDI_DIR_AUTO` detect texts base direction */
-#define LV_BIDI_BASE_DIR_DEF  LV_BIDI_DIR_AUTO
+ * `LV_BASE_DIR_LTR` Left-to-Right
+ * `LV_BASE_DIR_RTL` Right-to-Left
+ * `LV_BASE_DIR_AUTO` detect texts base direction */
+#define LV_BIDI_BASE_DIR_DEF  LV_BASE_DIR_AUTO
 #endif
 
 /* Enable Arabic/Persian processing
@@ -390,7 +390,7 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 
 #define LV_USE_LABEL        1
 #if LV_USE_LABEL
-#  define LV_LABEL_TEXT_SEL         1   /*Enable selecting text of the label */
+#  define LV_LABEL_TEXT_SELECTION         1   /*Enable selecting text of the label */
 #  define LV_LABEL_LONG_TXT_HINT    1   /*Store some extra info in labels to speed up drawing of very long texts*/
 #endif
 
