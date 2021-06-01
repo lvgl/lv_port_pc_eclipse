@@ -1,6 +1,7 @@
 #
 # Makefile
 #
+$(warning Using Make to build this project is deprecated, please switch to CMake)
 CC ?= gcc
 LVGL_DIR_NAME ?= lvgl
 LVGL_DIR ?= ${shell pwd}
