@@ -14,7 +14,7 @@
 #include <SDL2/SDL.h>
 #include "lvgl/lvgl.h"
 #include "lvgl/examples/lv_examples.h"
-#include "lv_examples/lv_demo.h"
+#include "lv_demos/lv_demo.h"
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/display/fbdev.h"
 #include "lv_drivers/indev/mouse.h"
@@ -77,6 +77,7 @@ int main(int argc, char **argv)
 
   /*Initialize the HAL (display, input devices, tick) for LVGL*/
   hal_init();
+
 //  lv_example_switch_1();
 //  lv_example_calendar_1();
 //  lv_example_btnmatrix_2();
