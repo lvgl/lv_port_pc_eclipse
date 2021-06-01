@@ -192,7 +192,7 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 
 /*1: Show the used memory and the memory fragmentation  in the left bottom corner
  * Requires LV_MEM_CUSTOM = 0*/
-#define LV_USE_MEM_MONITOR      1
+#define LV_USE_MEM_MONITOR      0
 
 /*1: Draw random colored rectangles over the redrawn areas*/
 #define LV_USE_REFR_DEBUG       0
@@ -287,10 +287,10 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #define LV_FONT_MONTSERRAT_48    1
 
 /* Demonstrate special features */
-#define LV_FONT_MONTSERRAT_12_SUBPX      0
+#define LV_FONT_MONTSERRAT_12_SUBPX      1
 #define LV_FONT_MONTSERRAT_28_COMPRESSED 0  /*bpp = 3*/
-#define LV_FONT_DEJAVU_16_PERSIAN_HEBREW 0  /*Hebrew, Arabic, Perisan letters and all their forms*/
-#define LV_FONT_SIMSUN_16_CJK            0  /*1000 most common CJK radicals*/
+#define LV_FONT_DEJAVU_16_PERSIAN_HEBREW 1  /*Hebrew, Arabic, Perisan letters and all their forms*/
+#define LV_FONT_SIMSUN_16_CJK            1  /*1000 most common CJK radicals*/
 
 /*Pixel perfect monospace fonts
  * http://pelulamu.net/unscii/ */
@@ -468,6 +468,9 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 /*Default transition time in [ms]*/
 # define LV_THEME_DEFAULT_TRANSITON_TIME    80
 #endif /*LV_USE_THEME_DEFAULT*/
+
+/*A theme designed for monochrome displays*/
+#define LV_USE_THEME_MONO       1
 
 /*An very simple them that is a good starting point for a custom theme*/
 #define LV_USE_THEME_BASIC    0
