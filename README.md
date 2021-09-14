@@ -29,7 +29,7 @@ You can download SDL from https://www.libsdl.org/
 
 On on Linux you can install it via terminal:
 ```
-sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev
+sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev libpng-dev
 ```
 
 ### Install Eclipse CDT
