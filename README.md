@@ -21,7 +21,7 @@ The PC simulator is cross platform.  **Windows, Linux and OSX** are supported, h
 Clone the PC project and the related sub modules:
 
 ```
-git clone --recursive https://github.com/littlevgl/pc_simulator_sdl_eclipse.git
+git clone --recursive https://github.com/lvgl/lv_port_pc_eclipse.git
 ```
 
 ### Install SDL
