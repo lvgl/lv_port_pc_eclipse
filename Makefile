@@ -13,9 +13,10 @@ WARNINGS ?= -Wall -Wextra \
             -Wreturn-type -Wmultichar -Wformat-security -Wno-ignored-qualifiers -Wno-error=pedantic -Wno-sign-compare -Wno-error=missing-prototypes -Wdouble-promotion -Wclobbered -Wdeprecated  \
             -Wempty-body -Wshift-negative-value -Wstack-usage=2048 \
             -Wtype-limits -Wsizeof-pointer-memaccess -Wpointer-arith
+            
+CFLAGS ?= -O3 -I$(LVGL_DIR)/ $(WARNINGS)
+LDFLAGS ?= -lSDL2 -lm
 
-CFLAGS ?= -O3 -I$(LVGL_DIR)/ $(WARNINGS) `pkg-config --cflags wayland-client` `pkg-config --cflags xkbcommon`
-LDFLAGS ?= -lSDL2 -lm `pkg-config --libs wayland-client` `pkg-config --libs xkbcommon` -lpthread
 BIN = demo
 
 
@@ -24,7 +25,6 @@ MAINSRC = ./main.c
 
 include $(LVGL_DIR)/lvgl/lvgl.mk
 include $(LVGL_DIR)/lv_drivers/lv_drivers.mk
-include $(LVGL_DIR)/lv_demos/lv_demo.mk
 
 CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c 
 
