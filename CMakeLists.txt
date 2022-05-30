@@ -11,7 +11,7 @@ file(GLOB_RECURSE INCLUDES "./*.h" )
 add_subdirectory(lvgl)
 add_subdirectory(lv_drivers)
 
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin) 
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 SET(CMAKE_CXX_FLAGS "-O3")
 
 find_package(SDL2 REQUIRED SDL2)
