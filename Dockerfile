@@ -7,9 +7,9 @@
 # To do GUI forwarding on linux, the following may work (easiest method, but unsafe)
 #     xhost + && docker run --network=host --env DISPLAY=$DISPLAY lvgl
 
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
-RUN apt update && apt install -y \
+RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     build-essential \
     cmake \
     gcc \
