@@ -23,6 +23,6 @@ ENV DISPLAY=:0
 
 COPY . .
 
-RUN make -j3
+RUN mkdir -p build && cd build && cmake .. && cmake --build . --parallel
 
-CMD ["./demo"]
+CMD ["./build/bin/main"]
