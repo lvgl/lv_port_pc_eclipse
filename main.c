@@ -120,7 +120,7 @@ static lv_disp_t * hal_init(lv_coord_t w, lv_coord_t h)
 {
 
   lv_disp_t * disp = lv_sdl_window_create(w, h);
-  lv_draw_unit_sw_create(disp, 15);
+  lv_draw_unit_sw_create(disp, 3);
 
   lv_indev_t * mouse = lv_sdl_mouse_create();
   lv_indev_set_group(mouse, lv_group_get_default());
