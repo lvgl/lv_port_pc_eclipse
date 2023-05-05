@@ -51,7 +51,7 @@
 #define LV_USE_BUILTIN_MALLOC 1
 #if LV_USE_BUILTIN_MALLOC
     /*Size of the memory available for `lv_malloc()` in bytes (>= 2kB)*/
-    #define LV_MEM_SIZE (11128U * 1024U)          /*[bytes]*/
+    #define LV_MEM_SIZE (32 * 1024U * 1024U)          /*[bytes]*/
 
     /*Set an address for the memory pool instead of allocating it as a normal array. Can be in external SRAM too.*/
     #define LV_MEM_ADR 0     /*0: unused*/
@@ -72,9 +72,10 @@
 #endif  /*LV_USE_BUILTIN_SNPRINTF*/
 
 #define LV_STDLIB_INCLUDE <stdlib.h>
-#define LV_MALLOC       malloc
-#define LV_REALLOC      realloc
-#define LV_FREE         free
+#define LV_STDIO_INCLUDE <stdio.h>
+#define LV_MALLOC       lv_malloc_builtin
+#define LV_REALLOC      lv_realloc_builtin
+#define LV_FREE         lv_free_builtin
 #define LV_MEMSET       memset
 #define LV_MEMCPY       memcpy
 #define LV_SNPRINTF     snprintf
@@ -113,7 +114,7 @@
 
 /*Enable complex draw engine.
  *Required to draw shadow, gradient, rounded corners, circles, arc, skew lines, image transformations or any masks*/
-#define LV_USE_DRAW_MASKS 0
+#define LV_USE_DRAW_MASKS 1
 
 /*Maximum buffer size to allocate for rotation.
  *Only used if software rotation is enabled in the display driver.*/
@@ -159,11 +160,17 @@
 /*-------------
  * OSAL
  *-----------*/
-#define LV_USE_OS   1
-#if LV_USE_OS
-    #define LV_USE_PTHREAD  1
+
+/*Select an operating system to use. Possible values:
+ *- LV_OS_NONE
+ *- LV_OS_PTHREAD
+ *- LV_OS_FREETYPE
+ *- LV_OS_CUSTOM*/
+#define LV_USE_OS   LV_OS_PTHREAD
+#if LV_USE_OS == LV_OS_CUSTOM
     #define LV_OS_CUSTOM_INCLUDE <stdint.h>
 #endif
+
 /*-------------
  * Logging
  *-----------*/
@@ -204,7 +211,7 @@
  *If LV_USE_LOG is enabled an error message will be printed on failure*/
 #define LV_USE_ASSERT_NULL          1   /*Check if the parameter is NULL. (Very fast, recommended)*/
 #define LV_USE_ASSERT_MALLOC        1   /*Checks is the memory is successfully allocated or no. (Very fast, recommended)*/
-#define LV_USE_ASSERT_STYLE         1   /*Check if the styles are properly initialized. (Very fast, recommended)*/
+#define LV_USE_ASSERT_STYLE         0   /*Check if the styles are properly initialized. (Very fast, recommended)*/
 #define LV_USE_ASSERT_MEM_INTEGRITY 0   /*Check the integrity of `lv_mem` after critical operations. (Slow)*/
 #define LV_USE_ASSERT_OBJ           0   /*Check the object's type and existence (e.g. not deleted). (Slow)*/
 
@@ -217,20 +224,28 @@
  *-----------*/
 
 /*1: Show CPU usage and FPS count*/
-#define LV_USE_PERF_MONITOR 0
+#define LV_USE_PERF_MONITOR 1
 #if LV_USE_PERF_MONITOR
     #define LV_USE_PERF_MONITOR_POS LV_ALIGN_BOTTOM_RIGHT
 #endif
 
 /*1: Show the used memory and the memory fragmentation
  * Requires LV_MEM_CUSTOM = 0*/
-#define LV_USE_MEM_MONITOR 0
+#define LV_USE_MEM_MONITOR 1
 #if LV_USE_MEM_MONITOR
     #define LV_USE_MEM_MONITOR_POS LV_ALIGN_BOTTOM_LEFT
 #endif
 
 /*1: Draw random colored rectangles over the redrawn areas*/
 #define LV_USE_REFR_DEBUG 0
+
+/*1: Draw a red overlay for ARGB layers and a green overlay for RGB layers*/
+#define LV_USE_LAYER_DEBUG 0
+
+/*1: Draw overlays with different colors for each draw_unit's tasks.
+ *Also add the index number of the draw unit on white background.
+ *For layers add the index number of the draw unit on black background.*/
+#define LV_USE_PARALLEL_DRAW_DEBUG 0
 
 /*Change the built in (v)snprintf functions*/
 #define LV_SPRINTF_CUSTOM 0
@@ -406,21 +421,21 @@
 
 /*Documentation of the widgets: https://docs.lvgl.io/latest/en/html/widgets/index.html*/
 
-#define LV_USE_ARC        0
+#define LV_USE_ARC        1
 
 #define LV_USE_ANIMIMG    0
 
-#define LV_USE_BAR        0
+#define LV_USE_BAR        1
 
-#define LV_USE_BTN        0
+#define LV_USE_BTN        1
 
-#define LV_USE_BTNMATRIX  0
+#define LV_USE_BTNMATRIX  1
 
 #define LV_USE_CANVAS     0
 
-#define LV_USE_CHECKBOX   0
+#define LV_USE_CHECKBOX   1
 
-#define LV_USE_DROPDOWN   0   /*Requires: lv_label*/
+#define LV_USE_DROPDOWN   1   /*Requires: lv_label*/
 
 #define LV_USE_IMG        1   /*Requires: lv_label*/
 
@@ -430,20 +445,20 @@
     #define LV_LABEL_LONG_TXT_HINT 1  /*Store some extra info in labels to speed up drawing of very long texts*/
 #endif
 
-#define LV_USE_LINE       0
+#define LV_USE_LINE       1
 
-#define LV_USE_ROLLER     0   /*Requires: lv_label*/
+#define LV_USE_ROLLER     1   /*Requires: lv_label*/
 
-#define LV_USE_SLIDER     0   /*Requires: lv_bar*/
+#define LV_USE_SLIDER     1   /*Requires: lv_bar*/
 
-#define LV_USE_SWITCH     0
+#define LV_USE_SWITCH     1
 
-#define LV_USE_TEXTAREA   0   /*Requires: lv_label*/
+#define LV_USE_TEXTAREA   1   /*Requires: lv_label*/
 #if LV_USE_TEXTAREA != 0
     #define LV_TEXTAREA_DEF_PWD_SHOW_TIME 1500    /*ms*/
 #endif
 
-#define LV_USE_TABLE      0
+#define LV_USE_TABLE      1
 
 /*==================
  * EXTRA COMPONENTS
@@ -452,7 +467,7 @@
 /*-----------
  * Widgets
  *----------*/
-#define LV_USE_CALENDAR   0
+#define LV_USE_CALENDAR   1
 #if LV_USE_CALENDAR
     #define LV_CALENDAR_WEEK_STARTS_MONDAY 0
     #if LV_CALENDAR_WEEK_STARTS_MONDAY
@@ -466,35 +481,35 @@
     #define LV_USE_CALENDAR_HEADER_DROPDOWN 1
 #endif  /*LV_USE_CALENDAR*/
 
-#define LV_USE_CHART      0
+#define LV_USE_CHART      1
 
 #define LV_USE_COLORWHEEL 0
 
-#define LV_USE_IMGBTN     0
+#define LV_USE_IMGBTN     1
 
-#define LV_USE_KEYBOARD   0
+#define LV_USE_KEYBOARD   1
 
-#define LV_USE_LED        0
+#define LV_USE_LED        1
 
-#define LV_USE_LIST       0
+#define LV_USE_LIST       1
 
-#define LV_USE_MENU       0
+#define LV_USE_MENU       1
 
-#define LV_USE_METER      0
+#define LV_USE_METER      1
 
-#define LV_USE_MSGBOX     0
+#define LV_USE_MSGBOX     1
 
-#define LV_USE_SPINBOX    0
+#define LV_USE_SPINBOX    1
 
-#define LV_USE_SPINNER    0
+#define LV_USE_SPINNER    1
 
-#define LV_USE_TABVIEW    0
+#define LV_USE_TABVIEW    1
 
-#define LV_USE_TILEVIEW   0
+#define LV_USE_TILEVIEW   1
 
-#define LV_USE_WIN        0
+#define LV_USE_WIN        1
 
-#define LV_USE_SPAN       0
+#define LV_USE_SPAN       1
 #if LV_USE_SPAN
     /*A line text can contain maximum num of span descriptor */
     #define LV_SPAN_SNIPPET_STACK_SIZE 64
@@ -519,10 +534,10 @@
 #endif /*LV_USE_THEME_DEFAULT*/
 
 /*A very simple theme that is a good starting point for a custom theme*/
-#define LV_USE_THEME_BASIC 1
+#define LV_USE_THEME_BASIC 0
 
 /*A theme designed for monochrome displays*/
-#define LV_USE_THEME_MONO 1
+#define LV_USE_THEME_MONO 0
 
 /*-----------
  * Layouts
@@ -618,6 +633,9 @@
 /*-----------
  * Others
  *----------*/
+#define LV_USE_IMGFONT  1
+
+#define LV_USE_SYSMON   1
 
 /*1: Enable API to take snapshot for object*/
 #define LV_USE_SNAPSHOT 0
@@ -654,29 +672,29 @@
 *==================*/
 
 /*Enable the examples to be built with the library*/
-#define LV_BUILD_EXAMPLES 0
+#define LV_BUILD_EXAMPLES 1
 
 /*===================
  * DEMO USAGE
  *====================*/
 
 /*Show some widget. It might be required to increase `LV_MEM_SIZE` */
-#define LV_USE_DEMO_WIDGETS        0
+#define LV_USE_DEMO_WIDGETS        1
 #if LV_USE_DEMO_WIDGETS
 #define LV_DEMO_WIDGETS_SLIDESHOW  0
 #endif
 
 /*Demonstrate the usage of encoder and keyboard*/
-#define LV_USE_DEMO_KEYPAD_AND_ENCODER     0
+#define LV_USE_DEMO_KEYPAD_AND_ENCODER     1
 
 /*Benchmark your system*/
-#define LV_USE_DEMO_BENCHMARK   0
+#define LV_USE_DEMO_BENCHMARK   1
 
 /*Stress test for LVGL*/
-#define LV_USE_DEMO_STRESS      0
+#define LV_USE_DEMO_STRESS      1
 
 /*Music player demo*/
-#define LV_USE_DEMO_MUSIC       0
+#define LV_USE_DEMO_MUSIC       1
 #if LV_USE_DEMO_MUSIC
 # define LV_DEMO_MUSIC_SQUARE       0
 # define LV_DEMO_MUSIC_LANDSCAPE    0
@@ -686,7 +704,9 @@
 #endif
 
 /*Flex layout demo*/
-#define LV_USE_DEMO_FLEX_LAYOUT 0
+#define LV_USE_DEMO_FLEX_LAYOUT 1
+
+#define LV_USE_DEMO_MULTILANG   1
 
 /*--END OF LV_CONF_H--*/
 

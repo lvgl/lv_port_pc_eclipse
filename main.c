@@ -66,6 +66,17 @@ static lv_disp_t * hal_init(lv_coord_t w, lv_coord_t h);
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
+void rotate_cb(void * var, int32_t v)
+{
+      lv_obj_invalidate(var); //H
+      lv_obj_set_style_transform_angle(var, v, 0);
+      if(v < 1800) {
+//          lv_obj_set_style_opa(var, lv_map(v, 0, 1800, 0, 255), 0);
+      } else {
+//          lv_obj_set_style_opa(var, lv_map(v, 1800, 3600, 255, 0), 0);
+      }
+}
+
 
 int main(int argc, char **argv)
 {
@@ -74,34 +85,17 @@ int main(int argc, char **argv)
 
   /*Initialize LVGL*/
    lv_init();
-  /*Initialize the HAL (display, input devices, tick) for LVGL*/
-  lv_group_t * g = lv_group_create();
-  lv_group_set_default(g);
 
-  hal_init(800, 480);
+  hal_init(470, 640);
 
-  lv_obj_set_flex_flow(lv_scr_act(), LV_FLEX_FLOW_ROW_WRAP);
-
-  for(int i = 0; i < 100; i++) {
-      lv_obj_t * panel = lv_obj_create(lv_scr_act());
-      lv_obj_set_size(panel, 140, 40);
-      lv_obj_set_style_bg_color(panel, lv_color_hex3(0xf00 + i%16), 0);
-      lv_obj_set_style_border_color(panel, lv_color_hex3(0x0f0), 0);
-      lv_obj_set_style_pad_all(panel, 8, 0);
-
-      lv_obj_t * label = lv_label_create(panel);
-      lv_label_set_text_fmt(label, "Panel %d\nOne more line", i);
-
-      lv_obj_set_style_transform_angle(panel, 50 * i, 0);
-  }
+  lv_demo_widgets();
 
 
   while(1) {
       /* Periodically call the lv_task handler.
        * It could be done in a timer interrupt or an OS task too.*/
       lv_timer_handler();
-      usleep(10 * 1000);
-//      lv_obj_invalidate(lv_scr_act());
+      usleep(1 * 1000);
   }
 
   return 0;
@@ -120,25 +114,23 @@ static lv_disp_t * hal_init(lv_coord_t w, lv_coord_t h)
 {
 
   lv_disp_t * disp = lv_sdl_window_create(w, h);
-  lv_draw_unit_sw_create(disp, 13);
+  lv_draw_unit_sw_create(disp, 10);
 
   lv_indev_t * mouse = lv_sdl_mouse_create();
   lv_indev_set_group(mouse, lv_group_get_default());
   lv_indev_set_disp(mouse, disp);
 
-//  LV_IMG_DECLARE(mouse_cursor_icon); /*Declare the image file.*/
-//  lv_obj_t * cursor_obj;
-//  cursor_obj = lv_img_create(lv_scr_act()); /*Create an image object for the cursor */
-//  lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
-//  lv_indev_set_cursor(mouse, cursor_obj);             /*Connect the image  object to the driver*/
+  LV_IMG_DECLARE(mouse_cursor_icon); /*Declare the image file.*/
+  lv_obj_t * cursor_obj;
+  cursor_obj = lv_img_create(lv_scr_act()); /*Create an image object for the cursor */
+  lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
+  lv_indev_set_cursor(mouse, cursor_obj);             /*Connect the image  object to the driver*/
 
   lv_indev_t * mousewheel = lv_sdl_mousewheel_create();
   lv_indev_set_disp(mousewheel, disp);
-  lv_indev_set_group(mousewheel, lv_group_get_default());
 
   lv_indev_t * keyboard = lv_sdl_keyboard_create();
   lv_indev_set_disp(keyboard, disp);
-  lv_indev_set_group(keyboard, lv_group_get_default());
 
   return disp;
 }

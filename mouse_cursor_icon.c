@@ -98,7 +98,7 @@ lv_img_dsc_t mouse_cursor_icon = {
     .header.always_zero = 0,
     .header.w = 14,
     .header.h = 20,
-    .data_size = 280 * LV_COLOR_FORMAT_NATIVE_ALPHA_SIZE,
-    .header.cf = LV_COLOR_FORMAT_NATIVE_ALPHA,
+    .data_size = 280 * 4,
+    .header.cf = LV_COLOR_DEPTH == 16 ? LV_COLOR_FORMAT_RGB565A8 : LV_COLOR_FORMAT_ARGB8888,
     .data = mouse_cursor_icon_map,
 };
