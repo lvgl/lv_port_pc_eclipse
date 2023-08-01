@@ -26,7 +26,7 @@
  *====================*/
 
 /*Color depth: 8 (A8), 16 (RGB565), 24 (RGB888), 32 (XRGB8888)*/
-#define LV_COLOR_DEPTH 16
+#define LV_COLOR_DEPTH 32
 
 /*=========================
    STDLIB WRAPPER SETTINGS
@@ -37,7 +37,7 @@
  * - LV_STDLIB_CLIB:    Standard C functions, like malloc, strlen, etc
  * - LV_STDLIB_CUSTOM:  Implement the functions externally
  */
-#define LV_USE_STDLIB_MALLOC    LV_STDLIB_BUILTIN
+#define LV_USE_STDLIB_MALLOC    LV_STDLIB_CLIB
 #define LV_USE_STDLIB_STRING    LV_STDLIB_BUILTIN
 #define LV_USE_STDLIB_SPRINTF   LV_STDLIB_BUILTIN
 
@@ -90,7 +90,10 @@
  *========================*/
 
 /* Max. memory to be used for layers */
-#define  LV_LAYER_MAX_MEMORY_USAGE             1024       /*[kB]*/
+#define  LV_LAYER_MAX_MEMORY_USAGE             16*1024       /*[kB]*/
+
+#define LV_DRAW_BUF_STRIDE_ALIGN                1          /*Multiple of these Bytes*/
+#define LV_DRAW_BUF_ALIGN                       32
 
 #define LV_USE_DRAW_SW 1
 #if LV_USE_DRAW_SW == 1
@@ -386,7 +389,7 @@
 /*Support bidirectional texts. Allows mixing Left-to-Right and Right-to-Left texts.
  *The direction will be processed according to the Unicode Bidirectional Algorithm:
  *https://www.w3.org/International/articles/inline-bidi-markup/uba-basics*/
-#define LV_USE_BIDI 0
+#define LV_USE_BIDI 1
 #if LV_USE_BIDI
     /*Set the default direction. Supported values:
     *`LV_BASE_DIR_LTR` Left-to-Right
@@ -397,7 +400,7 @@
 
 /*Enable Arabic/Persian processing
  *In these languages characters should be replaced with an other form based on their position in the text*/
-#define LV_USE_ARABIC_PERSIAN_CHARS 0
+#define LV_USE_ARABIC_PERSIAN_CHARS 1
 
 /*==================
  * WIDGETS
@@ -564,7 +567,7 @@
 #endif
 
 /*PNG decoder library*/
-#define LV_USE_PNG 0
+#define LV_USE_PNG 1
 
 /*BMP decoder library*/
 #define LV_USE_BMP 1
@@ -574,7 +577,7 @@
 #define LV_USE_SJPG 0
 
 /*GIF decoder library*/
-#define LV_USE_GIF 0
+#define LV_USE_GIF 1
 
 /*QR code library*/
 #define LV_USE_QRCODE 0
@@ -770,6 +773,9 @@
 
 /*Widget transformation demo*/
 #define LV_USE_DEMO_TRANSFORM       1
+
+/*Demonstrate scroll settings*/
+#define LV_USE_DEMO_SCROLL          1
 
 /*--END OF LV_CONF_H--*/
 
