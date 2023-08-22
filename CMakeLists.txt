@@ -20,4 +20,4 @@ add_compile_definitions(LV_CONF_INCLUDE_SIMPLE)
 target_link_libraries(main PRIVATE lvgl lvgl::examples lvgl::demos ${SDL2_LIBRARIES})
 add_custom_target (run COMMAND ${EXECUTABLE_OUTPUT_PATH}/main)
 
-target_compile_options(lvgl PRIVATE -Werror -Werror=float-conversion)
+target_compile_options(lvgl PRIVATE -Wall -Werror -Werror=float-conversion)
