@@ -18,6 +18,6 @@ add_subdirectory(lvgl)
 add_executable(main main.c mouse_cursor_icon.c ${SOURCES} ${INCLUDES})
 add_compile_definitions(LV_CONF_INCLUDE_SIMPLE)
 target_link_libraries(main PRIVATE lvgl lvgl::examples lvgl::demos ${SDL2_LIBRARIES})
-add_custom_target (run COMMAND ${EXECUTABLE_OUTPUT_PATH}/main)
+add_custom_target (run COMMAND ${EXECUTABLE_OUTPUT_PATH}/main DEPENDS main)
 
 target_compile_options(lvgl PRIVATE -Wall -Werror -Werror=float-conversion)
