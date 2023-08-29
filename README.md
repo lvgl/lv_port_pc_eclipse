@@ -21,7 +21,21 @@ The PC simulator is cross platform.  **Windows, Linux and OSX** are supported, h
 Clone the PC project and the related sub modules:
 
 ```
-git clone --recursive https://github.com/littlevgl/pc_simulator_sdl_eclipse.git
+git clone https://github.com/littlevgl/pc_simulator_sdl_eclipse.git
+```
+
+### Checkout your LVGL version
+
+By default the repository will be on `master`.
+
+Checkout the branch that corresponds to the version of LVGL you will be using.  For example, if your project uses LVGL v8.0 then you need to checkout the corresponding release branch of this repository:
+```
+git checkout release/v8.0
+```
+
+After specifying your version, update your local the submodule dependencies specific to your version:
+```
+git submodule update --init --recursive
 ```
 
 ### Install SDL
