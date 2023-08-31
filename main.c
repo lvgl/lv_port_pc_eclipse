@@ -115,12 +115,12 @@ int main(int argc, char **argv)
 //  lv_obj_invalidate(lv_scr_act());
 //  lv_refr_now(NULL);
 //  lv_refr_now(NULL);
-uint32_t i;
-for(i = 0; i < 1000; i++) {
-      lv_refr_now(NULL);
-      lv_obj_invalidate(lv_scr_act());
-}
-exit(0);
+//uint32_t i;
+//for(i = 0; i < 1000; i++) {
+//      lv_refr_now(NULL);
+//      lv_obj_invalidate(lv_scr_act());
+//}
+//exit(0);
 
   while(1) {
       /* Periodically call the lv_task handler.
