@@ -26,14 +26,17 @@ git clone https://github.com/littlevgl/pc_simulator_sdl_eclipse.git
 
 ### Checkout your LVGL version
 
-By default the repository will be on `master`.
+You are viewing this README on the LVGL `master` branch.
 
-Checkout the branch that corresponds to the version of LVGL you will be using.  For example, if your project uses LVGL v8.0 then you need to checkout the corresponding release branch of this repository:
+- [Click here to browse the `release/v8.3` branch.](https://github.com/lvgl/lv_port_pc_eclipse/tree/release/v8.3)
+- [Click here to see all branches.](https://github.com/lvgl/lv_port_pc_eclipse/branches)
+
+If your project will not be using the LVGL `master` branch, checkout the branch that corresponds to the version of LVGL you will be using.  For example, if your project uses LVGL v8.3, then you need to checkout the corresponding branch of **this** repository:
 ```
-git checkout release/v8.0
+git checkout release/v8.3
 ```
 
-After specifying your version, update your local the submodule dependencies specific to your version:
+After checking out your branch, or staying on `master`, update your local submodule dependencies:
 ```
 git submodule update --init --recursive
 ```
