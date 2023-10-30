@@ -20,7 +20,7 @@ BIN = demo
 
 CONFIG_LV_USE_THORVG_INTERNAL ?=y
 
-ifeq ($(CONFIG_LV_USE_THORVG_INTERNAL), n)
+ifeq ($(CONFIG_LV_USE_THORVG_EXTERNAL), y)
 CFLAGS += `pkg-config --cflags thorvg`
 LDFLAGS += `pkg-config --libs thorvg`
 endif
