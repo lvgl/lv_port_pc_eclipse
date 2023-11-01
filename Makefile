@@ -18,13 +18,6 @@ CFLAGS ?= -O3 -I$(LVGL_DIR)/ $(WARNINGS) `pkg-config --cflags wayland-client` `p
 LDFLAGS ?= -lSDL2 -lm `pkg-config --libs wayland-client` `pkg-config --libs xkbcommon` -lpthread
 BIN = demo
 
-CONFIG_LV_USE_THORVG_INTERNAL ?=y
-
-ifeq ($(CONFIG_LV_USE_THORVG_EXTERNAL), y)
-CFLAGS += `pkg-config --cflags thorvg`
-LDFLAGS += `pkg-config --libs thorvg`
-endif
-
 #Collect the files to compile
 MAINSRC = ./main.c
 

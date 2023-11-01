@@ -830,8 +830,7 @@
 /*Demonstrate scroll settings*/
 #define LV_USE_DEMO_SCROLL          1
 
-#define LV_USE_THORVG 1
-#define LV_USE_THORVG_EXTERNAL 0
+/*Vector graphic demo*/
 #define LV_USE_THORVG_INTERNAL 1
 #define LV_USE_VECTOR_GRAPHIC   1
 #define LV_USE_DEMO_VECTOR_GRAPHIC  1
