@@ -225,7 +225,7 @@
 
 /*1: Show CPU usage and FPS count
  * Requires `LV_USE_SYSMON = 1`*/
-#define LV_USE_PERF_MONITOR 0
+#define LV_USE_PERF_MONITOR 1
 #if LV_USE_PERF_MONITOR
     #define LV_USE_PERF_MONITOR_POS LV_ALIGN_BOTTOM_RIGHT
 
@@ -829,6 +829,11 @@
 
 /*Demonstrate scroll settings*/
 #define LV_USE_DEMO_SCROLL          1
+
+/*Vector graphic demo*/
+#define LV_USE_THORVG_INTERNAL 1
+#define LV_USE_VECTOR_GRAPHIC   1
+#define LV_USE_DEMO_VECTOR_GRAPHIC  1
 /*--END OF LV_CONF_H--*/
 
 #endif /*LV_CONF_H*/

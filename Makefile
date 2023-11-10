@@ -18,7 +18,6 @@ CFLAGS ?= -O3 -I$(LVGL_DIR)/ $(WARNINGS) `pkg-config --cflags wayland-client` `p
 LDFLAGS ?= -lSDL2 -lm `pkg-config --libs wayland-client` `pkg-config --libs xkbcommon` -lpthread
 BIN = demo
 
-
 #Collect the files to compile
 MAINSRC = ./main.c
 
@@ -30,11 +29,12 @@ OBJEXT ?= .o
 
 AOBJS = $(ASRCS:.S=$(OBJEXT))
 COBJS = $(CSRCS:.c=$(OBJEXT))
+CXXOBJS = $(CXXSRCS:.cpp=$(OBJEXT))
 
 MAINOBJ = $(MAINSRC:.c=$(OBJEXT))
 
-SRCS = $(ASRCS) $(CSRCS) $(MAINSRC)
-OBJS = $(AOBJS) $(COBJS)
+SRCS = $(ASRCS) $(CSRCS) $(MAINSRC) $(CXXSRCS)
+OBJS = $(AOBJS) $(COBJS) $(CXXOBJS)
 
 ## MAINOBJ -> OBJFILES
 
@@ -44,9 +44,13 @@ all: default
 	@$(CC)  $(CFLAGS) -c $< -o $@
 	@echo "CC $<"
 
-default: $(AOBJS) $(COBJS) $(MAINOBJ)
-	$(CC) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(LDFLAGS)
+%.o: %.cpp
+	@$(CXX)  $(CFLAGS) -c $< -o $@
+	@echo "CXX $<"
+
+default: $(AOBJS) $(COBJS) $(MAINOBJ) $(CXXOBJS)
+	$(CXX) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(CXXOBJS) $(LDFLAGS)
 
 clean:
-	rm -f $(BIN) $(AOBJS) $(COBJS) $(MAINOBJ)
+	rm -f $(BIN) $(AOBJS) $(COBJS) $(CXXOBJS) $(MAINOBJ)
 
