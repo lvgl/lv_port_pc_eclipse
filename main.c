@@ -24,7 +24,7 @@
 /**********************
  *  STATIC PROTOTYPES
  **********************/
-static lv_display_t * hal_init(lv_coord_t w, lv_coord_t h);
+static lv_display_t * hal_init(int32_t w, int32_t h);
 
 /**********************
  *  STATIC VARIABLES
@@ -58,27 +58,29 @@ static lv_display_t * hal_init(lv_coord_t w, lv_coord_t h);
  *   GLOBAL FUNCTIONS
  **********************/
 
-
 int main(int argc, char **argv)
 {
   (void)argc; /*Unused*/
   (void)argv; /*Unused*/
 
-
   /*Initialize LVGL*/
   lv_init();
 
+  /*Initialize the display, and the input devices*/
   hal_init(320, 240);
 
-  //lv_example_chart_3();
-
+  /*Open a demo or an example*/
   lv_demo_widgets();
+  //  lv_example_chart_1();
+
+  /*To hide the memory and performance indicators in the corners
+   *disable `LV_USE_MEM_MONITOR` and `LV_USE_PERF_MONITOR` in `lv_conf.h`*/
 
   while(1) {
       /* Periodically call the lv_task handler.
        * It could be done in a timer interrupt or an OS task too.*/
       lv_timer_handler();
-      usleep(1 * 1000);
+      usleep(10* 1000);
   }
 
   return 0;
@@ -92,12 +94,13 @@ int main(int argc, char **argv)
  * Initialize the Hardware Abstraction Layer (HAL) for the LVGL graphics
  * library
  */
-static lv_display_t * hal_init(lv_coord_t w, lv_coord_t h)
+static lv_display_t * hal_init(int32_t w, int32_t h)
 {
 
-    lv_group_set_default(lv_group_create());
+//    lv_group_set_default(lv_group_create());
 
   lv_display_t * disp = lv_sdl_window_create(w, h);
+
   lv_indev_t * mouse = lv_sdl_mouse_create();
   lv_indev_set_group(mouse, lv_group_get_default());
   lv_indev_set_disp(mouse, disp);
@@ -115,5 +118,6 @@ static lv_display_t * hal_init(lv_coord_t w, lv_coord_t h)
   lv_indev_t * keyboard = lv_sdl_keyboard_create();
   lv_indev_set_disp(keyboard, disp);
   lv_indev_set_group(keyboard, lv_group_get_default());
+
   return disp;
 }
