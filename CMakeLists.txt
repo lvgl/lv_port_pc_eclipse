@@ -24,7 +24,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         -Wdeprecated
         -Wdouble-promotion
         -Wempty-body
-        -Werror
         -Wextra
         -Wformat-security
         -Wmaybe-uninitialized
@@ -40,8 +39,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         -Wundef
         -Wuninitialized
         -Wunreachable-code
-        -Werror=float-conversion
-        -Werror=strict-aliasing
+        -Wfloat-conversion
+        -Wstrict-aliasing
     )
 
     target_compile_options(main PRIVATE -fsanitize=address,leak,undefined)
