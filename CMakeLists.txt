@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(lvgl)
+
+option(LV_USE_DRAW_SDL "Use SDL draw unit" OFF)
+
 set(CMAKE_C_STANDARD 11)#C11
 set(CMAKE_CXX_STANDARD 17)#C17
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -8,13 +11,26 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 find_package(SDL2 REQUIRED SDL2)
 
+add_compile_definitions($<$<BOOL:${LV_USE_DRAW_SDL}>:LV_USE_DRAW_SDL=1>)
+
 add_subdirectory(lvgl)
 target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS})
 
 add_executable(main main.c mouse_cursor_icon.c)
+
 target_compile_definitions(main PRIVATE LV_CONF_INCLUDE_SIMPLE)
 target_link_libraries(main lvgl lvgl::examples lvgl::demos lvgl::thorvg ${SDL2_LIBRARIES} m pthread)
 add_custom_target (run COMMAND ${EXECUTABLE_OUTPUT_PATH}/main DEPENDS main)
+
+if(LV_USE_DRAW_SDL)
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+    # Need to install libsdl2-image-dev
+    # `sudo apt install libsdl2-image-dev`
+    # `brew install sdl2_image`
+    find_package(SDL2_image REQUIRED)
+    target_include_directories(lvgl PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
+    target_link_libraries(main ${SDL2_IMAGE_LIBRARIES})
+endif(LV_USE_DRAW_SDL)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(lvgl PRIVATE
