@@ -39,9 +39,17 @@
  * - LV_STDLIB_RTTHREAD:    RT-Thread implementation
  * - LV_STDLIB_CUSTOM:      Implement the functions externally
  */
+
+#ifdef NDEBUG
 #define LV_USE_STDLIB_MALLOC    LV_STDLIB_BUILTIN
 #define LV_USE_STDLIB_STRING    LV_STDLIB_BUILTIN
 #define LV_USE_STDLIB_SPRINTF   LV_STDLIB_BUILTIN
+#else
+/*Use stdlib in debug mode to enable ASAN check etc.*/
+#define LV_USE_STDLIB_MALLOC    LV_STDLIB_CLIB
+#define LV_USE_STDLIB_STRING    LV_STDLIB_CLIB
+#define LV_USE_STDLIB_SPRINTF   LV_STDLIB_CLIB
+#endif
 
 
 #if LV_USE_STDLIB_MALLOC == LV_STDLIB_BUILTIN
