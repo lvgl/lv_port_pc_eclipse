@@ -70,8 +70,15 @@ int main(int argc, char **argv)
   hal_init(320, 240);
 
   /*Open a demo or an example*/
-  lv_demo_widgets();
-  //  lv_example_chart_1();
+  if (argc == 0) {
+    lv_demo_widgets();
+    //  lv_example_chart_1();
+  } else {
+    if (!lv_demos_create(&argv[1], argc - 1)) {
+      lv_demos_show_help();
+      goto demo_end;
+    }
+  }
 
   /*To hide the memory and performance indicators in the corners
    *disable `LV_USE_MEM_MONITOR` and `LV_USE_PERF_MONITOR` in `lv_conf.h`*/
@@ -83,6 +90,8 @@ int main(int argc, char **argv)
       usleep(10* 1000);
   }
 
+demo_end:
+  lv_deinit();
   return 0;
 }
 
