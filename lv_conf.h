@@ -133,7 +133,9 @@
 #define LV_USE_DRAW_PXP 0
 
 /* Draw using cached SDL textures*/
+#ifndef LV_USE_DRAW_SDL
 #define LV_USE_DRAW_SDL 0
+#endif
 
 /*=================
  * OPERATING SYSTEM
