@@ -611,7 +611,9 @@
 #define LV_USE_LODEPNG 1
 
 /*PNG decoder(libpng) library*/
+#ifndef LV_USE_LIBPNG
 #define LV_USE_LIBPNG 0
+#endif
 
 /*BMP decoder library*/
 #define LV_USE_BMP 1
