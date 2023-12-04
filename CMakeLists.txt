@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(lvgl)
 
 option(LV_USE_DRAW_SDL "Use SDL draw unit" OFF)
+option(LV_USE_LIBPNG "Use libpng to decode PNG" OFF)
 
 set(CMAKE_C_STANDARD 11)#C11
 set(CMAKE_CXX_STANDARD 17)#C17
@@ -12,6 +13,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 find_package(SDL2 REQUIRED SDL2)
 
 add_compile_definitions($<$<BOOL:${LV_USE_DRAW_SDL}>:LV_USE_DRAW_SDL=1>)
+add_compile_definitions($<$<BOOL:${LV_USE_LIBPNG}>:LV_USE_LIBPNG=1>)
 
 add_subdirectory(lvgl)
 target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS})
@@ -31,6 +33,12 @@ if(LV_USE_DRAW_SDL)
     target_include_directories(lvgl PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
     target_link_libraries(main ${SDL2_IMAGE_LIBRARIES})
 endif(LV_USE_DRAW_SDL)
+
+if(LV_USE_LIBPNG)
+    find_package(PNG REQUIRED)
+    target_include_directories(lvgl PUBLIC ${PNG_INCLUDE_DIR})
+    target_link_libraries(main ${PNG_LIBRARY})
+endif(LV_USE_LIBPNG)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(lvgl PRIVATE

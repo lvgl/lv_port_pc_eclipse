@@ -48,7 +48,9 @@ The following steps can be used with CMake on a Unix-like system. This may also 
 1. Ensure CMake is installed, i.e. the `cmake` command works on the terminal.
 2. Make a new directory. The name doesn't matter but `build` will be used for this tutorial.
 3. Type `cd build`.
-4. Type `cmake ..`. CMake will generate the appropriate build files. To build with SDL draw unit, use `cmake .. -DLV_USE_DRAW_SDL=ON`
+4. Type `cmake ..`. CMake will generate the appropriate build files.
+   - To build with SDL draw unit, add `-DLV_USE_DRAW_SDL=ON` to command line
+   - To build with libpng to support PNG image, add `-DLV_USE_LIBPNG=ON` to command line
 5. Type `make -j4` or (more portable) `cmake --build . --parallel`.
 
 **NOTE:** `--parallel` is supported from CMake v3.12 onwards. If you are using an older version of CMake, remove `--parallel` from the command or use the make option.
