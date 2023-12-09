@@ -3,6 +3,7 @@ project(lvgl)
 
 option(LV_USE_DRAW_SDL "Use SDL draw unit" OFF)
 option(LV_USE_LIBPNG "Use libpng to decode PNG" OFF)
+option(LV_USE_LIBJPEG_TURBO "Use libjpeg turbo to decode JPEG" OFF)
 
 set(CMAKE_C_STANDARD 11)#C11
 set(CMAKE_CXX_STANDARD 17)#C17
@@ -14,6 +15,7 @@ find_package(SDL2 REQUIRED SDL2)
 
 add_compile_definitions($<$<BOOL:${LV_USE_DRAW_SDL}>:LV_USE_DRAW_SDL=1>)
 add_compile_definitions($<$<BOOL:${LV_USE_LIBPNG}>:LV_USE_LIBPNG=1>)
+add_compile_definitions($<$<BOOL:${LV_USE_LIBJPEG_TURBO}>:LV_USE_LIBJPEG_TURBO=1>)
 
 add_subdirectory(lvgl)
 target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS})
@@ -39,6 +41,15 @@ if(LV_USE_LIBPNG)
     target_include_directories(lvgl PUBLIC ${PNG_INCLUDE_DIR})
     target_link_libraries(main ${PNG_LIBRARY})
 endif(LV_USE_LIBPNG)
+
+if(LV_USE_LIBJPEG_TURBO)
+    # Need to install libjpeg-turbo8-dev
+    # `sudo apt install libjpeg-turbo8-dev`
+    # `brew install libjpeg-turbo`
+    find_package(JPEG REQUIRED)
+    target_include_directories(lvgl PUBLIC ${JPEG_INCLUDE_DIRS})
+    target_link_libraries(main ${JPEG_LIBRARIES})
+endif(LV_USE_LIBJPEG_TURBO)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(lvgl PRIVATE

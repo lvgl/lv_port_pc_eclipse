@@ -51,6 +51,7 @@ The following steps can be used with CMake on a Unix-like system. This may also 
 4. Type `cmake ..`. CMake will generate the appropriate build files.
    - To build with SDL draw unit, add `-DLV_USE_DRAW_SDL=ON` to command line
    - To build with libpng to support PNG image, add `-DLV_USE_LIBPNG=ON` to command line
+   - To build with libjpeg-turbo to support JPEG image, add `-DLV_USE_LIBJPEG_TURBO=ON` to command line
 5. Type `make -j4` or (more portable) `cmake --build . --parallel`.
 
 **NOTE:** `--parallel` is supported from CMake v3.12 onwards. If you are using an older version of CMake, remove `--parallel` from the command or use the make option.
