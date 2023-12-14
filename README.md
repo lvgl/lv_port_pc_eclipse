@@ -24,12 +24,12 @@ Clone the PC project and the related sub modules:
 git clone --recursive https://github.com/littlevgl/pc_simulator_sdl_eclipse.git
 ```
 
-### Install SDL
+### Install Packages
 You can download SDL from https://www.libsdl.org/
 
 On on Linux you can install it via terminal:
 ```
-sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev
+sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev libsdl2-image-dev libjpeg-dev libpng-dev
 ```
 
 ### Install Eclipse CDT
