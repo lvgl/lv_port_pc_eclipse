@@ -4,6 +4,7 @@ project(lvgl)
 option(LV_USE_DRAW_SDL "Use SDL draw unit" OFF)
 option(LV_USE_LIBPNG "Use libpng to decode PNG" OFF)
 option(LV_USE_LIBJPEG_TURBO "Use libjpeg turbo to decode JPEG" OFF)
+option(LV_USE_FFMPEG "Use libffmpeg to display video using lv_ffmpeg" OFF)
 
 set(CMAKE_C_STANDARD 99)#C99 # lvgl officially support C99 and above
 set(CMAKE_CXX_STANDARD 17)#C17
@@ -16,6 +17,7 @@ find_package(SDL2 REQUIRED SDL2)
 add_compile_definitions($<$<BOOL:${LV_USE_DRAW_SDL}>:LV_USE_DRAW_SDL=1>)
 add_compile_definitions($<$<BOOL:${LV_USE_LIBPNG}>:LV_USE_LIBPNG=1>)
 add_compile_definitions($<$<BOOL:${LV_USE_LIBJPEG_TURBO}>:LV_USE_LIBJPEG_TURBO=1>)
+add_compile_definitions($<$<BOOL:${LV_USE_FFMPEG}>:LV_USE_FFMPEG=1>)
 
 add_subdirectory(lvgl)
 target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS})
@@ -50,6 +52,10 @@ if(LV_USE_LIBJPEG_TURBO)
     target_include_directories(lvgl PUBLIC ${JPEG_INCLUDE_DIRS})
     target_link_libraries(main ${JPEG_LIBRARIES})
 endif(LV_USE_LIBJPEG_TURBO)
+
+if(LV_USE_FFMPEG)
+    target_link_libraries(main avformat avcodec avutil swscale)
+endif(LV_USE_FFMPEG)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(lvgl PRIVATE

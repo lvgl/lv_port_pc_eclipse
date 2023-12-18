@@ -693,10 +693,13 @@
 
 /*FFmpeg library for image decoding and playing videos
  *Supports all major image formats so do not enable other image decoder with it*/
+#ifndef LV_USE_FFMPEG
 #define LV_USE_FFMPEG 0
+#endif
+
 #if LV_USE_FFMPEG
     /*Dump input information to stderr*/
-    #define LV_FFMPEG_DUMP_FORMAT 0
+    #define LV_FFMPEG_AV_DUMP_FORMAT 0
 #endif
 
 /*==================
