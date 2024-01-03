@@ -1,5 +1,5 @@
 Debug/
-.settings/language.settings.xml
+.settings/
 lv_dev_tools/
 **/*.o
 demo
