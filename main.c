@@ -67,7 +67,7 @@ int main(int argc, char **argv)
   lv_init();
 
   /*Initialize the display, and the input devices*/
-  hal_init(320, 240);
+  hal_init(480, 320);
 
   /*Open a demo or an example*/
   if (argc == 0) {
