@@ -661,7 +661,10 @@
 #define LV_USE_BARCODE 1
 
 /*FreeType library*/
+#ifndef LV_USE_FREETYPE
 #define LV_USE_FREETYPE 0
+#endif
+
 #if LV_USE_FREETYPE
     /*Memory used by FreeType to cache characters in kilobytes*/
     #define LV_FREETYPE_CACHE_SIZE 768

@@ -5,6 +5,7 @@ option(LV_USE_DRAW_SDL "Use SDL draw unit" OFF)
 option(LV_USE_LIBPNG "Use libpng to decode PNG" OFF)
 option(LV_USE_LIBJPEG_TURBO "Use libjpeg turbo to decode JPEG" OFF)
 option(LV_USE_FFMPEG "Use libffmpeg to display video using lv_ffmpeg" OFF)
+option(LV_USE_FREETYPE "Use freetype lib" OFF)
 
 set(CMAKE_C_STANDARD 99)#C99 # lvgl officially support C99 and above
 set(CMAKE_CXX_STANDARD 17)#C17
@@ -56,6 +57,12 @@ endif(LV_USE_LIBJPEG_TURBO)
 if(LV_USE_FFMPEG)
     target_link_libraries(main avformat avcodec avutil swscale)
 endif(LV_USE_FFMPEG)
+
+if(LV_USE_FREETYPE)
+    find_package(Freetype REQUIRED)
+    target_link_libraries(main ${FREETYPE_LIBRARIES})
+    target_include_directories(lvgl PUBLIC ${FREETYPE_INCLUDE_DIRS})
+endif(LV_USE_FREETYPE)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(lvgl PRIVATE
