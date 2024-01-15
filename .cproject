@@ -72,7 +72,6 @@
 									<listOptionValue builtIn="false" value="m"/>
 									<listOptionValue builtIn="false" value="SDL2"/>
 									<listOptionValue builtIn="false" value="SDL2main"/>
-									<listOptionValue builtIn="false" value="SDL2_image"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="true" id="gnu.cpp.link.option.other.115427651" name="Other options (-Xlinker [option])" superClass="gnu.cpp.link.option.other" useByScannerDiscovery="false" valueType="stringList"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.239773277" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
@@ -82,7 +81,7 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.700899456" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
 							<tool command="gcc" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.gnu.cross.assembler.229592691" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
-								<option id="gnu.both.asm.option.flags.1711305047" superClass="gnu.both.asm.option.flags" value="-c" valueType="string"/>
+								<option id="gnu.both.asm.option.flags.1711305047" name="Assembler flags" superClass="gnu.both.asm.option.flags" value="-c" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1000056846" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
