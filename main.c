@@ -112,7 +112,7 @@ static lv_display_t * hal_init(int32_t w, int32_t h)
 
   lv_indev_t * mouse = lv_sdl_mouse_create();
   lv_indev_set_group(mouse, lv_group_get_default());
-  lv_indev_set_disp(mouse, disp);
+  lv_indev_set_display(mouse, disp);
   lv_display_set_default(disp);
 
   LV_IMAGE_DECLARE(mouse_cursor_icon); /*Declare the image file.*/
@@ -122,10 +122,10 @@ static lv_display_t * hal_init(int32_t w, int32_t h)
   lv_indev_set_cursor(mouse, cursor_obj);             /*Connect the image  object to the driver*/
 
   lv_indev_t * mousewheel = lv_sdl_mousewheel_create();
-  lv_indev_set_disp(mousewheel, disp);
+  lv_indev_set_display(mousewheel, disp);
 
   lv_indev_t * keyboard = lv_sdl_keyboard_create();
-  lv_indev_set_disp(keyboard, disp);
+  lv_indev_set_display(keyboard, disp);
   lv_indev_set_group(keyboard, lv_group_get_default());
 
   return disp;
