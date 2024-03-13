@@ -105,8 +105,7 @@ demo_end:
  */
 static lv_display_t * hal_init(int32_t w, int32_t h)
 {
-
-//    lv_group_set_default(lv_group_create());
+  lv_group_set_default(lv_group_create());
 
   lv_display_t * disp = lv_sdl_window_create(w, h);
 
