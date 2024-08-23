@@ -29,7 +29,7 @@
                     "value": "32"
                 }
             ],
-            "action": [
+            "actions": [
                 {
                     "toReplace": "#define LV_COLOR_DEPTH \\d+",
                     "newContent": "#define LV_COLOR_DEPTH {value}",
@@ -40,10 +40,10 @@
         {
             "type": "checkbox",
             "label": "Show performance monitor",
-            "action": [
+            "actions": [
                 {
                     "toReplace": "#define LV_USE_PERF_MONITOR .*",
-                    "newContent": "#define LV_USE_PERF_MONITOR (0|1)",
+                    "newContent": "#define LV_USE_PERF_MONITOR {value}",
                     "filePath": "lv_conf.h"
                 }
             ]
