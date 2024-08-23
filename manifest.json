@@ -1,0 +1,52 @@
+{
+    "name": "Eclipse Simulator with SDL",
+    "maintainer": "LVGL",
+    "hostOperatingsystem": [
+        "Linux",
+        "Windows",
+        "MacOS"
+    ],
+    "environment": [
+        "Eclipse",
+        "SDL"
+    ],
+    "description": "The LVGL is written mainly for microcontrollers and embedded systems however you can run the library on your PC as well without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system. The PC simulator is cross platform. Windows, Linux and OSX are supported, however on Windows it's easier to get started with a another simulator project. This project uses Eclipse CDT (as an IDE) and SDL =a low level driver library to open a window, and handle mouse, keyboard etc.)",
+    "settings": [
+        {
+            "type": "dropdown",
+            "label": "Color Depth",
+            "options": [
+                {
+                    "name": "16 (RGB565)",
+                    "value": "16"
+                },
+                {
+                    "name": "24 (RGB565)",
+                    "value": "24"
+                },
+                {
+                    "name": "32 (RGB565)",
+                    "value": "32"
+                }
+            ],
+            "actions": [
+                {
+                    "toReplace": "#define LV_COLOR_DEPTH \\d+",
+                    "newContent": "#define LV_COLOR_DEPTH {value}",
+                    "filePath": "lv_conf.h"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "label": "Show performance monitor",
+            "actions": [
+                {
+                    "toReplace": "#define LV_USE_PERF_MONITOR .*",
+                    "newContent": "#define LV_USE_PERF_MONITOR {value}",
+                    "filePath": "lv_conf.h"
+                }
+            ]
+        }
+    ]
+}
