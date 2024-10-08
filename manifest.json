@@ -13,7 +13,7 @@
     "description": "LVGL is written mainly for microcontrollers and embedded systems however you can run the library on your PC as well without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system. The PC simulator is cross platform. Windows, Linux and OSX are supported, however on Windows it's easier to get started with a another simulator project. This project uses Eclipse CDT (as an IDE) and SDL =a low level driver library to open a window, and handle mouse, keyboard etc.)",
     "shortDescription": "Eclipse-based project to run LVGL on PC.",
     "urlToClone": "https://github.com/lvgl/lv_port_pc_eclipse",
-    "logo": "https://raw.githubusercontent.com/lvgl/project-creator/master/meta/images/eclipse/logo.svg",
+    "logo": ["https://raw.githubusercontent.com/lvgl/project-creator/master/meta/images/eclipse/logo.svg"],
     "branches": [
         "release/v9.2"
     ],
