@@ -49,11 +49,11 @@
             "options": [
                 {
                     "name": "Yes",
-                    "value": "1",
+                    "value": "1"
                 },
                 {
                     "name": "No",
-                    "value": "0"
+                    "value": "0",
                     "default": "true"
                 }
             ],
