@@ -59,8 +59,8 @@
             ],
             "actions": [
                 {
-                    "toReplace": "#define LV_USE_PERF_MONITOR .*",
-                    "newContent": "#define LV_USE_PERF_MONITOR {value}",
+                    "toReplace": " *#define LV_USE_PERF_MONITOR .*",
+                    "newContent": "    #define LV_USE_PERF_MONITOR {value}",
                     "filePath": "lv_conf.h"
                 }
             ]
