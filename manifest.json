@@ -50,11 +50,11 @@
                 {
                     "name": "Yes",
                     "value": "1",
-                    "default": "true"
                 },
                 {
                     "name": "No",
                     "value": "0"
+                    "default": "true"
                 }
             ],
             "actions": [
