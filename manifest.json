@@ -17,6 +17,10 @@
     "branches": [
         "release/v9.2"
     ],
+    "tags": [
+        "master",
+        "v9.2.2"
+    ],
     "settings": [
         {
             "type": "dropdown",
