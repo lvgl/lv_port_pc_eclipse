@@ -7,6 +7,9 @@
  *      INCLUDES
  *********************/
 #define _DEFAULT_SOURCE /* needed for usleep() */
+#include <errno.h>
+#include <pthread.h>
+#include <semaphore.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "lvgl/lvgl.h"
@@ -25,6 +28,7 @@
  *  STATIC PROTOTYPES
  **********************/
 static lv_display_t * hal_init(int32_t w, int32_t h);
+static void timer_handler_resume_cb(void * data);
 
 /**********************
  *  STATIC VARIABLES
@@ -60,9 +64,6 @@ static lv_display_t * hal_init(int32_t w, int32_t h);
 
 int main(int argc, char **argv)
 {
-  (void)argc; /*Unused*/
-  (void)argv; /*Unused*/
-
   /*Initialize LVGL*/
   lv_init();
 
@@ -80,14 +81,28 @@ int main(int argc, char **argv)
     }
   }
 
+  static sem_t sem;
+  if (sem_init(&sem, 0, 0) != 0) {
+    LV_LOG_ERROR("Failed to initialize semaphore: %d", errno);
+    goto demo_end;
+  }
+
+  lv_timer_handler_set_resume_cb(timer_handler_resume_cb, &sem);
+
   /*To hide the memory and performance indicators in the corners
    *disable `LV_USE_MEM_MONITOR` and `LV_USE_PERF_MONITOR` in `lv_conf.h`*/
 
   while(1) {
-      /* Periodically call the lv_task handler.
-       * It could be done in a timer interrupt or an OS task too.*/
-      lv_timer_handler();
-      usleep(10* 1000);
+    /* Periodically call the lv_timer_handler. */
+    const uint32_t time_until_next = lv_timer_handler();
+
+    if (time_until_next == LV_NO_TIMER_READY) {
+      /* No more timers ready, wait for the timer resume. */
+      sem_wait(&sem);
+      continue;
+    }
+
+    usleep(time_until_next * 1000);
   }
 
 demo_end:
@@ -128,4 +143,12 @@ static lv_display_t * hal_init(int32_t w, int32_t h)
   lv_indev_set_group(keyboard, lv_group_get_default());
 
   return disp;
+}
+
+/**
+ * Callback function to resume the timer handler when the timer is ready.
+ */
+static void timer_handler_resume_cb(void * data)
+{
+  sem_post((sem_t *)data);
 }
