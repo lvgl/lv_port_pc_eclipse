@@ -70,10 +70,12 @@ int main(int argc, char **argv)
   hal_init(480, 320);
 
   /*Open a demo or an example*/
-  if (argc == 0) {
+  if (argc <= 1) {
+	/*If not argument if provided just a open a demo or an example.*/
     lv_demo_widgets();
-    //  lv_example_chart_1();
+//      lv_example_chart_1();
   } else {
+	/*Process the command line arguments and open the related demo*/
     if (!lv_demos_create(&argv[1], argc - 1)) {
       lv_demos_show_help();
       goto demo_end;
