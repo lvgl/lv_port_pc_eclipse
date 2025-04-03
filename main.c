@@ -70,7 +70,7 @@ int main(int argc, char **argv)
   hal_init(480, 320);
 
   /*Open a demo or an example*/
-  if (argc == 0) {
+  if (argc <= 1) {
     lv_demo_widgets();
     //  lv_example_chart_1();
   } else {
