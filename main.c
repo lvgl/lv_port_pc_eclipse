@@ -6,9 +6,6 @@
 /*********************
  *      INCLUDES
  *********************/
-#define _DEFAULT_SOURCE /* needed for usleep() */
-#include <stdlib.h>
-#include <unistd.h>
 #include "lvgl/lvgl.h"
 #include "lvgl/examples/lv_examples.h"
 #include "lvgl/demos/lv_demos.h"
@@ -60,9 +57,6 @@ static lv_display_t * hal_init(int32_t w, int32_t h);
 
 int main(int argc, char **argv)
 {
-  (void)argc; /*Unused*/
-  (void)argv; /*Unused*/
-
   /*Initialize LVGL*/
   lv_init();
 
@@ -84,10 +78,15 @@ int main(int argc, char **argv)
    *disable `LV_USE_MEM_MONITOR` and `LV_USE_PERF_MONITOR` in `lv_conf.h`*/
 
   while(1) {
-      /* Periodically call the lv_task handler.
-       * It could be done in a timer interrupt or an OS task too.*/
-      lv_timer_handler();
-      usleep(10* 1000);
+    /* Periodically call the lv_timer_handler. */
+    uint32_t time_until_next = lv_timer_handler();
+
+    if (time_until_next == LV_NO_TIMER_READY) {
+      /* Simply sleep for a while. */
+      time_until_next = LV_DEF_REFR_PERIOD;
+    }
+
+    lv_delay_ms(time_until_next);
   }
 
 demo_end:
