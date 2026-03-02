@@ -7,6 +7,10 @@ option(LV_USE_LIBJPEG_TURBO "Use libjpeg turbo to decode JPEG" OFF)
 option(LV_USE_FFMPEG "Use libffmpeg to display video using lv_ffmpeg" OFF)
 option(LV_USE_FREETYPE "Use freetype lib" OFF)
 
+# When this option is enabled, the executable program will be signed with get-task-allow ability and can be debugged
+# with Xcode Instruments
+option(XCODE_INSTRUMENTS_SIGN "Use codesign tool to sign the executable program with get-task-allow ability" OFF)
+
 set(CMAKE_C_STANDARD 99)#C99 # lvgl officially support C99 and above
 set(CMAKE_CXX_STANDARD 17)#C17
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -94,3 +98,11 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(main PRIVATE -fsanitize=address,leak,undefined)
     target_link_options(main PRIVATE -fsanitize=address,leak,undefined)
 endif()
+
+if (XCODE_INSTRUMENTS_SIGN)
+# execute post codesign
+add_custom_command(TARGET main POST_BUILD
+        COMMAND codesign -s - -v -f --entitlements=${PROJECT_SOURCE_DIR}/xcode_instruments_entitle.xml ${EXECUTABLE_OUTPUT_PATH}/main
+        COMMENT "codesign Simulator"
+)
+endif ()
