@@ -91,8 +91,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         -Wstrict-aliasing
     )
 
-    if (UNIX)
+    if(NOT WIN32)
         target_compile_options(main PRIVATE -fsanitize=address,leak,undefined)
         target_link_options(main PRIVATE -fsanitize=address,leak,undefined)
-    endif ()
+    endif()
 endif()
