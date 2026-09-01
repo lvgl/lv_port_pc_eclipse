@@ -297,6 +297,7 @@
  *  - LV_DRAW_SW_ASM_NEON
  *  - LV_DRAW_SW_ASM_HELIUM
  *  - LV_DRAW_SW_ASM_RISCV_V: RISC-V Vector
+ *  - LV_DRAW_SW_ASM_SVE2
  *  - LV_DRAW_SW_ASM_CUSTOM
  */
 #define LV_USE_DRAW_SW_ASM LV_DRAW_SW_ASM_NONE
@@ -618,6 +619,33 @@
  * INPUT DEVICES
  *============================================================================*/
 
+/** Distance the pointer needs to travel before scrolling starts. */
+#define LV_INDEV_DEF_SCROLL_LIMIT 10
+
+/** Slow-down applied after releasing a scroll. Greater value means faster slow-down. */
+#define LV_INDEV_DEF_SCROLL_THROW 10
+
+/** Scrolling past the edge of a scrollable widget is slower by this factor. */
+#define LV_INDEV_DEF_SCROLL_ELASTIC_FACTOR 4
+
+/** Press time after which `LV_EVENT_LONG_PRESSED` is sent. */
+#define LV_INDEV_DEF_LONG_PRESS_TIME 400
+
+/** Time between `LV_EVENT_LONG_PRESSED_REPEAT` events. */
+#define LV_INDEV_DEF_LONG_PRESS_REP_TIME 100
+
+/** Max time between consecutive clicks to count as a double or triple click. */
+#define LV_INDEV_DEF_DOUBLE_CLICK_TIME 400
+
+/** Distance the pointer needs to travel before a gesture is detected. */
+#define LV_INDEV_DEF_GESTURE_LIMIT 50
+
+/** Minimum pointer velocity at release to report a swipe. */
+#define LV_INDEV_DEF_GESTURE_MIN_VELOCITY 3
+
+/** The encoder diff is multiplied by this value and divided by 256. */
+#define LV_INDEV_DEF_ROTARY_SENSITIVITY 256
+
 /** Move focus between a container's children with arrow keys, based on their position. */
 #define LV_USE_GRIDNAV 0
 
@@ -627,6 +655,22 @@
  */
 #define LV_USE_GESTURE_RECOGNITION 0
 
+#if LV_USE_GESTURE_RECOGNITION
+/** Scale the fingers need to pinch down to before pinch events are sent. */
+#define LV_INDEV_DEF_GESTURE_PINCH_DOWN_THRESHOLD 75
+
+/** Scale the fingers need to pinch up to before pinch events are sent. */
+#define LV_INDEV_DEF_GESTURE_PINCH_UP_THRESHOLD 150
+
+/** A pinch starting above this scale is discarded.
+ *  Must be greater than the pinch out threshold.
+ */
+#define LV_INDEV_DEF_GESTURE_PINCH_MAX_INITIAL_SCALE 250
+
+/** Angle the fingers need to rotate by before rotation events are sent. */
+#define LV_INDEV_DEF_GESTURE_ROTATION_THRESHOLD 200
+
+#endif /*LV_USE_GESTURE_RECOGNITION*/
 
 
 /*============================================================================
@@ -1368,7 +1412,10 @@
 /** Menu */
 #define LV_USE_MENU 1
 
-/** Message box */
+/** Message box
+ *
+ *  Enable: LV_USE_LABEL
+ */
 #define LV_USE_MSGBOX 1
 
 /** QR code
@@ -2255,19 +2302,22 @@
 #endif /*LV_GLOBAL_USE_CUSTOM_INCLUDE*/
 #endif /*LV_ENABLE_GLOBAL_CUSTOM*/
 
-/** NULL checks (very fast, recommended) */
-#define LV_USE_ASSERT_NULL 1
+/** LV_ASSERT / LV_ASSERT_MSG / LV_ASSERT_FORMAT_MSG */
+#define LV_USE_ASSERT 0
 
-/** Allocation success checks (very fast, recommended) */
-#define LV_USE_ASSERT_MALLOC 1
+/** LV_ASSERT_MALLOC */
+#define LV_USE_ASSERT_MALLOC 0
 
-/** Style init checks (very fast, recommended) */
+/** LV_ASSERT_NULL */
+#define LV_USE_ASSERT_NULL 0
+
+/** LV_ASSERT_STYLE */
 #define LV_USE_ASSERT_STYLE 1
 
-/** lv_mem integrity checks (slow) */
+/** LV_ASSERT_MEM_INTEGRITY */
 #define LV_USE_ASSERT_MEM_INTEGRITY 1
 
-/** Widget validity checks (slow) */
+/** LV_ASSERT_OBJ */
 #define LV_USE_ASSERT_OBJ 1
 
 /** Disable warning saying `LV_ASSERT_HANDLER_INCLUDE` is deprecated.
